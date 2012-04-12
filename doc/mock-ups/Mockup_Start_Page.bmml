@@ -1,0 +1,62 @@
+<mockup version="1.0" skin="sketch" measuredW="1413" measuredH="800" mockupW="1024" mockupH="767">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="389" y="33" w="1024" h="767" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Front%20Page</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Map" x="591" y="272" w="656" h="222" measuredW="252" measuredH="222" zOrder="2" locked="false" isInGroup="-1"/>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Image" x="591" y="202" w="656" h="70" measuredW="1417" measuredH="122" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <src>./assets/timemap_timeline.png</src>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::DataGrid" x="584" y="533" w="671" h="197" measuredW="460" measuredH="175" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Book%20%28Creation%29%20%5E%2C%20Author%28s%29%20%5Ev%2C%20Year%2C%20Fragments%20v%2C%20MyFragments%5Cr%0ALeutnant%20Gustl%2C%20Arthur%20Schnitzler%2C%201900%2C%203%2C%20%5Bedit%5D%0ALorem%20Ipsum%2C%20Lorem%20Ipsum%2C%201850%2C%202%20%0ALorem%20Ipsum%2C%20Lorem%20Ipsum%2C%201850%2C%201%2C%20%5Bedit%5D%0ALorem%20Ipsum%2C%20Lorem%20Ipsum%2C%201850%2C%203%0ALorem%20Ipsum%2C%20Lorem%20Ipsum%2C%201850%2C%202%2C%20%5Bedit%5D%0A%7B50L%2C%200R%2C%2015%2C%2015%2C%200C%7D</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::TabBar" x="584" y="138" w="360" h="32" measuredW="288" measuredH="100" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>0</selectedIndex>
+        <text>Home%2C%20Books%2C%20Authors%2C%20Fragments</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::FieldSet" x="1062" y="111" w="200" h="42" measuredW="200" measuredH="170" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Hobo%20Standard%20Login%20Area</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Button" x="1109" y="735" w="-1" h="-1" measuredW="73" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Previous</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::Button" x="1202" y="735" w="-1" h="-1" measuredW="51" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Next</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::TextInput" x="1199" y="506" w="-1" h="-1" measuredW="56" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Search</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::StickyNote" x="1221" y="560" w="126" h="157" measuredW="109" measuredH="123" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Table%20Plus%20with%20Search%20%26%20Pagination%0A%20%0AShould%20be%20linked%20to%20Timemap</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::FieldSet" x="584" y="187" w="671" h="310" measuredW="200" measuredH="170" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Timemap%20Component</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::StickyNote" x="950" y="319" w="297" h="172" measuredW="109" measuredH="123" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Most%20painless%20way%20for%20the%20first%20version%20is%20imho%20to%20implement%20a%20GeoRSS%20Feed@Fragments%20to%20feed%20the%20Timemap%20component.%0A%20%0ASee%3A%0Ahttp%3A//timemap.googlecode.com/svn/tags/2.0.1/examples/earthquake_georss.html</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

@@ -1,0 +1,40 @@
+<mockup version="1.0" skin="sketch" measuredW="1413" measuredH="800" mockupW="1024" mockupH="767">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="389" y="33" w="1024" h="767" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Book%20Detail%20Page</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::TabBar" x="584" y="138" w="360" h="32" measuredW="288" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>1</selectedIndex>
+        <text>Home%2C%20Books%2C%20Authors%2C%20Fragments</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::FieldSet" x="1062" y="111" w="200" h="42" measuredW="200" measuredH="170" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Hobo%20Standard%20Login%20Area</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Button" x="584" y="589" w="-1" h="-1" measuredW="215" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>New%20Fragment%20for%20%3CBook%20Name%3E</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::FieldSet" x="585" y="217" w="677" h="170" measuredW="200" measuredH="170" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Standard%20Hobo%20Collection%20Book_Detail</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::FieldSet" x="584" y="399" w="677" h="170" measuredW="200" measuredH="170" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Standard%20Hobo%20Collection%20Book_Fragments</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::StickyNote" x="1209" y="435" w="155" h="188" measuredW="109" measuredH="123" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Acts_as_list%20behaviour%0A%20%0AActs_as_list%20change%20permission%20hould%20be%20available%20for%20all%20registered%20users%20in%20the%20first%20version.</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

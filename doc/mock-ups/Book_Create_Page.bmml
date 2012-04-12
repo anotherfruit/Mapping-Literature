@@ -1,0 +1,40 @@
+<mockup version="1.0" skin="sketch" measuredW="1413" measuredH="800" mockupW="1024" mockupH="767">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="389" y="33" w="1024" h="767" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Book%20Create%20Page</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::TabBar" x="584" y="138" w="360" h="32" measuredW="288" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <selectedIndex>1</selectedIndex>
+        <text>Home%2C%20Books%2C%20Authors%2C%20Fragments</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::FieldSet" x="1062" y="111" w="200" h="42" measuredW="200" measuredH="170" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Hobo%20Standard%20Login%20Area</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Button" x="584" y="589" w="210" h="27" measuredW="206" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>New%20Book%20%28for%20%3CAuthor%20Name%3E%29</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::FieldSet" x="585" y="217" w="677" h="342" measuredW="200" measuredH="170" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Standard%20Hobo%20Collection%20Book_Create</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::StickyNote" x="920" y="421" w="334" h="123" measuredW="109" measuredH="123" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>ISBN%20Validation%20-%20Maybe%20this%20works%20out%20of%20the%20box%3A%0A%20%0Ahttp%3A//rubydoc.info/gems/isbn_validation/1.1.0/frames</text>
+      </controlProperties>
+    </control>
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::StickyNote" x="668" y="421" w="211" h="123" measuredW="109" measuredH="123" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Author%20assign%20via%20AJAX%20Autocomplete%20Field%20would%20be%20helpful</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
