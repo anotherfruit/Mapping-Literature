@@ -4,7 +4,7 @@ class Creation < ActiveRecord::Base
 
   fields do
     title              :string
-    isbn9              :string
+    isbn10             :string
     isbn13             :string
     published_at       :date
     first_published_at :date
