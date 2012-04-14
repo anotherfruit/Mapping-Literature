@@ -10,7 +10,7 @@ class Genre < ActiveRecord::Base
 
   has_many :rs_creation_genres, :dependent => :destroy
   has_many :creations, :through => :rs_creation_genres, :accessible => :true
-  children :creations
+#  children :creations
 
 
 

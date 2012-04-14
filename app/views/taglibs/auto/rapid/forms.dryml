@@ -1,5 +1,53 @@
 <!-- AUTOMATICALLY GENERATED FILE - DO NOT EDIT -->
 
+<def tag="form" for="Author">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="first_name, middle_name, last_name, birthdate, hlink, creations" param/>
+    <div param="actions">
+      <submit label="#{ht 'author.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>
+
+
+
+<def tag="form" for="Creation">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="title, isbn10, isbn13, published_at, first_published_at, authors, genres" param/>
+    <div param="actions">
+      <submit label="#{ht 'creation.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>
+
+
+
+<def tag="form" for="Fragment">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="body, page_nr_start, page_nr_end, creation" param/>
+    <div param="actions">
+      <submit label="#{ht 'fragment.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>
+
+
+
+<def tag="form" for="Genre">
+  <form merge param="default">
+    <error-messages param/>
+    <field-list fields="title, hlink, creations" param/>
+    <div param="actions">
+      <submit label="#{ht 'genre.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
+    </div>
+  </form>
+</def>
+
+
+
 <def tag="form" for="User">
   <form merge param="default">
     <error-messages param/>

@@ -5,6 +5,46 @@
 MappingLiterature::Application.routes.draw do
 
 
+  # Resource routes for controller "authors"
+  get 'authors(.:format)' => 'authors#index', :as => 'authors'
+  get 'authors/new(.:format)', :as => 'new_author'
+  get 'authors/:id/edit(.:format)' => 'authors#edit', :as => 'edit_author'
+  get 'authors/:id(.:format)' => 'authors#show', :as => 'author', :constraints => { :id => %r([^/.?]+) }
+  post 'authors(.:format)' => 'authors#create', :as => 'create_author'
+  put 'authors/:id(.:format)' => 'authors#update', :as => 'update_author', :constraints => { :id => %r([^/.?]+) }
+  delete 'authors/:id(.:format)' => 'authors#destroy', :as => 'destroy_author', :constraints => { :id => %r([^/.?]+) }
+
+
+  # Resource routes for controller "creations"
+  get 'creations(.:format)' => 'creations#index', :as => 'creations'
+  get 'creations/new(.:format)', :as => 'new_creation'
+  get 'creations/:id/edit(.:format)' => 'creations#edit', :as => 'edit_creation'
+  get 'creations/:id(.:format)' => 'creations#show', :as => 'creation', :constraints => { :id => %r([^/.?]+) }
+  post 'creations(.:format)' => 'creations#create', :as => 'create_creation'
+  put 'creations/:id(.:format)' => 'creations#update', :as => 'update_creation', :constraints => { :id => %r([^/.?]+) }
+  delete 'creations/:id(.:format)' => 'creations#destroy', :as => 'destroy_creation', :constraints => { :id => %r([^/.?]+) }
+
+
+  # Resource routes for controller "fragments"
+  get 'fragments(.:format)' => 'fragments#index', :as => 'fragments'
+  get 'fragments/new(.:format)', :as => 'new_fragment'
+  get 'fragments/:id/edit(.:format)' => 'fragments#edit', :as => 'edit_fragment'
+  get 'fragments/:id(.:format)' => 'fragments#show', :as => 'fragment', :constraints => { :id => %r([^/.?]+) }
+  post 'fragments(.:format)' => 'fragments#create', :as => 'create_fragment'
+  put 'fragments/:id(.:format)' => 'fragments#update', :as => 'update_fragment', :constraints => { :id => %r([^/.?]+) }
+  delete 'fragments/:id(.:format)' => 'fragments#destroy', :as => 'destroy_fragment', :constraints => { :id => %r([^/.?]+) }
+
+
+  # Resource routes for controller "genres"
+  get 'genres(.:format)' => 'genres#index', :as => 'genres'
+  get 'genres/new(.:format)', :as => 'new_genre'
+  get 'genres/:id/edit(.:format)' => 'genres#edit', :as => 'edit_genre'
+  get 'genres/:id(.:format)' => 'genres#show', :as => 'genre', :constraints => { :id => %r([^/.?]+) }
+  post 'genres(.:format)' => 'genres#create', :as => 'create_genre'
+  put 'genres/:id(.:format)' => 'genres#update', :as => 'update_genre', :constraints => { :id => %r([^/.?]+) }
+  delete 'genres/:id(.:format)' => 'genres#destroy', :as => 'destroy_genre', :constraints => { :id => %r([^/.?]+) }
+
+
   # Lifecycle routes for controller "users"
   put 'users/:id/accept_invitation(.:format)' => 'users#do_accept_invitation', :as => 'do_user_accept_invitation'
   get 'users/:id/accept_invitation(.:format)' => 'users#accept_invitation', :as => 'user_accept_invitation'

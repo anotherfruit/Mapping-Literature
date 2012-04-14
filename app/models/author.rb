@@ -13,7 +13,7 @@ class Author < ActiveRecord::Base
 
   has_many :rs_author_creations, :dependent => :destroy
   has_many :creations, :through => :rs_author_creations, :accessible => :true
-  children :creations
+  #children :creations
 
   # --- Permissions --- #
 
