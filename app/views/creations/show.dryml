@@ -1,0 +1,9 @@
+<show-page>
+<after-collection-section:>
+  <a:authors action="new" if="&can_create?(RsAuthorCreation)">
+  <ht key="author.actions.new" count="1">
+     New Author
+  </ht>
+  </a:authors>
+</after-collection-section:>
+</show-page>

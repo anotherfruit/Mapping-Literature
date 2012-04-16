@@ -14,6 +14,10 @@ MappingLiterature::Application.routes.draw do
   put 'authors/:id(.:format)' => 'authors#update', :as => 'update_author', :constraints => { :id => %r([^/.?]+) }
   delete 'authors/:id(.:format)' => 'authors#destroy', :as => 'destroy_author', :constraints => { :id => %r([^/.?]+) }
 
+  # Owner routes for controller "authors"
+  post 'creations/:creation_id/authors(.:format)' => 'authors#create_for_creation', :as => 'create_author_for_creation'
+  get 'creations/:creation_id/authors/new(.:format)' => 'authors#new_for_creation', :as => 'new_author_for_creation'
+
 
   # Resource routes for controller "creations"
   get 'creations(.:format)' => 'creations#index', :as => 'creations'
@@ -23,6 +27,10 @@ MappingLiterature::Application.routes.draw do
   post 'creations(.:format)' => 'creations#create', :as => 'create_creation'
   put 'creations/:id(.:format)' => 'creations#update', :as => 'update_creation', :constraints => { :id => %r([^/.?]+) }
   delete 'creations/:id(.:format)' => 'creations#destroy', :as => 'destroy_creation', :constraints => { :id => %r([^/.?]+) }
+
+  # Owner routes for controller "creations"
+  post 'authors/:author_id/creations(.:format)' => 'creations#create_for_author', :as => 'create_creation_for_author'
+  get 'authors/:author_id/creations/new(.:format)' => 'creations#new_for_author', :as => 'new_creation_for_author'
 
 
   # Resource routes for controller "fragments"

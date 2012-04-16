@@ -7,3 +7,26 @@
 <include gem='hobo_jquery'/>
 
 <include gem='hobo_jquery_ui'/>
+
+
+<extend tag="form" for="Author">
+  <old-form replace>
+    <field-list: fields="last_name, creations" />
+    <after-field-list:> <%= hidden_field(:creation, :id) %></after-field-list:>
+    <actions:>
+      <submit label="#{ht 'author.actions.save', :default=>['Save']}" param/>
+    <or-cancel with="&@creation" param="cancel"/>
+    </actions:>
+  </old-form>
+</extend>
+
+<extend tag="form" for="Creation">
+  <old-form replace>
+    <field-list: fields="title, authors" />
+    <after-field-list:> <%= hidden_field(:author, :id) %></after-field-list:>
+    <actions:>
+      <submit label="#{ht 'creation.actions.save', :default=>['Save']}" param/>
+      <or-cancel with="&@author" param="cancel"/>
+    </actions:>
+  </old-form>
+</extend>

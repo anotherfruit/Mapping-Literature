@@ -133,6 +133,38 @@
 
 
 
+<def tag="new-for-creation-page" polymorphic/>
+<def tag="new-for-creation-page" for="Author">
+  <page merge title="#{ht 'author.new_for_owner.title', :default=>['New Author for']} #{name :with => @creation}">
+    <body: class="new-for-owner-page  author" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="author.new_for_owner.heading">
+            New Author
+          </ht>
+        </h2>
+        <h3 param="subheading">
+          <ht key="author.new_for_owner.subheading">
+            For:
+          </ht>
+          <a with="&@creation"/>
+        </h3>
+      </header>
+
+      <section param="content-body">
+        <form owner="creation" method="post" param>
+          <field-list: skip="creation"/>
+          <submit: label="#{ht 'author.actions.create', :default=>['Create Author']}"/>
+        </form>
+      </section>
+    </content:>
+  </page>
+</def>
+
+
+
 
 
 <!-- ====== Creation Pages ====== -->
@@ -257,6 +289,38 @@
       </section>
     </content:>
 
+  </page>
+</def>
+
+
+
+<def tag="new-for-author-page" polymorphic/>
+<def tag="new-for-author-page" for="Creation">
+  <page merge title="#{ht 'creation.new_for_owner.title', :default=>['New Creation for']} #{name :with => @author}">
+    <body: class="new-for-owner-page  creation" param/>
+
+    <content: param>
+      <header param="content-header">
+        <h2 param="heading">
+          <ht key="creation.new_for_owner.heading">
+            New Creation
+          </ht>
+        </h2>
+        <h3 param="subheading">
+          <ht key="creation.new_for_owner.subheading">
+            For:
+          </ht>
+          <a with="&@author"/>
+        </h3>
+      </header>
+
+      <section param="content-body">
+        <form owner="author" method="post" param>
+          <field-list: skip="author"/>
+          <submit: label="#{ht 'creation.actions.create', :default=>['Create Creation']}"/>
+        </form>
+      </section>
+    </content:>
   </page>
 </def>
 

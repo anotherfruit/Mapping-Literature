@@ -1,0 +1,12 @@
+<show-page>
+<content-body:>
+  <after-collection-section:>
+    <a:creations action="new" if="&can_create?(RsAuthorCreation)">
+    <ht key="creation.actions.new" count="1">
+     New Creation
+    </ht>
+  </a:creations>
+  </after-collection-section:>
+</content-body:>
+
+</show-page>

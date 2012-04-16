@@ -1,29 +1,70 @@
 <page title="Home">
 
+<append-scripts:>
+<script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAASI0kCI-azC8RgbOZzWc3VRRarOQe_TKf_51Omf6UUSOFm7EABRRhO0PO4nBAO9FCmVDuowVwROLo3w" type="text/javascript"></script>
+  <script type="text/javascript">
+    var tm;
+    $(function() {
+    tm = TimeMap.init({
+         mapId: "map",               // Id of map div element (required)
+    timelineId: "timeline",     // Id of timeline div element (required)
+    options: {eventIconPath: '../images/'},
+      datasets: [
+      {
+          title: "Recent Earthquakes",
+          theme: "red",
+    type: "georss", // Data to be loaded in GeoRSS - must be a local URL
+    options: {
+      // GeoRSS file to load
+    url: "earthquakes.rss",
+      // additional tags to load
+    extraTags: ['link'],
+      // custom template to use the extra data
+    infoTemplate: '<div class="infotitle"><a href="{{link}}">{{title}}</a></div>' +
+    '<div class="infodescription">{{description}}</div>'
+    }
+    }
+    ],
+    bandInfo: [
+        {
+            width:          "85%",
+            intervalUnit:   Timeline.DateTime.DAY,
+            intervalPixels: 210
+        },
+        {
+            width:          "15%",
+            intervalUnit:   Timeline.DateTime.WEEK,
+            intervalPixels: 150,
+            showEventText:  false,
+            trackHeight:    0.2,
+            trackGap:       0.2
+        }
+    ]
+  });
+  });
+  </script>
+  </append-scripts:>
   <body: class="front-page"/>
 
   <content:>
+
     <header class="content-header">
-      <h1>Welcome to <app-name/></h1>
-      <section class="welcome-message">
-        <h3>Congratulations! Your Hobo Rails App is up and running</h3>
-        <ul>
-          <li>To customise this page: edit app/views/front/index.dryml</li>
-        </ul>
-
-        <% if User.count == 0 -%>
-          <h3 style="margin-top: 20px;">There are no user accounts - please provide the details of the site administrator</h3>
-          <form with="&this || User.new" without-cancel>
-            <field-list: fields="name, email_address, password, password_confirmation"/>
-            <submit: label="Register Administrator"/>
-          </form>
-        <% end -%>
 
 
-      </section>
+
     </header>
 
     <section class="content-body">
+
+     <div id="timemap">
+       <div id="timelinecontainer">
+          <div id="timeline"></div>
+      </div>
+      <div id="mapcontainer">
+          <div id="map"></div>
+      </div>
+     </div>
+
     </section>
   </content:>
 

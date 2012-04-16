@@ -3,13 +3,16 @@ class Creation < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    title              :string
+    title              :string, :required
     isbn10             :string
     isbn13             :string
-    published_at       :date
-    first_published_at :date
+    published_at       :date, :required
+    first_published_at :date, :required
     timestamps
   end
+
+  validates_format_of :isbn10, :allow_blank => true, :with => /^(?:\d[\ |-]?){9}[\d|X]$/
+  validates_format_of :isbn13, :allow_blank => true, :with => /^(?:\d[\ |-]?){13}$/
 
   has_many :fragments, :dependent => :destroy
   has_many :rs_author_creations, :dependent => :destroy
@@ -19,6 +22,8 @@ class Creation < ActiveRecord::Base
   has_many :rs_creation_genres, :dependent => :destroy
   has_many :genres, :through => :rs_creation_genres, :accessible => :true
   children :genres
+
+
 
   # --- Permissions --- #
 

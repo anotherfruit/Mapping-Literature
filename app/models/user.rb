@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   fields do
     name          :string, :required, :unique
+    role          enum_string(:Student, :Admin)
     email_address :email_address, :login => true
     administrator :boolean, :default => false
     timestamps
