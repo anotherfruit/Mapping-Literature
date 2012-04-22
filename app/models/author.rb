@@ -11,7 +11,7 @@ class Author < ActiveRecord::Base
     timestamps
   end
 
-  has_many :rs_author_creations, :dependent => :destroy
+  has_many :rs_author_creations, :dependent => :destroy, :inverse_of => :author
   has_many :creations, :through => :rs_author_creations, :accessible => :true
   #children :creations
 

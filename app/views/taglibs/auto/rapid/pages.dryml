@@ -133,38 +133,6 @@
 
 
 
-<def tag="new-for-creation-page" polymorphic/>
-<def tag="new-for-creation-page" for="Author">
-  <page merge title="#{ht 'author.new_for_owner.title', :default=>['New Author for']} #{name :with => @creation}">
-    <body: class="new-for-owner-page  author" param/>
-
-    <content: param>
-      <header param="content-header">
-        <h2 param="heading">
-          <ht key="author.new_for_owner.heading">
-            New Author
-          </ht>
-        </h2>
-        <h3 param="subheading">
-          <ht key="author.new_for_owner.subheading">
-            For:
-          </ht>
-          <a with="&@creation"/>
-        </h3>
-      </header>
-
-      <section param="content-body">
-        <form owner="creation" method="post" param>
-          <field-list: skip="creation"/>
-          <submit: label="#{ht 'author.actions.create', :default=>['Create Author']}"/>
-        </form>
-      </section>
-    </content:>
-  </page>
-</def>
-
-
-
 
 
 <!-- ====== Creation Pages ====== -->
@@ -190,7 +158,7 @@
 
       <section param="content-body">
         <a action="new" to="&model" param="new-link">
-          <ht key="creation.actions.new">New Creation</ht>
+          <ht key="creation.actions.new">New Book</ht>
         </a>
 
         <page-nav param="top-page-nav"/>
@@ -207,21 +175,21 @@
 
 
 <def tag="new-page" for="Creation">
-  <page merge title="#{ht 'creation.new.title', :default=>[' New Creation'] }">
+  <page merge title="#{ht 'creation.new.title', :default=>[' New Book'] }">
     <body: class="new-page creation" param/>
 
     <content: param>
       <section param="content-header">
         <h2 param="heading">
           <ht key="creation.new.heading">
-            New Creation
+            New Book
           </ht>
         </h2>
       </section>
 
       <section param="content-body">
         <form param>
-          <submit: label="#{ht 'creation.actions.create', :default=>['Create Creation']}"/>
+          <submit: label="#{ht 'creation.actions.create', :default=>['Create Book']}"/>
         </form>
       </section>
     </content:>
@@ -230,15 +198,17 @@
 
 
 <def tag="show-page" for="Creation">
-  <page merge title="#{ht 'creation.show.title', :default=>['Creation'], :name => name(:no_wrapper => true) }">
+  <page merge title="#{ht 'creation.show.title', :default=>['Book'], :name => name(:no_wrapper => true) }">
 
     <body: class="show-page creation" param/>
 
     <content: param>
+      <section-group>
+        <section param="main-content">
           <header param="content-header">
             <h2 param="heading">
               <ht key="creation.show.heading" name="#{name(:no_wrapper => true)}">
-                Creation <name/>
+                Book <name/>
               </ht>
             </h2>
 
@@ -246,7 +216,7 @@
 
             <a action="edit" if="&can_edit?" param="edit-link">
               <ht key="creation.actions.edit" name="#{name(:no_wrapper => true)}">
-                Edit Creation
+                Edit Book
               </ht>
             </a>
           </header>
@@ -263,6 +233,19 @@
               <collection:genres param/>
             </section>
           </section>
+        </section>
+
+        <aside param>
+          <section param="fragments-collection-section">
+            <h3 param="fragments-collection-heading">
+              <ht key="fragment.collection.heading" count="&this.fragments.count" >
+                <human-collection-name collection="fragments" your/>
+              </ht>
+            </h3>
+            <collection:fragments  param="fragments-collection"/>
+          </section>
+        </aside>
+      </section-group>
     </content:>
 
   </page>
@@ -270,7 +253,7 @@
 
 
 <def tag="edit-page" for="Creation">
-  <page merge title="#{ht 'creation.edit.title', :default=>['Edit Creation'], :name => name(:no_wrapper => true) }">
+  <page merge title="#{ht 'creation.edit.title', :default=>['Edit Book'], :name => name(:no_wrapper => true) }">
 
     <body: class="edit-page creation" param/>
 
@@ -278,10 +261,10 @@
       <section param="content-header">
         <h2 param="heading">
           <ht key="creation.edit.heading" name="#{name(:no_wrapper => true)}">
-            Edit Creation
+            Edit Book
           </ht>
         </h2>
-        <delete-button label="#{ht 'creation.actions.delete', :default=>['Remove This Creation']}" param/>
+        <delete-button label="#{ht 'creation.actions.delete', :default=>['Remove This Book']}" param/>
       </section>
 
       <section param="content-body">
@@ -289,38 +272,6 @@
       </section>
     </content:>
 
-  </page>
-</def>
-
-
-
-<def tag="new-for-author-page" polymorphic/>
-<def tag="new-for-author-page" for="Creation">
-  <page merge title="#{ht 'creation.new_for_owner.title', :default=>['New Creation for']} #{name :with => @author}">
-    <body: class="new-for-owner-page  creation" param/>
-
-    <content: param>
-      <header param="content-header">
-        <h2 param="heading">
-          <ht key="creation.new_for_owner.heading">
-            New Creation
-          </ht>
-        </h2>
-        <h3 param="subheading">
-          <ht key="creation.new_for_owner.subheading">
-            For:
-          </ht>
-          <a with="&@author"/>
-        </h3>
-      </header>
-
-      <section param="content-body">
-        <form owner="author" method="post" param>
-          <field-list: skip="author"/>
-          <submit: label="#{ht 'creation.actions.create', :default=>['Create Creation']}"/>
-        </form>
-      </section>
-    </content:>
   </page>
 </def>
 
@@ -414,7 +365,7 @@
 
           <section param="content-body">
             <view:body param="description" />
-            <field-list fields="page_nr_start, page_nr_end, creation" param/>
+            <field-list fields="page_nr_start, page_nr_end, lat, long, creation" param/>
           </section>
     </content:>
 
@@ -518,7 +469,7 @@
 
     <content: param>
           <header param="content-header">
-            <a:creations param="parent-link">&laquo; <ht key="genre.actions.back_to_parent" parent="Creation" name="&this">Back to <name/></ht></a:creations>
+            <a:creations param="parent-link">&laquo; <ht key="genre.actions.back_to_parent" parent="Book" name="&this">Back to <name/></ht></a:creations>
             <h2 param="heading">
               <ht key="genre.show.heading" name="#{name(:no_wrapper => true)}">
                 Genre <name/>
@@ -659,7 +610,7 @@
           </header>
 
           <section param="content-body">
-            <field-list fields="email_address, state" param/>
+            <field-list fields="role, email_address, state" param/>
           </section>
     </content:>
 

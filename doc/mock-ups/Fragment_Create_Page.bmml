@@ -5,7 +5,7 @@
         <text>Fragment%20Create%20Page</text>
       </controlProperties>
     </control>
-    <control controlID="5" controlTypeID="com.balsamiq.mockups::TabBar" x="584" y="138" w="360" h="32" measuredW="288" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::TabBar" x="584" y="138" w="360" h="32" measuredW="287" measuredH="100" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
         <selectedIndex>3</selectedIndex>
         <text>Home%2C%20Books%2C%20Authors%2C%20Fragments</text>
@@ -31,18 +31,13 @@
         <text>Book%20assign%20via%20AJAX%20Autocomplete%20Field%20would%20be%20helpful</text>
       </controlProperties>
     </control>
-    <control controlID="22" controlTypeID="com.balsamiq.mockups::StickyNote" x="835" y="248" w="-1" h="-1" measuredW="109" measuredH="123" zOrder="6" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>jQuery%20Date%20picker%20would%20be%20helpful</text>
-      </controlProperties>
-    </control>
-    <control controlID="23" controlTypeID="com.balsamiq.mockups::Map" x="590" y="431" w="666" h="222" measuredW="252" measuredH="222" zOrder="8" locked="false" isInGroup="-1"/>
-    <control controlID="24" controlTypeID="com.balsamiq.mockups::FieldSet" x="583" y="413" w="679" h="259" measuredW="200" measuredH="170" zOrder="7" locked="false" isInGroup="-1">
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Map" x="590" y="431" w="666" h="222" measuredW="252" measuredH="222" zOrder="7" locked="false" isInGroup="-1"/>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::FieldSet" x="583" y="413" w="679" h="259" measuredW="200" measuredH="170" zOrder="6" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Google%20Maps%20Marker%20Placer%20%28no%20polygons%29</text>
       </controlProperties>
     </control>
-    <control controlID="25" controlTypeID="com.balsamiq.mockups::StickyNote" x="1045" y="543" w="211" h="123" measuredW="109" measuredH="123" zOrder="9" locked="false" isInGroup="-1">
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::StickyNote" x="1045" y="543" w="211" h="123" measuredW="109" measuredH="123" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Search%20field%20for%20centering%20map%20scope%20would%20be%20helpful.%20%0AIf%20too%20much%20work%2C%20focussing%20on%20center%20of%20Vienna%20will%20do%20it.%20</text>
       </controlProperties>

@@ -6,8 +6,8 @@ class RsAuthorCreation < ActiveRecord::Base
     timestamps
   end
 
-  belongs_to :creation
-  belongs_to :author
+  belongs_to :creation, :inverse_of => :rs_author_creations
+  belongs_to :author, :inverse_of => :rs_author_creations
 
   # --- Permissions --- #
 

@@ -27,7 +27,7 @@
 <def tag="form" for="Fragment">
   <form merge param="default">
     <error-messages param/>
-    <field-list fields="body, page_nr_start, page_nr_end, creation" param/>
+    <field-list fields="body, page_nr_start, page_nr_end, lat, long, creation" param/>
     <div param="actions">
       <submit label="#{ht 'fragment.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
     </div>
@@ -51,7 +51,7 @@
 <def tag="form" for="User">
   <form merge param="default">
     <error-messages param/>
-    <field-list fields="name, email_address, administrator, state" param/>
+    <field-list fields="name, role, email_address, administrator, state" param/>
     <div param="actions">
       <submit label="#{ht 'user.actions.save', :default=>['Save']}" param/><or-cancel param="cancel"/>
     </div>

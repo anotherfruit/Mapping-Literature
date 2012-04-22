@@ -23,3 +23,10 @@ en:
 #    attribute_help:
 #      user:
 #        email_address: We will never share your address with third parties
+
+
+  activerecord:
+    models:
+      creation:
+        one: Book
+        other: Books

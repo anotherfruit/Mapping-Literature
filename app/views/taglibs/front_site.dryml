@@ -7,3 +7,15 @@
 <%# The default Hobo theme %>
 <include gem='hobo_clean'/>
 
+<extend tag="form" for="Author">
+  <old-form merge>
+    <cancel: href="&@author.creations.first ? creation_path(@author.creations.first) : authors_path"/>
+  </old-form>
+</extend>
+
+<extend tag="form" for="Creation">
+  <old-form merge>
+    <cancel: href="&@creation.authors.first ? creation_path(@creation.authors.first) : creations_path"/>
+  </old-form>
+</extend>
+

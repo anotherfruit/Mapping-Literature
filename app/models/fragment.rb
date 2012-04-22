@@ -6,6 +6,8 @@ class Fragment < ActiveRecord::Base
     body          :text
     page_nr_start :integer
     page_nr_end   :integer
+    lat           :decimal, :precision => 15, :scale => 12
+    long          :decimal, :precision => 15, :scale => 12
     timestamps
   end
 

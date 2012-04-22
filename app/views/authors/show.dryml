@@ -1,12 +1,9 @@
 <show-page>
-<content-body:>
-  <after-collection-section:>
-    <a:creations action="new" if="&can_create?(RsAuthorCreation)">
-    <ht key="creation.actions.new" count="1">
-     New Creation
-    </ht>
-  </a:creations>
-  </after-collection-section:>
-</content-body:>
-
+<append-content-body:>
+<a href='&new_creation_path("creation[authors]" => "@#{@author.id}")' if="&can_create?(RsAuthorCreation)">
+<ht key="creation.actions.new" count="1">
+    New Creation
+</ht>
+    </a>
+</append-content-body:>
 </show-page>

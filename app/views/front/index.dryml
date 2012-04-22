@@ -1,7 +1,15 @@
 <page title="Home">
 
 <append-scripts:>
-<script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAASI0kCI-azC8RgbOZzWc3VRRarOQe_TKf_51Omf6UUSOFm7EABRRhO0PO4nBAO9FCmVDuowVwROLo3w" type="text/javascript"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/mxn/mxn.js?(google)"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/timeline-1.2.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/timemap.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/param.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/xml.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/georss.js"></script>
+
+<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyCeedViMXkTJ95shxIsmEiRyi5AuDGyLHA" type="text/javascript"></script>
+
   <script type="text/javascript">
     var tm;
     $(function() {
@@ -11,12 +19,12 @@
     options: {eventIconPath: '../images/'},
       datasets: [
       {
-          title: "Recent Earthquakes",
+          title: "All Fragments",
           theme: "red",
     type: "georss", // Data to be loaded in GeoRSS - must be a local URL
     options: {
       // GeoRSS file to load
-    url: "earthquakes.rss",
+    url: "/fragments/rss",
       // additional tags to load
     extraTags: ['link'],
       // custom template to use the extra data
@@ -28,12 +36,12 @@
     bandInfo: [
         {
             width:          "85%",
-            intervalUnit:   Timeline.DateTime.DAY,
+            intervalUnit:   Timeline.DateTime.DECADE,
             intervalPixels: 210
         },
         {
             width:          "15%",
-            intervalUnit:   Timeline.DateTime.WEEK,
+            intervalUnit:   Timeline.DateTime.CENTURY,
             intervalPixels: 150,
             showEventText:  false,
             trackHeight:    0.2,
@@ -54,7 +62,7 @@
 
     </header>
 
-    <section class="content-body">
+
 
      <div id="timemap">
        <div id="timelinecontainer">
@@ -64,8 +72,9 @@
           <div id="map"></div>
       </div>
      </div>
-
+    <section class="content-body">
     </section>
   </content:>
 
 </page>
+

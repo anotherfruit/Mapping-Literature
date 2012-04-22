@@ -6,8 +6,8 @@ class RsCreationGenre < ActiveRecord::Base
     timestamps
   end
 
-  belongs_to :genre
-  belongs_to :creation
+  belongs_to :genre, :inverse_of => :rs_creation_genres
+  belongs_to :creation, :inverse_of => :rs_creation_genres
 
   # --- Permissions --- #
 

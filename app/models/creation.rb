@@ -14,14 +14,14 @@ class Creation < ActiveRecord::Base
   validates_format_of :isbn10, :allow_blank => true, :with => /^(?:\d[\ |-]?){9}[\d|X]$/
   validates_format_of :isbn13, :allow_blank => true, :with => /^(?:\d[\ |-]?){13}$/
 
-  has_many :fragments, :dependent => :destroy
-  has_many :rs_author_creations, :dependent => :destroy
+  has_many :fragments, :dependent => :destroy, :inverse_of => :creation
+  has_many :rs_author_creations, :dependent => :destroy, :inverse_of => :creation
   has_many :authors, :through => :rs_author_creations, :accessible => :true
-  children :authors
 
-  has_many :rs_creation_genres, :dependent => :destroy
+  has_many :rs_creation_genres, :dependent => :destroy, :inverse_of => :creation
   has_many :genres, :through => :rs_creation_genres, :accessible => :true
-  children :genres
+
+  children :genres, :fragments
 
 
 

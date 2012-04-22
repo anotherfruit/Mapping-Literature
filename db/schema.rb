@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413153458) do
+ActiveRecord::Schema.define(:version => 20120417173438) do
 
   create_table "authors", :force => true do |t|
     t.string   "first_name"
@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(:version => 20120413153458) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creation_id"
+    t.decimal  "lat",           :precision => 15, :scale => 12
+    t.decimal  "long",          :precision => 15, :scale => 12
   end
 
   add_index "fragments", ["creation_id"], :name => "index_fragments_on_creation_id"
@@ -83,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20120413153458) do
     t.datetime "updated_at"
     t.string   "state",                                   :default => "invited"
     t.datetime "key_timestamp"
+    t.string   "role"
   end
 
   add_index "users", ["state"], :name => "index_users_on_state"
