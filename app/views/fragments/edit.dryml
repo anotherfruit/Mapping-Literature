@@ -1,24 +1,133 @@
 <edit-page>
-
 <append-scripts:>
+<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyCeedViMXkTJ95shxIsmEiRyi5AuDGyLHA" type="text/javascript"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/mxn/mxn.js?(google)"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/timeline-1.2.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/timemap.js"></script>
 
-
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/gmaptestsnippet.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/param.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/xml.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/georss.js"></script>
+<% fragment = this %>
 <script type="text/javascript">
-$(document).ready(function(){
-   initialize();
+
+var tm;
+$(function() {
+
+    tm = TimeMap.init({
+        mapId: "map",               // Id of map div element (required)
+        timelineId: "timeline",     // Id of timeline div element (required)
+        options: {
+            mapType: "physical",
+            eventIconPath: "/assets/timemap/"
+        },
+        datasets: [
+            {
+                type: "basic",
+                options: {
+                    items: [
+                            <% case fragment.shape
+                            when "way"       %>
+
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            placemarks: [
+                                {
+                                    polyline: [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                        {lat: <%=gpscoordset.lat%>, lon: <%=gpscoordset.long%>},
+                                <% end %>
+                                    ],
+                                },
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {
+                                    point: {
+                                        lat: <%=gpscoordset.lat%>,
+                                        lon: <%=gpscoordset.long%>
+                                    }
+                                },
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+
+                                theme: "blue"
+                            }
+                        },
+                        <% when "multipoint" %>
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            placemarks: [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {
+                                    point: {
+                                        lat: <%=gpscoordset.lat%>,
+    lon: <%=gpscoordset.long%>
+                                    }
+                                },
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+                                description: "<br/>&quot;I'm a multi-point fragment that outlines a horizon&quot;<br/>Hurray",
+                                theme: "blue"
+                            }
+                        },
+                    <%  when "space" %>
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            polygon : [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {lat: <%=gpscoordset.lat%>, lon: <%=gpscoordset.long%>},
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+                                description: "<br/>&quot;I'm a fragment, outlining space!&quot;<br/><%=fragment_url(fragment)%>",
+                                theme: "orange"
+                            }
+                        },
+  <%
+else
+  puts "You just making it up!"
+end %>
+
+
+                    ]
+                }
+            }
+        ],
+        bandInfo: [
+        {
+            width:          "75%",
+            intervalUnit:   Timeline.DateTime.DECADE,
+            intervalPixels: 210
+        },
+        {
+            width:          "25%",
+            intervalUnit:   Timeline.DateTime.CENTURY,
+            intervalPixels: 150,
+            showEventText:  false,
+            trackHeight:    0.2,
+            trackGap:       0.2
+        }
+        ]
+    });
 });
-</script>
-</append-scripts:>
+    </script>
+
+  </append-scripts:>
 
 <append-content-body:>
  <style>
-  #mapCanvas {
-    width: 500px;
-    height: 400px;
-    float: left;
+  #timemap {
+  width: 400px;
   }
+  #timelinecontainer {
+  height: 100px !important;
+  }
+
+
   #infoPanel {
     float: left;
     margin-left: 10px;
@@ -28,15 +137,11 @@ $(document).ready(function(){
   }
   </style>
 
-<div id="mapCanvas"></div>
-  <div id="infoPanel">
-    <b>Marker status:</b>
-    <div id="markerStatus"><i>Click and drag the marker.</i></div>
-    <b>Current position:</b>
-    <div id="info"></div>
-    <b>Closest matching address:</b>
-    <div id="address"></div>
-  </div>
+      <a:gpscoordsets action="new" if="&can_create?(Gpscoordset)">
+        <ht key="gpscoordset.actions.new" count="1">
+          New Gpscoordset
+        </ht>
+      </a:gpscoordsets>
 
 </append-content-body:>
 </edit-page>

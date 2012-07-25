@@ -11,15 +11,24 @@
  *= require_tree ./application
 */
 
+fieldset.feckless-fields input.text, fieldset.feckless-fields input.string, fieldset.feckless-fields input.email-address, fieldset.feckless-fields input.password, fieldset.feckless-fields textarea {
+    border: 1px solid #444444;
+    padding: 2px;
+    width: 100%;
+}
+
+textarea {
+    height: 200px;
+    width: 100%;
+}
+
 /* Timemap GeoRSS */
 
 div#timelinecontainer { height: 310px; }
 div#mapcontainer { height: 300px; }
 div.infodescription { height: 130px; }
+div.description { margin-bottom: 20px; }
 
-div, p {
-    font-family: Verdana, Arial, sans-serif;
-}
 
 p.content {
     font-size: 12px;

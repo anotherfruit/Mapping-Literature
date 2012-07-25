@@ -1,0 +1,156 @@
+<show-page>
+<append-scripts:>
+<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyCeedViMXkTJ95shxIsmEiRyi5AuDGyLHA" type="text/javascript"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/mxn/mxn.js?(google)"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/timeline-1.2.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/timemap.js"></script>
+
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/param.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/xml.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/georss.js"></script>
+<% fragment = this %>
+<script type="text/javascript">
+
+var tm;
+$(function() {
+
+    tm = TimeMap.init({
+        mapId: "map",               // Id of map div element (required)
+        timelineId: "timeline",     // Id of timeline div element (required)
+        options: {
+            mapType: "physical",
+            eventIconPath: "/assets/timemap/"
+        },
+        datasets: [
+            {
+                type: "basic",
+                options: {
+                    items: [
+                            <% case fragment.shape
+                            when "way"       %>
+
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            placemarks: [
+                                {
+                                    polyline: [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                        {lat: <%=gpscoordset.lat%>, lon: <%=gpscoordset.long%>},
+                                <% end %>
+                                    ],
+                                },
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {
+                                    point: {
+                                        lat: <%=gpscoordset.lat%>,
+    lon: <%=gpscoordset.long%>
+                                    }
+                                },
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+
+                                theme: "blue"
+                            }
+                        },
+                        <% when "multipoint" %>
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            placemarks: [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {
+                                    point: {
+                                        lat: <%=gpscoordset.lat%>,
+    lon: <%=gpscoordset.long%>
+                                    }
+                                },
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+                                description: "<br/>&quot;I'm a multi-point fragment that outlines a horizon&quot;<br/>Hurray",
+                                theme: "blue"
+                            }
+                        },
+                    <%  when "space" %>
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            polygon : [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {lat: <%=gpscoordset.lat%>, lon: <%=gpscoordset.long%>},
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+                                description: "<br/>&quot;I'm a fragment, outlining space!&quot;<br/><%=fragment_url(fragment)%>",
+                                theme: "orange"
+                            }
+                        },
+  <%
+else
+  puts "You just making it up!"
+end %>
+
+
+                    ]
+                }
+            }
+        ],
+        bandInfo: [
+        {
+            width:          "75%",
+            intervalUnit:   Timeline.DateTime.DECADE,
+            intervalPixels: 210
+        },
+        {
+            width:          "25%",
+            intervalUnit:   Timeline.DateTime.CENTURY,
+            intervalPixels: 150,
+            showEventText:  false,
+            trackHeight:    0.2,
+            trackGap:       0.2
+        }
+        ]
+    });
+});
+    </script>
+
+</append-scripts:>
+
+<prepend-collection-section:>
+ <style>
+  #timemap {
+  margin-top: 55px;
+  width: 400px;
+  }
+  #timelinecontainer {
+  height: 100px !important;
+  }
+
+
+  #infoPanel {
+    float: left;
+    margin-left: 10px;
+  }
+  #infoPanel div {
+    margin-bottom: 5px;
+  }
+  </style>
+
+<div style="float:right;">
+<div id="timemap">
+<div id="timelinecontainer">
+<div id="timeline"></div>
+       </div>
+<div id="mapcontainer">
+<div id="map"></div>
+      </div>
+</div>
+   </div>
+
+
+
+
+           </prepend-collection-section:>
+</show-page>

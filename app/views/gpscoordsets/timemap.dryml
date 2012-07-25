@@ -1,0 +1,150 @@
+<page title="Home">
+
+<append-scripts:>
+<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyCeedViMXkTJ95shxIsmEiRyi5AuDGyLHA" type="text/javascript"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/mxn/mxn.js?(google)"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/timeline-1.2.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/timemap.js"></script>
+
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/param.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/xml.js"></script>
+<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/georss.js"></script>
+
+<script type="text/javascript">
+
+var tm;
+$(function() {
+
+    tm = TimeMap.init({
+        mapId: "map",               // Id of map div element (required)
+        timelineId: "timeline",     // Id of timeline div element (required)
+        options: {
+            mapType: "physical",
+            eventIconPath: "../images/"
+        },
+        datasets: [
+            {
+                type: "basic",
+                options: {
+                    items: [
+                        <% @fragments.each do |fragment|
+                            case fragment.shape
+                            when "way"       %>
+
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            placemarks: [
+                                {
+                                    polyline: [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                        {lat: <%=gpscoordset.lat%>, lon: <%=gpscoordset.long%>},
+                                <% end %>
+                                    ],
+                                },
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {
+                                    point: {
+                                        lat: <%=gpscoordset.lat%>,
+                                        lon: <%=gpscoordset.long%>
+                                    }
+                                },
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+                                description: " &quot;I am large, I contain multitudes.&quot;&mdash;Walt Whitman<br/>My info window is anchored based on the first loaded item.",
+                                theme: "blue"
+                            }
+                        },
+                        <% when "multipoint" %>
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            placemarks: [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {
+                                    point: {
+                                        lat: <%=gpscoordset.lat%>,
+                                        lon: <%=gpscoordset.long%>
+                                    }
+                                },
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+                                description: " &quot;I am large, I contain multitudes.&quot;&mdash;Walt Whitman<br/>My info window is anchored based on the first loaded item.",
+                                theme: "blue"
+                            }
+                        },
+                    <%  when "space" %>
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            polygon : [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {lat: <%=gpscoordset.lat%>, lon: <%=gpscoordset.long%>},
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+                                description: "I'm a fragment, outlining space!",
+                                theme: "orange"
+                            }
+                        },
+  <%
+else
+  puts "You just making it up!"
+end %>
+                        <% end %>
+
+                    ]
+                }
+            }
+        ],
+        bandInfo: [
+        {
+            width:          "85%",
+            intervalUnit:   Timeline.DateTime.DECADE,
+            intervalPixels: 210
+        },
+        {
+            width:          "15%",
+            intervalUnit:   Timeline.DateTime.CENTURY,
+            intervalPixels: 150,
+            showEventText:  false,
+            trackHeight:    0.2,
+            trackGap:       0.2
+        }
+        ]
+    });
+});
+    </script>
+
+  </append-scripts:>
+  <body: class="front-page"/>
+
+  <content:>
+
+    <header class="content-header">
+    </header>
+
+    <div id="timemap">
+       <div id="timelinecontainer">
+          <div id="timeline"></div>
+      </div>
+      <div id="mapcontainer">
+          <div id="map"></div>
+      </div>
+     </div>
+    <section class="content-body">
+
+      <do with="&@books">
+        <table-plus fields="title,authors,published_at,fragments_count">
+          <published-at-heading-link:>Year</published-at-heading-link:>
+          <published-at-view:><%= this.year %></published-at-view:>
+          <fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
+        </table-plus>
+      </do>
+    </section>
+  </content:>
+
+</page>
+

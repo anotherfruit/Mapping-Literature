@@ -12,3 +12,9 @@
 // The default Hobo theme
 //= require hobo_clean
 //= require_tree ./front
+
+<script type="text/javascript">
+$(document).ready(function(){
+    initialize();
+    });
+</script>

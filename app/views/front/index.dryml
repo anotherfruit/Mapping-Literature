@@ -1,39 +1,107 @@
 <page title="Home">
 
 <append-scripts:>
+<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyCeedViMXkTJ95shxIsmEiRyi5AuDGyLHA" type="text/javascript"></script>
 <script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/mxn/mxn.js?(google)"></script>
 <script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/timeline-1.2.js"></script>
 <script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/timemap.js"></script>
+
 <script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/param.js"></script>
 <script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/xml.js"></script>
 <script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/georss.js"></script>
 
-<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyCeedViMXkTJ95shxIsmEiRyi5AuDGyLHA" type="text/javascript"></script>
+<script type="text/javascript">
 
-  <script type="text/javascript">
-    var tm;
-    $(function() {
+var tm;
+$(function() {
+
     tm = TimeMap.init({
-         mapId: "map",               // Id of map div element (required)
-    timelineId: "timeline",     // Id of timeline div element (required)
-    options: {eventIconPath: '../images/'},
-      datasets: [
-      {
-          title: "All Fragments",
-          theme: "red",
-    type: "georss", // Data to be loaded in GeoRSS - must be a local URL
-    options: {
-      // GeoRSS file to load
-    url: "/fragments/rss",
-      // additional tags to load
-    extraTags: ['link'],
-      // custom template to use the extra data
-    infoTemplate: '<div class="infotitle"><a href="{{link}}">{{title}}</a></div>' +
-    '<div class="infodescription">{{description}}</div>'
-    }
-    }
-    ],
-    bandInfo: [
+        mapId: "map",               // Id of map div element (required)
+        timelineId: "timeline",     // Id of timeline div element (required)
+        options: {
+            mapType: "physical",
+            eventIconPath: "/assets/timemap/"
+        },
+        datasets: [
+            {
+                type: "basic",
+                options: {
+                    items: [
+                        <% @fragments.each do |fragment|
+                            if (fragment.gpscoordsets.count>0)
+                            case fragment.shape
+                            when "way"       %>
+
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            placemarks: [
+                                {
+                                    polyline: [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                        {lat: <%=gpscoordset.lat%>, lon: <%=gpscoordset.long%>},
+                                <% end %>
+                                    ],
+                                },
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {
+                                    point: {
+                                        lat: <%=gpscoordset.lat%>,
+    lon: <%=gpscoordset.long%>
+                                    }
+                                },
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+                                description: "<br/>&quot;I'm a fragment that outlines a way&quot;<br/><br/>" + "<%=raw("<a href='"+ (url_for fragment) +"'>Link to Fragment</a>")%>" + "<br/>" + "<%=raw("<a href='"+ (url_for fragment.creation) +"'>Link to Book</a>")%>",
+                                theme: "red"
+                            }
+                        },
+                        <% when "multipoint" %>
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            placemarks: [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {
+                                    point: {
+                                        lat: <%=gpscoordset.lat%>,
+                                        lon: <%=gpscoordset.long%>
+                                    }
+                                },
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+                                description: "<br/>&quot;I'm a (multi-)point fragment that outlines a horizon&quot;<br/><br/>" + "<%=raw("<a href='"+ (url_for fragment) +"'>Link to Fragment</a>")%>" + "<br/>" + "<%=raw("<a href='"+ (url_for fragment.creation) +"'>Link to Book</a>")%>",
+                                theme: "blue"
+                            }
+                        },
+                    <%  when "space" %>
+                        {
+                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
+                            polygon : [
+                                <% fragment.gpscoordsets.each do |gpscoordset| %>
+                                {lat: <%=gpscoordset.lat%>, lon: <%=gpscoordset.long%>},
+                                <% end %>
+                            ],
+                            title : "<%=fragment.creation%> - <%=fragment%>",
+                            options : {
+                                description: "<br/>&quot;I'm a fragment, outlining space!&quot;<br/><br/>" + "<%=raw("<a href='"+ (url_for fragment) +"'>Link to Fragment</a>")%>" + "<br/>" + "<%=raw("<a href='"+ (url_for fragment.creation) +"'>Link to Book</a>")%>",
+                                theme: "orange"
+                            }
+                        },
+  <%
+else
+  puts "You just making it up!"
+end %>
+<% end %>
+                        <% end %>
+
+                    ]
+                }
+            }
+        ],
+        bandInfo: [
         {
             width:          "85%",
             intervalUnit:   Timeline.DateTime.DECADE,
@@ -47,34 +115,39 @@
             trackHeight:    0.2,
             trackGap:       0.2
         }
-    ]
-  });
-  });
-  </script>
+        ]
+    });
+});
+
+    </script>
+
   </append-scripts:>
   <body: class="front-page"/>
 
-  <content:>
+<content:>
 
-    <header class="content-header">
+<header class="content-header">
+</header>
 
-
-
-    </header>
-
-
-
-     <div id="timemap">
+    <div id="timemap">
        <div id="timelinecontainer">
           <div id="timeline"></div>
-      </div>
+</div>
       <div id="mapcontainer">
           <div id="map"></div>
-      </div>
+</div>
      </div>
-    <section class="content-body">
+<section class="content-body">
+
+<do with="&@books">
+<table-plus fields="this,authors,published_at,fragments_count">
+<published-at-heading-link:>Year</published-at-heading-link:>
+          <published-at-view:><%= this.year %></published-at-view:>
+<fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
+        </table-plus>
+</do>
     </section>
-  </content:>
+</content:>
 
 </page>
 

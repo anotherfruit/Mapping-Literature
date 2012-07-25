@@ -15,6 +15,9 @@ MappingLiterature::Application.routes.draw do
   delete 'authors/:id(.:format)' => 'authors#destroy', :as => 'destroy_author', :constraints => { :id => %r([^/.?]+) }
 
 
+  # Index action routes for controller "creations"
+  get 'creations/complete_title(.:format)', :as => 'complete_title_creations'
+
   # Resource routes for controller "creations"
   get 'creations(.:format)' => 'creations#index', :as => 'creations'
   get 'creations/new(.:format)', :as => 'new_creation'
@@ -37,6 +40,11 @@ MappingLiterature::Application.routes.draw do
   put 'fragments/:id(.:format)' => 'fragments#update', :as => 'update_fragment', :constraints => { :id => %r([^/.?]+) }
   delete 'fragments/:id(.:format)' => 'fragments#destroy', :as => 'destroy_fragment', :constraints => { :id => %r([^/.?]+) }
 
+  # Owner routes for controller "fragments"
+  get 'creations/:creation_id/fragments(.:format)' => 'fragments#index_for_creation', :as => 'fragments_for_creation'
+  get 'creations/:creation_id/fragments/new(.:format)' => 'fragments#new_for_creation', :as => 'new_fragment_for_creation'
+  post 'creations/:creation_id/fragments(.:format)' => 'fragments#create_for_creation', :as => 'create_fragment_for_creation'
+
 
   # Resource routes for controller "genres"
   get 'genres(.:format)' => 'genres#index', :as => 'genres'
@@ -46,6 +54,22 @@ MappingLiterature::Application.routes.draw do
   post 'genres(.:format)' => 'genres#create', :as => 'create_genre'
   put 'genres/:id(.:format)' => 'genres#update', :as => 'update_genre', :constraints => { :id => %r([^/.?]+) }
   delete 'genres/:id(.:format)' => 'genres#destroy', :as => 'destroy_genre', :constraints => { :id => %r([^/.?]+) }
+
+
+  # Index action routes for controller "gpscoordsets"
+  get 'gpscoordsets/timemap(.:format)', :as => 'timemap_gpscoordsets'
+
+  # Resource routes for controller "gpscoordsets"
+  get 'gpscoordsets/new(.:format)', :as => 'new_gpscoordset'
+  get 'gpscoordsets/:id/edit(.:format)' => 'gpscoordsets#edit', :as => 'edit_gpscoordset'
+  get 'gpscoordsets/:id(.:format)' => 'gpscoordsets#show', :as => 'gpscoordset', :constraints => { :id => %r([^/.?]+) }
+  post 'gpscoordsets(.:format)' => 'gpscoordsets#create', :as => 'create_gpscoordset'
+  put 'gpscoordsets/:id(.:format)' => 'gpscoordsets#update', :as => 'update_gpscoordset', :constraints => { :id => %r([^/.?]+) }
+  delete 'gpscoordsets/:id(.:format)' => 'gpscoordsets#destroy', :as => 'destroy_gpscoordset', :constraints => { :id => %r([^/.?]+) }
+
+  # Owner routes for controller "gpscoordsets"
+  get 'fragments/:fragment_id/gpscoordsets/new(.:format)' => 'gpscoordsets#new_for_fragment', :as => 'new_gpscoordset_for_fragment'
+  post 'fragments/:fragment_id/gpscoordsets(.:format)' => 'gpscoordsets#create_for_fragment', :as => 'create_gpscoordset_for_fragment'
 
 
   # Lifecycle routes for controller "users"

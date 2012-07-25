@@ -1,9 +1,5 @@
 <show-page>
 <append-content-body:>
-<a href='&new_author_path("author[creations]" => "@#{@creation.id}")' if="&can_create?(RsAuthorCreation)">
-<ht key="author.actions.new" count="1">
-    New Author
-</ht>
-    </a>
+
 </append-content-body:>
 </show-page>

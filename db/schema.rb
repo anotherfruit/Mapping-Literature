@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120417173438) do
+ActiveRecord::Schema.define(:version => 20120605203842) do
 
   create_table "authors", :force => true do |t|
     t.string   "first_name"
@@ -31,6 +31,9 @@ ActiveRecord::Schema.define(:version => 20120417173438) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "isbn10"
+    t.integer  "fragments_count"
+    t.string   "publisher"
+    t.string   "publisher_url"
   end
 
   create_table "fragments", :force => true do |t|
@@ -40,11 +43,20 @@ ActiveRecord::Schema.define(:version => 20120417173438) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creation_id"
-    t.decimal  "lat",           :precision => 15, :scale => 12
-    t.decimal  "long",          :precision => 15, :scale => 12
+    t.boolean  "indoor"
+    t.boolean  "outdoor"
+    t.boolean  "non_replacable_scenery"
+    t.boolean  "fictional"
+    t.string   "shape"
+    t.boolean  "immigrant"
+    t.boolean  "surrogat"
+    t.boolean  "geographic_horizon"
+    t.boolean  "setting"
+    t.integer  "user_id"
   end
 
   add_index "fragments", ["creation_id"], :name => "index_fragments_on_creation_id"
+  add_index "fragments", ["user_id"], :name => "index_fragments_on_user_id"
 
   create_table "genres", :force => true do |t|
     t.string   "title"
@@ -52,6 +64,16 @@ ActiveRecord::Schema.define(:version => 20120417173438) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "gpscoordsets", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "lat",         :precision => 15, :scale => 12
+    t.decimal  "long",        :precision => 15, :scale => 12
+    t.integer  "fragment_id"
+  end
+
+  add_index "gpscoordsets", ["fragment_id"], :name => "index_gpscoordsets_on_fragment_id"
 
   create_table "rs_author_creations", :force => true do |t|
     t.datetime "created_at"

@@ -8,10 +8,10 @@ class Genre < ActiveRecord::Base
     timestamps
   end
 
-  has_many :rs_creation_genres, :dependent => :destroy
+  has_many :rs_creation_genres, :dependent => :destroy, :inverse_of => :genre
   has_many :creations, :through => :rs_creation_genres, :accessible => :true
 
-
+  #children :creations
 
 
   # --- Permissions --- #
