@@ -117,7 +117,32 @@ end %>
         }
         ]
     });
-});
+
+    // http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
+    var debounce = function (func, threshold) {
+      var timeout;
+      return function debounced () {
+        var obj = this, args = arguments;
+        function delayed () {
+          func.apply(obj, args);
+          timeout = null;
+        };
+
+        if (timeout) clearTimeout(timeout);
+
+        timeout = setTimeout(delayed, threshold || 100);
+      };
+    }
+
+
+    tm.timeline.getBand(0).addOnScrollListener(debounce(function(band) {
+      $("#date_start").datepicker("setDate", band.getMinVisibleDate());
+      $("#date_end").datepicker("setDate", band.getMaxVisibleDate());
+      $("#date-filter-form").submit();
+    }, 200));
+
+})
+
 
     </script>
 
@@ -139,14 +164,20 @@ end %>
      </div>
 <section class="content-body">
 
-<do with="&@books">
-<table-plus fields="this,authors,published_at,fragments_count">
-<published-at-heading-link:>Year</published-at-heading-link:>
-          <published-at-view:><%= this.year %></published-at-view:>
-<fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
-        </table-plus>
-</do>
-    </section>
+  <form id="date-filter-form" action="&request.path" method="get" update="books-table">
+    filter from: <datepicker name="date_start" with="&@date_start"/> to: <datepicker name="date_end" with="&@date_end"/>
+    <submit/>
+  </form>
+  <do part="books-table">
+    <do with="&@books">
+      <table-plus fields="this,authors,published_at,fragments_count">
+        <published-at-heading-link:>Year</published-at-heading-link:>
+        <published-at-view:><%= this.year %></published-at-view:>
+        <fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
+      </table-plus>
+    </do>
+  </do>
+</section>
 </content:>
 
 </page>

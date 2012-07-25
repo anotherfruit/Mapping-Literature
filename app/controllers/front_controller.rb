@@ -24,13 +24,26 @@ class FrontController < ApplicationController
 
   def index
     @fragments = Fragment.find(:all)
+    if params[:date_start]
+      @date_start = Date.parse(params[:date_start])
+    else
+      @date_start = Date.new(1800,1,1)
+    end
+    if params[:date_end]
+      @date_end = Date.parse(params[:date_end])
+    else
+      @date_end = Date.today
+    end
+    Rails.logger.info @date_end
     @books = Creation.include(:authors)
     @books = @books.search([params[:search], "authors.first_name",
                             "authors.last_name", "creations.title"]) if params[:search]
+    @books = @books.where("creations.published_at > ? AND creations.published_at < ?", @date_start, @date_end)
     @books = @books.order(parse_sort_param({:title =>
                                                 "creations.title", :authors => "authors.last_name", :published_at =>
         "creations.published_at", :fragments_count =>
-        "creations.fragments _count"})) if params[:sort]
+                                             "creations.fragments _count"})) if params[:sort]
+    hobo_ajax_response if request.xhr?
   end
 
   def summary
