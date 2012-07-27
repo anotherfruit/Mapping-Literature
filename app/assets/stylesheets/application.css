@@ -5,9 +5,6 @@
  * subsites.
  *
  *= require_self
- *= require hobo_rapid
- *= require hobo_jquery
- *= require hobo_jquery_ui
  *= require_tree ./application
 */
 

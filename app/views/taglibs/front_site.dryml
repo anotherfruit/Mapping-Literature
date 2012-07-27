@@ -13,7 +13,8 @@
 <include src="taglibs/auto/rapid/forms"/>
 
 <%# The default Hobo theme %>
-<include gem='hobo_clean'/>
+<include gem='hobo_bootstrap'/>
+
 
 <extend tag="form" for="Author">
   <old-form merge>

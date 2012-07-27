@@ -8,13 +8,9 @@
 // the the compiled file.
 //
 //= require application
-//
-// The default Hobo theme
-//= require hobo_clean
+//= require bootstrap-collapse
 //= require_tree ./front
 
-<script type="text/javascript">
-$(document).ready(function(){
-    initialize();
-    });
-</script>
+// $(document).ready(function(){
+//     initialize();
+//     });

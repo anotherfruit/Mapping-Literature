@@ -17,8 +17,6 @@ GIT
       hobo_fields (= 1.4.0.pre7)
       hobo_support (= 1.4.0.pre7)
       will_paginate (~> 3.0.0)
-    hobo_clean (1.4.0.pre7)
-      hobo (= 1.4.0.pre7)
     hobo_fields (1.4.0.pre7)
       hobo_support (= 1.4.0.pre7)
     hobo_jquery (1.4.0.pre7)
@@ -32,6 +30,19 @@ GIT
       hobo (= 1.4.0.pre7)
     hobo_support (1.4.0.pre7)
       rails (~> 3.2.0)
+
+GIT
+  remote: http://github.com/wyuenho/compass-twitter-bootstrap
+  revision: a05019a303531d92b9e6a7cf2c7dfca980f67e27
+  specs:
+    compass_twitter_bootstrap (2.0.4)
+      compass
+
+PATH
+  remote: /work/hobo_bootstrap
+  specs:
+    hobo_bootstrap (1.4.0.pre6)
+      hobo (~> 1.4.0.pre6)
 
 GEM
   remote: http://rubygems.org/
@@ -67,6 +78,7 @@ GEM
     ansi (1.4.3)
     arel (3.0.2)
     builder (3.0.0)
+    chunky_png (1.2.5)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -74,9 +86,16 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    compass-rails (1.0.3)
+      compass (>= 0.12.2, < 0.14)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    fssm (0.2.9)
     geocoder (1.1.2)
     hike (1.2.1)
     httparty (0.8.3)
@@ -161,10 +180,12 @@ PLATFORMS
 DEPENDENCIES
   acts_as_list
   coffee-rails (~> 3.2.1)
+  compass-rails
+  compass_twitter_bootstrap!
   dryml!
   geocoder
   hobo!
-  hobo_clean!
+  hobo_bootstrap!
   hobo_fields!
   hobo_jquery!
   hobo_jquery_ui!

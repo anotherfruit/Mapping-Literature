@@ -23,6 +23,9 @@ group :assets do
   gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+
+  gem 'compass_twitter_bootstrap', :git => 'http://github.com/wyuenho/compass-twitter-bootstrap'
+  gem 'compass-rails'
 end
 
 gem 'jquery-rails'
@@ -52,7 +55,10 @@ gem "hobo_rapid", :git => "git://github.com/tablatom/hobo.git", :branch => "rail
 gem "hobo_jquery", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
 gem "hobo_jquery_ui", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
 # The default Hobo theme
-gem "hobo_clean", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
+# gem "hobo_clean", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
+
+gem "hobo_bootstrap", :path => "/work/hobo_bootstrap"
+# gem "hobo_bootstrap", :git => "git://github.com/bryanlarsen/hobo_bootstrap.git"
 
 
 # gem "hobo_support", :path => "/work/hobo32"

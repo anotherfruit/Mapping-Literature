@@ -5,10 +5,14 @@
  * will be included.
  *
  *= require_self
- *
- * The default Hobo theme
- *= require hobo_clean
+ *= require hobo_rapid
+ *= require hobo_jquery
+ *= require hobo_jquery_ui
  *= require jquery-ui/redmond
  *= require application
+ *= require hobo_bootstrap
+ *= require hobo_bootstrap_docs
+ *= require hobo_bootstrap_responsive
  *= require_tree ./front
 */
+@import "compass_twitter_bootstrap";
