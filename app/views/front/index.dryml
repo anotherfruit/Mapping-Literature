@@ -18,83 +18,14 @@ $(function() {
             eventIconPath: "/assets/timemap/"
         },
         datasets: [
-            {
+            <%=raw({
                 type: "basic",
                 options: {
-                    items: [
-                        <% @fragments.each do |fragment|
-                            if (fragment.gpscoordsets.count>0)
-                            case fragment.shape
-                            when "way"       %>
-
-                        {
-                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
-                            placemarks: [
-                                {
-                                    polyline: [
-                                <% fragment.gpscoordsets.each do |gpscoordset| %>
-                                        {lat: <%=gpscoordset.lat%>, lon: <%=gpscoordset.long%>},
-                                <% end %>
-                                    ],
-                                },
-                                <% fragment.gpscoordsets.each do |gpscoordset| %>
-                                {
-                                    point: {
-                                        lat: <%=gpscoordset.lat%>,
-    lon: <%=gpscoordset.long%>
-                                    }
-                                },
-                                <% end %>
-                            ],
-                            title : "<%=fragment.creation%> - <%=fragment%>",
-                            options : {
-                                description: "<br/>&quot;I'm a fragment that outlines a way&quot;<br/><br/>" + "<%=raw("<a href='"+ (url_for fragment) +"'>Link to Fragment</a>")%>" + "<br/>" + "<%=raw("<a href='"+ (url_for fragment.creation) +"'>Link to Book</a>")%>",
-                                theme: "red"
-                            }
-                        },
-                        <% when "multipoint" %>
-                        {
-                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
-                            placemarks: [
-                                <% fragment.gpscoordsets.each do |gpscoordset| %>
-                                {
-                                    point: {
-                                        lat: <%=gpscoordset.lat%>,
-                                        lon: <%=gpscoordset.long%>
-                                    }
-                                },
-                                <% end %>
-                            ],
-                            title : "<%=fragment.creation%> - <%=fragment%>",
-                            options : {
-                                description: "<br/>&quot;I'm a (multi-)point fragment that outlines a horizon&quot;<br/><br/>" + "<%=raw("<a href='"+ (url_for fragment) +"'>Link to Fragment</a>")%>" + "<br/>" + "<%=raw("<a href='"+ (url_for fragment.creation) +"'>Link to Book</a>")%>",
-                                theme: "blue"
-                            }
-                        },
-                    <%  when "space" %>
-                        {
-                            start : "<%=fragment.creation.first_published_at.strftime("%Y-%m-%d")%>",
-                            polygon : [
-                                <% fragment.gpscoordsets.each do |gpscoordset| %>
-                                {lat: <%=gpscoordset.lat%>, lon: <%=gpscoordset.long%>},
-                                <% end %>
-                            ],
-                            title : "<%=fragment.creation%> - <%=fragment%>",
-                            options : {
-                                description: "<br/>&quot;I'm a fragment, outlining space!&quot;<br/><br/>" + "<%=raw("<a href='"+ (url_for fragment) +"'>Link to Fragment</a>")%>" + "<br/>" + "<%=raw("<a href='"+ (url_for fragment.creation) +"'>Link to Book</a>")%>",
-                                theme: "orange"
-                            }
-                        },
-  <%
-else
-  puts "You just making it up!"
-end %>
-<% end %>
-                        <% end %>
-
-                    ]
+                    items: @fragments.map do |fragment|
+                          fragment_timemap_data(fragment)
+                    end
                 }
-            }
+            }.to_json)%>
         ],
         bandInfo: [
         {
