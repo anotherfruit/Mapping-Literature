@@ -9,6 +9,11 @@
 //
 //= require application
 //= require bootstrap-collapse
+//= require timemap/timeline-1.2
+//= require timemap/timemap
+//= require timemap/param
+//= require timemap/loaders/xml
+//= require timemap/loaders/georss
 //= require_tree ./front
 
 // $(document).ready(function(){

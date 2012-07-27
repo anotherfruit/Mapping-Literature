@@ -1,15 +1,10 @@
 <page title="Home">
 
-<append-scripts:>
-<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyCeedViMXkTJ95shxIsmEiRyi5AuDGyLHA" type="text/javascript"></script>
-<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/mxn/mxn.js?(google)"></script>
-<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/lib/timeline-1.2.js"></script>
-<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/timemap.js"></script>
+  <scripts: replace>
+      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyChYb5-wdAVaDZAuTIxmPdTF0s3X2JOR5A&sensor=false"></script>
+    <script src="/mxn/mxn.js?(googlev3)" type="text/javascript"></script>
 
-<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/param.js"></script>
-<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/xml.js"></script>
-<script type="text/javascript" src="http://mappingliterature.metaspots.net/wp-content/playground/timemap.2.0.1/src/loaders/georss.js"></script>
-
+    <scripts restore/>
 <script type="text/javascript">
 
 var tm;
@@ -146,7 +141,9 @@ end %>
 
     </script>
 
-  </append-scripts:>
+  </scripts:>
+
+
   <body: class="front-page"/>
 
 <content:>
@@ -174,6 +171,7 @@ end %>
         <published-at-heading-link:>Year</published-at-heading-link:>
         <published-at-view:><%= this.year %></published-at-view:>
         <fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
+        <table: class="table table-striped table-bordered"/>
       </table-plus>
     </do>
   </do>
