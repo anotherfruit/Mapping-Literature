@@ -10,6 +10,8 @@
 var tm;
 $(function() {
 
+    var initialLoad = true;
+
     tm = TimeMap.init({
         mapId: "map",               // Id of map div element (required)
         timelineId: "timeline",     // Id of timeline div element (required)
@@ -64,8 +66,27 @@ $(function() {
     tm.timeline.getBand(0).addOnScrollListener(debounce(function(band) {
       $("#date_start").datepicker("setDate", band.getMinVisibleDate());
       $("#date_end").datepicker("setDate", band.getMaxVisibleDate());
-      $("#date-filter-form").submit();
+      if(!$("#lock_map").prop("checked")) tm.map.autoCenterAndZoom(true);
+      else $("#filter-form").submit();
+      // tm.map.load gets called after map is centred, which will submit the form.
     }, 200));
+
+    tm.map.autoCenterAndZoom(true);
+
+    function updateMapFilter(event_name, event_source, event_args) {
+      var bounds = tm.map.getBounds();
+      $("#ne_lat").val(bounds.getNorthEast().lat);
+      $("#ne_lon").val(bounds.getNorthEast().lon);
+      $("#sw_lat").val(bounds.getSouthWest().lat);
+      $("#sw_lon").val(bounds.getSouthWest().lon);
+      if(!initialLoad) $("#filter-form").submit();
+    }
+
+    tm.map.load.addHandler(updateMapFilter);
+    tm.map.changeZoom.addHandler(debounce(updateMapFilter));
+    tm.map.endPan.addHandler(debounce(updateMapFilter));
+
+    initialLoad = false;
 
 })
 
@@ -92,15 +113,25 @@ $(function() {
      </div>
 <section class="content-body">
 
-  <form id="date-filter-form" action="&request.path" method="get" update="books-table">
-    filter from: <datepicker name="date_start" with="&@date_start"/> to: <datepicker name="date_end" with="&@date_end"/>
-    <submit/>
+  <form id="filter-form" action="&request.path" method="get" update="books-table">
+    date filter: <datepicker name="date_start" with="&@date_start"/> to: <datepicker name="date_end" with="&@date_end"/>
+    <br/>
+    map filter:
+    <input type="text" name="sw_lat" id="sw_lat" with="&@sw_lat"/>
+    <input type="text" name="sw_lon" id="sw_lon" with="&@sw_lon"/>
+    <input type="text" name="ne_lat" id="ne_lat" with="&@ne_lat"/>
+    <input type="text" name="ne_lon" id="ne_lon" with="&@ne_lon"/>
+    <br/>
+    <submit label="filter"/>
   </form>
+
+  <input type="checkbox" name="lock_map" id="lock_map"/><label for="lock_map">Lock Map</label>
+
   <do part="books-table">
     <do with="&@books">
-      <table-plus fields="this,authors,published_at,fragments_count">
-        <published-at-heading-link:>Year</published-at-heading-link:>
-        <published-at-view:><%= this.year %></published-at-view:>
+      <table-plus fields="this,authors,first_published_at,fragments_count">
+        <first-published-at-heading-link:>Year</first-published-at-heading-link:>
+        <first-published-at-view:><%= this.year %></first-published-at-view:>
         <fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
         <table: class="table table-striped table-bordered"/>
       </table-plus>

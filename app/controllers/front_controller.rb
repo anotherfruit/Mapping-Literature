@@ -24,24 +24,33 @@ class FrontController < ApplicationController
 
   def index
     @fragments = Fragment.find(:all)
-    if params[:date_start]
+    @books = Creation.includes(:authors)
+
+    unless params[:date_start].blank?
       @date_start = Date.parse(params[:date_start])
     else
       @date_start = Date.new(1800,1,1)
     end
-    if params[:date_end]
+    unless params[:date_end].blank?
       @date_end = Date.parse(params[:date_end])
     else
       @date_end = Date.today
     end
-    Rails.logger.info @date_end
-    @books = Creation.include(:authors)
+
+    unless params[:sw_lat].blank? || params[:sw_lon].blank? || params[:ne_lat].blank? || params[:ne_lon].blank?
+      @sw_lat = params[:sw_lat]
+      @sw_lon = params[:sw_lon]
+      @ne_lat = params[:ne_lat]
+      @ne_lon = params[:ne_lon]
+      @books = @books.includes(:fragments => :gpscoordsets).where("gpscoordsets.lat > ? AND gpscoordsets.long > ? AND gpscoordsets.lat < ? AND gpscoordsets.long < ?", @sw_lat, @sw_lon, @ne_lat, @ne_lon)
+    end
+
     @books = @books.search([params[:search], "authors.first_name",
                             "authors.last_name", "creations.title"]) if params[:search]
-    @books = @books.where("creations.published_at > ? AND creations.published_at < ?", @date_start, @date_end)
+    @books = @books.where("creations.first_published_at > ? AND creations.first_published_at < ?", @date_start, @date_end)
     @books = @books.order(parse_sort_param({:title =>
-                                                "creations.title", :authors => "authors.last_name", :published_at =>
-        "creations.published_at", :fragments_count =>
+                                                "creations.title", :authors => "authors.last_name", :first_published_at =>
+        "creations.first_published_at", :fragments_count =>
                                              "creations.fragments _count"})) if params[:sort]
     hobo_ajax_response if request.xhr?
   end
