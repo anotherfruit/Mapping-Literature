@@ -770,7 +770,7 @@ Mapstraction.prototype.removeAllPolylines = function() {
  * autoCenterAndZoom sets the center and zoom of the map to the smallest bounding box
  * containing all markers
  */
-Mapstraction.prototype.autoCenterAndZoom = function() {
+Mapstraction.prototype.autoCenterAndZoom = function(ignoreHiddenMarkers) {
 	var lat_max = -90;
 	var lat_min = 90;
 	var lon_max = -180;
@@ -793,13 +793,13 @@ Mapstraction.prototype.autoCenterAndZoom = function() {
 	for (var i = 0; i < this.markers.length; i++) {
 		lat = this.markers[i].location.lat;
 		lon = this.markers[i].location.lon;
-		checkMinMax();
+	        if(!(ignoreHiddenMarkers && this.markers[i].isHidden())) checkMinMax();
 	}
 	for(i = 0; i < this.polylines.length; i++) {
 		for (var j = 0; j < this.polylines[i].points.length; j++) {
 			lat = this.polylines[i].points[j].lat;
 			lon = this.polylines[i].points[j].lon;
-			checkMinMax();
+			if(!(ignoreHiddenMarkers && this.markers[i].isHidden())) checkMinMax();
 		}
 	}
 	this.setBounds( new BoundingBox(lat_min, lon_min, lat_max, lon_max) );
