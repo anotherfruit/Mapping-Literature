@@ -23,7 +23,9 @@ module FragmentsHelper
           title: "#{fragment.creation} - #{fragment.to_s}",
           options: {
             description: "<br/>&quot;I'm a fragment that outlines a way&quot;<br/><br/>#{link_to 'Link to Fragment', fragment}<br/>#{link_to 'Link to Book', fragment}",
-            theme: "red"
+            theme: "red",
+            fragmentId: fragment.id,
+            creationId: fragment.creation.id
           }
         }
       when "multipoint"
@@ -40,7 +42,9 @@ module FragmentsHelper
           title: "#{fragment.creation} - #{fragment.to_s}",
           options: {
             description: "<br/>&quot;I'm a multi-point fragment that outlines a horizon&quot;<br/><br/>#{link_to 'Link to Fragment', fragment}<br/>#{link_to 'Link to Book', fragment}",
-            theme: "blue"
+            theme: "blue",
+            fragmentId: fragment.id,
+            creationId: fragment.creation.id
           }
         }
       when "space"
@@ -55,7 +59,9 @@ module FragmentsHelper
           title: "#{fragment.creation} - #{fragment.to_s}",
           options: {
             description: "<br/>&quot;I'm a fragment outlining space!&quot;<br/><br/>#{link_to 'Link to Fragment', fragment}<br/>#{link_to 'Link to Book', fragment}",
-            theme: "orange"
+            theme: "orange",
+            fragmentId: fragment.id,
+            creationId: fragment.creation.id
           }
         }
       end

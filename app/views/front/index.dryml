@@ -6,90 +6,17 @@
 
     <scripts restore/>
 <script type="text/javascript">
-
 var tm;
 $(function() {
-
-    var initialLoad = true;
-
-    tm = TimeMap.init({
-        mapId: "map",               // Id of map div element (required)
-        timelineId: "timeline",     // Id of timeline div element (required)
-        options: {
-            mapType: "physical",
-            eventIconPath: "/assets/timemap/"
-        },
-        datasets: [
-            <%=raw({
+    front_index_on_load(<%=raw({
                 type: "basic",
                 options: {
-                    items: @fragments.map do |fragment|
+                    items: @all_books.*.fragments.flatten.map do |fragment|
                           fragment_timemap_data(fragment)
                     end
                 }
-            }.to_json)%>
-        ],
-        bandInfo: [
-        {
-            width:          "85%",
-            intervalUnit:   Timeline.DateTime.DECADE,
-            intervalPixels: 210
-        },
-        {
-            width:          "15%",
-            intervalUnit:   Timeline.DateTime.CENTURY,
-            intervalPixels: 150,
-            showEventText:  false,
-            trackHeight:    0.2,
-            trackGap:       0.2
-        }
-        ]
-    });
-
-    // http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
-    var debounce = function (func, threshold) {
-      var timeout;
-      return function debounced () {
-        var obj = this, args = arguments;
-        function delayed () {
-          func.apply(obj, args);
-          timeout = null;
-        };
-
-        if (timeout) clearTimeout(timeout);
-
-        timeout = setTimeout(delayed, threshold || 100);
-      };
-    }
-
-
-    tm.timeline.getBand(0).addOnScrollListener(debounce(function(band) {
-      $("#date_start").datepicker("setDate", band.getMinVisibleDate());
-      $("#date_end").datepicker("setDate", band.getMaxVisibleDate());
-      if(!$("#lock_map").prop("checked")) tm.map.autoCenterAndZoom(true);
-      else $("#filter-form").submit();
-      // tm.map.load gets called after map is centred, which will submit the form.
-    }, 200));
-
-    tm.map.autoCenterAndZoom(true);
-
-    function updateMapFilter(event_name, event_source, event_args) {
-      var bounds = tm.map.getBounds();
-      $("#ne_lat").val(bounds.getNorthEast().lat);
-      $("#ne_lon").val(bounds.getNorthEast().lon);
-      $("#sw_lat").val(bounds.getSouthWest().lat);
-      $("#sw_lon").val(bounds.getSouthWest().lon);
-      if(!initialLoad) $("#filter-form").submit();
-    }
-
-    tm.map.load.addHandler(updateMapFilter);
-    tm.map.changeZoom.addHandler(debounce(updateMapFilter));
-    tm.map.endPan.addHandler(debounce(updateMapFilter));
-
-    initialLoad = false;
-
+            }.to_json)%>, '<%= @date_start == Date.new(1800,1,1) ? "earliest" : (@date_start + (@date_end - @date_start)/2).strftime("%Y-%m-%d") %>')
 })
-
 
     </script>
 
@@ -117,19 +44,30 @@ $(function() {
     date filter: <datepicker name="date_start" with="&@date_start"/> to: <datepicker name="date_end" with="&@date_end"/>
     <br/>
     map filter:
-    <input type="text" name="sw_lat" id="sw_lat" with="&@sw_lat"/>
-    <input type="text" name="sw_lon" id="sw_lon" with="&@sw_lon"/>
-    <input type="text" name="ne_lat" id="ne_lat" with="&@ne_lat"/>
-    <input type="text" name="ne_lon" id="ne_lon" with="&@ne_lon"/>
+    <input type="text" name="sw_lat" id="sw_lat" value="&@sw_lat"/>
+    <input type="text" name="sw_lon" id="sw_lon" value="&@sw_lon"/>
+    <input type="text" name="ne_lat" id="ne_lat" value="&@ne_lat"/>
+    <input type="text" name="ne_lon" id="ne_lon" value="&@ne_lon"/>
     <br/>
+    <input type="hidden" name="search" value="&params[:search]"/>
+    <input type="hidden" name="center_map" value="&params[:center_map]=='' ? '' : 'ON'"/>
     <submit label="filter"/>
+    <br/>
   </form>
 
-  <input type="checkbox" name="lock_map" id="lock_map"/><label for="lock_map">Lock Map</label>
 
   <do part="books-table">
     <do with="&@books">
       <table-plus fields="this,authors,first_published_at,fragments_count">
+        <search-filter: class="form-inline">
+          <hidden-fields: skip="page, search, center_map"/>
+          <before-label:>
+            <div>
+              <input type ="hidden" name="center_map" value=""/>
+              <input type="checkbox" name="center_map" id="center_map" checked="&params[:center_map]!=''"/><label for="center_map">Keep map centred</label>
+            </div>
+          </before-label:>
+        </search-filter:>
         <first-published-at-heading-link:>Year</first-published-at-heading-link:>
         <first-published-at-view:><%= this.year %></first-published-at-view:>
         <fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
