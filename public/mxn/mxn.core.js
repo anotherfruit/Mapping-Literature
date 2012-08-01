@@ -795,12 +795,14 @@ Mapstraction.prototype.autoCenterAndZoom = function(ignoreHiddenMarkers) {
 		lon = this.markers[i].location.lon;
 	        if(!(ignoreHiddenMarkers && this.markers[i].isHidden())) checkMinMax();
 	}
-	for(i = 0; i < this.polylines.length; i++) {
+        for(i = 0; i < this.polylines.length; i++) {
+	   if(!(ignoreHiddenMarkers && this.polylines[i].isHidden())) {
 		for (var j = 0; j < this.polylines[i].points.length; j++) {
 			lat = this.polylines[i].points[j].lat;
 			lon = this.polylines[i].points[j].lon;
-			if(!(ignoreHiddenMarkers && this.markers[i].isHidden())) checkMinMax();
+                        checkMinMax();
 		}
+           }
 	}
 	this.setBounds( new BoundingBox(lat_min, lon_min, lat_max, lon_max) );
 };
