@@ -1,4 +1,4 @@
-<page title="Home">
+<page title="Home" nav-location="top">
 
   <scripts: replace>
       <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyChYb5-wdAVaDZAuTIxmPdTF0s3X2JOR5A&sensor=false"></script>
@@ -40,7 +40,7 @@ $(function() {
      </div>
 <section class="content-body">
 
-  <form id="filter-form" action="&request.path" method="get" update="books-table">
+  <form id="filter-form" action="&request.path" method="get" update="books-table" message="Updating Table..." spinner-at="#filter-form input.submit-button" spinner-options="&{my: 'right center', at: 'left center'}">
     date filter: <datepicker name="date_start" with="&@date_start"/> to: <datepicker name="date_end" with="&@date_end"/>
     <br/>
     map filter:
@@ -59,7 +59,7 @@ $(function() {
   <do part="books-table">
     <do with="&@books">
       <table-plus fields="this,authors,first_published_at,fragments_count">
-        <search-filter: class="form-inline">
+        <search-filter: >
           <hidden-fields: skip="page, search, center_map"/>
           <before-label:>
             <div>
@@ -71,7 +71,6 @@ $(function() {
         <first-published-at-heading-link:>Year</first-published-at-heading-link:>
         <first-published-at-view:><%= this.year %></first-published-at-view:>
         <fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
-        <table: class="table table-striped table-bordered"/>
       </table-plus>
     </do>
   </do>

@@ -39,26 +39,27 @@ gem 'jquery-rails'
 # Deploy with Capistrano
 # gem 'capistrano'
 
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
+group :development do
+  gem 'debugger'
+end
 
 group :test do
   # Pretty printed test output
   gem 'turn', '~> 0.8.3', :require => false
 end
 
-gem "hobo_support", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
-gem "hobo_fields", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
-gem "dryml", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
-gem "hobo", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
-gem "hobo_rapid", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
-gem "hobo_jquery", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
-gem "hobo_jquery_ui", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
+gem "hobo_support", :git => "git://github.com/tablatom/hobo.git"
+gem "hobo_fields", :git => "git://github.com/tablatom/hobo.git"
+gem "dryml", :git => "git://github.com/tablatom/hobo.git"
+gem "hobo", :git => "git://github.com/tablatom/hobo.git"
+gem "hobo_rapid", :git => "git://github.com/tablatom/hobo.git"
+gem "hobo_jquery", :git => "git://github.com/tablatom/hobo.git"
+gem "hobo_jquery_ui", :git => "git://github.com/tablatom/hobo.git"
 # The default Hobo theme
-# gem "hobo_clean", :git => "git://github.com/tablatom/hobo.git", :branch => "rails-3.2"
+gem "hobo_clean", :git => "git://github.com/tablatom/hobo.git"
 
-gem "hobo_bootstrap", :path => "/work/hobo_bootstrap"
-# gem "hobo_bootstrap", :git => "git://github.com/bryanlarsen/hobo_bootstrap.git"
+# gem "hobo_bootstrap", :path => "/work/hobo_bootstrap"
+gem "hobo_bootstrap", :git => "git://github.com/bryanlarsen/hobo_bootstrap.git"
 
 
 # gem "hobo_support", :path => "/work/hobo32"
@@ -68,8 +69,8 @@ gem "hobo_bootstrap", :path => "/work/hobo_bootstrap"
 # gem "hobo_rapid", :path => "/work/hobo32"
 # gem "hobo_jquery", :path => "/work/hobo32"
 # gem "hobo_jquery_ui", :path => "/work/hobo32"
-# # The default Hobo theme
-# gem "hobo_clean", :path => "/work/hobo32"
+# The default Hobo theme
+#gem "hobo_clean", :path => "/work/hobo32"
 
 gem "jquery-ui-themes", "~> 0.0.4"
 
