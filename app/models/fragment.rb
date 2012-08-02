@@ -23,7 +23,7 @@ class Fragment < ActiveRecord::Base
 
   belongs_to :creation, :counter_cache => true
   belongs_to :user, :creator => true
-  has_many :gpscoordsets, :accessible => :true
+  has_many :gpscoordsets, :accessible => :true, :inverse_of => :fragment
   children :gpscoordsets
 
 #  acts_as_gmappable :lat => "lat", :lng => "long", :address =>"gmaps4rails_address", :checker => :prevent_geocoding

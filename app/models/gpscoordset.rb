@@ -8,7 +8,7 @@ class Gpscoordset < ActiveRecord::Base
     long                        :decimal, :precision => 15, :scale => 12
   end
 
-  belongs_to :fragment
+  belongs_to :fragment, :inverse_of => :gpscoordsets
   validates_presence_of :fragment
 
   # --- Permissions --- #

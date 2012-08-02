@@ -30,40 +30,30 @@
 
 <extend tag="form" for ="Fragment">
  <old-form merge>
-   <error-messages param/>
-   <field-list fields="body"/>
-  <div id="floatwrapper" style="margin-bottom:550px;">
-   <div style="float:left;">
-   <field-list fields="page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, shape, creation">
-   </field-list>
+   <field-list: replace>
+     <feckless-fieldset fields="body"/>
+     <div id="floatwrapper" style="margin-bottom:550px;">
+       <div style="float:left;">
+         <feckless-fieldset fields="page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, shape, creation, gpscoordsets">
+         </feckless-fieldset>
 
-   <div id="infoPanel" style="display: none;">
-    <div id="markerStatus"><i>Click and drag the marker.</i></div>
-     <div id="info"></div>
-     <div id="address"></div>
-    </div>
-   </div>
-
-   <div style="float:right;">
-     <div id="timemap">
-       <div id="timelinecontainer">
-          <div id="timeline"></div>
        </div>
-      <div id="mapcontainer">
-          <div id="map"></div>
-      </div>
-     </div>
-   </div>
-  </div>
-<br/>
-<div>
-   <collection:gpscoordsets/>
-</div>
 
-   <div param="actions">
-       <submit label="Save" param/><or-cancel param="cancel"/>
-   </div>
- </old-form>
+       <div style="float:right;">
+         <div id="timemap">
+           <div id="timelinecontainer">
+             <div id="timeline"></div>
+           </div>
+           <div id="mapcontainer">
+             <div id="map"></div>
+           </div>
+         </div>
+       </div>
+     </div>
+     <br/>
+   </field-list:>
+   <actions: style="clear: both;"/>
+  </old-form>
 </extend>
 
 <def tag="card" for="Gpscoordset">
@@ -174,4 +164,15 @@ margin-bottom: 5px;
       <submit label="Save" param/><or-cancel param="cancel"/>
     </div>
  </old-form>
+</extend>
+
+
+<extend tag="page">
+  <old-page merge nav-location="top">
+    <scripts: replace>
+      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyChYb5-wdAVaDZAuTIxmPdTF0s3X2JOR5A&sensor=false"></script>
+      <script src="/mxn/mxn.js?(googlev3)" type="text/javascript"></script>
+      <scripts restore/>
+    </scripts:>
+  </old-page>
 </extend>

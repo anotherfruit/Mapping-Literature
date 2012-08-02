@@ -1,26 +1,26 @@
-<page title="Home" nav-location="top">
+<page title="Home">
 
-  <scripts: replace>
-      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyChYb5-wdAVaDZAuTIxmPdTF0s3X2JOR5A&sensor=false"></script>
-    <script src="/mxn/mxn.js?(googlev3)" type="text/javascript"></script>
-
-    <scripts restore/>
-<script type="text/javascript">
+  <append-scripts:>
+    <script type="text/javascript">
 var tm;
 $(function() {
-    front_index_on_load(<%=raw({
+    tm = ml_map_init(<%=raw({
                 type: "basic",
                 options: {
                     items: @all_books.*.fragments.flatten.map do |fragment|
                           fragment_timemap_data(fragment)
                     end
                 }
-            }.to_json)%>, '<%= @date_start == Date.new(1800,1,1) ? "earliest" : (@date_start + (@date_end - @date_start)/2).strftime("%Y-%m-%d") %>')
+            }.to_json)%>, '<%= @date_start == Date.new(1800,1,1) ? "earliest" : (@date_start + (@date_end - @date_start)/2).strftime("%Y-%m-%d") %>');
+
+    ml_front_index_on_load(tm);
 })
+
+
 
     </script>
 
-  </scripts:>
+  </append-scripts:>
 
 
   <body: class="front-page"/>

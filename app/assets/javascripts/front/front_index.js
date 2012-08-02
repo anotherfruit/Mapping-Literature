@@ -1,8 +1,6 @@
-function front_index_on_load(datasets, scrollTo) {
+function ml_map_init(datasets, scrollTo) {
 
-    var initialLoad = true;
-
-    tm = TimeMap.init({
+    return TimeMap.init({
       mapId: "map",               // Id of map div element (required)
       timelineId: "timeline",     // Id of timeline div element (required)
       options: {
@@ -25,8 +23,13 @@ function front_index_on_load(datasets, scrollTo) {
           trackGap:       0.2
         }
       ],
-      scrollTo: scrollTo
+      scrollTo: scrollTo || 'earliest'
     });
+}
+
+
+function ml_front_index_on_load(tm) {
+    var initialLoad = true;
 
     // http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
     var debounce = function (func, threshold) {
