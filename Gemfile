@@ -79,3 +79,5 @@ gem "will_paginate", :git => "git://github.com/bryanlarsen/will_paginate"
 # The asset pipeline in Rails is really slow in development mode.
 # Hobo has a lot of assets, so speed it up with rails-dev-tweaks
 gem "rails-dev-tweaks", "~> 0.6.1", :group => :development
+
+gem 'yaml_db'
