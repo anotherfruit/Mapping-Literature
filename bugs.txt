@@ -1,0 +1,5 @@
+- the top bar bounces during ajax
+
+- google map icons messed up
+
+- check filter form synchronization
