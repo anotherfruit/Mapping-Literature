@@ -28,7 +28,47 @@ class Fragment < ActiveRecord::Base
 
 #  acts_as_gmappable :lat => "lat", :lng => "long", :address =>"gmaps4rails_address", :checker => :prevent_geocoding
 
-#  acts_as_list :scope => :creation
+  #  acts_as_list :scope => :creation
+
+  def placemarks
+    case shape
+    when "way"
+      [
+       {
+         polyline: gpscoordsets.map do |gpscoordset|
+           {lat: gpscoordset.lat, lon: gpscoordset.long}
+         end
+       }
+      ] + gpscoordsets.map do |gpscoordset|
+        {
+          point: {
+            lat: gpscoordset.lat,
+            lon: gpscoordset.long
+          }
+        }
+      end
+    when "multipoint"
+      gpscoordsets.map do |gpscoordset|
+        {
+          point: {
+            lat: gpscoordset.lat,
+            lon: gpscoordset.long
+          }
+        }
+      end
+    when "space"
+      [ {
+          polygon: gpscoordsets.map do |gpscoordset|
+            {
+              lat: gpscoordset.lat,
+              lon: gpscoordset.long
+            }
+          end
+        } ]
+    else
+      []
+    end
+  end
 
   # --- Permissions --- #
 

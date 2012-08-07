@@ -7,8 +7,8 @@ $(function() {
     tm = ml_map_init(<%=raw({
                 type: "basic",
                 options: {
-                    items: @all_books.*.fragments.flatten.map do |fragment|
-                          fragment_timemap_data(fragment)
+                    items: @all_books.map do |creation|
+                          timemap_data(creation)
                     end
                 }
             }.to_json)%>, '<%= @date_start == Date.new(1800,1,1) ? "earliest" : (@date_start + (@date_end - @date_start)/2).strftime("%Y-%m-%d") %>');
