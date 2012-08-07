@@ -9,7 +9,7 @@ gem 'acts_as_list'
 
 gem 'sqlite3'
 gem 'pg'
-gem 'geocoder'
+gem "activerecord-postgis-adapter"
 
 
 
@@ -81,3 +81,6 @@ gem "will_paginate", :git => "git://github.com/bryanlarsen/will_paginate"
 gem "rails-dev-tweaks", "~> 0.6.1", :group => :development
 
 gem 'yaml_db'
+
+gem 'geocoder'
+gem 'rgeo'

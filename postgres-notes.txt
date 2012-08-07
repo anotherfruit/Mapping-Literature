@@ -1,0 +1,15 @@
+# install postgresql & postgis, etc.
+
+# then:
+
+sudo su - postgres
+psql template1
+create role mapping_literature with createdb superuser login password 'test';
+\q
+rm db/test.sqlite3
+rake db:create
+rake db:migrate
+rake db:data:load
+psql template1
+alter role mapping_literature with nosuperuser;
+\q
