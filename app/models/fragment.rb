@@ -21,10 +21,15 @@ class Fragment < ActiveRecord::Base
     timestamps
   end
 
-  belongs_to :creation, :counter_cache => true
+  belongs_to :creation, :counter_cache => true, :inverse_of => :fragments
   belongs_to :user, :creator => true
-  has_many :gpscoordsets, :accessible => :true, :inverse_of => :fragment
-  children :gpscoordsets
+  has_many :fragment_anchors, :inverse_of => :fragment
+  has_many :anchors, :through => :fragment_anchors, :accessible => :true
+  children :anchors
+
+  # temporary, will be removed once transition to anchors is complete
+  has_many :gpscoordsets, :accessible => :true, :inverse_of => :fragment
+
 
 #  acts_as_gmappable :lat => "lat", :lng => "long", :address =>"gmaps4rails_address", :checker => :prevent_geocoding
 

@@ -176,3 +176,7 @@ margin-bottom: 5px;
     </scripts:>
   </old-page>
 </extend>
+
+<def tag="view" for="Geometry">
+  <%= this.to_s %>
+</def>
