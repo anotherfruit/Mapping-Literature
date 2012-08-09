@@ -1,4 +1,27 @@
-# install postgresql & postgis, etc.
+# save your current data
+
+rake db:data:dump
+
+# install postgresql & postgis per instructions for your operating system
+
+sudo apt-get install python-software-properties
+sudo apt-add-repository ppa:sharpie/for-science
+sudo apt-add-repository ppa:sharpie/postgis-stable
+sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
+sudo apt-get update
+sudo apt-get install postgresql-9.1-postgis2
+sudo apt-get install libgeos-dev libproj-dev proj-bin
+sudo vi /etc/postgresql/9.1/main/pg_hba.conf
+
+change:
+
+local   all             all                                     peer
+
+to:
+
+local   all             all                                     md5
+
+sudo service postgresql restart
 
 # then:
 
@@ -6,10 +29,15 @@ sudo su - postgres
 psql template1
 create role mapping_literature with createdb superuser login password 'test';
 \q
+exit
 rm db/test.sqlite3
 rake db:create
 rake db:migrate
 rake db:data:load
+rake db:migrate:down VERSION=20120808162217
+rake db:migrate
+sudo su - postgres
 psql template1
-alter role mapping_literature with nosuperuser;
+alter role mapping_literature with nosuperuser nocreatedb;
 \q
+exit

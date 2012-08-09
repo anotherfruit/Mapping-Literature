@@ -25,7 +25,8 @@ class HoboMigration20 < ActiveRecord::Migration
       when "way"
         shape = "LINESTRING (#{fragment.gpscoordsets.map{|coord| coord.long.to_s+' '+coord.lat.to_s}.join(',')})"
       else
-        fail "fragment #{fragment.id} does not have a shape!"
+        puts "fragment #{fragment.id} does not have a shape!"
+        next
       end
       a = fragment.anchors.create(:name => "", :shape => shape)
       puts "Failure: #{fragment.id}: #{shape}" if a.shape.blank?
