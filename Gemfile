@@ -9,9 +9,7 @@ gem 'acts_as_list'
 
 gem 'sqlite3'
 gem 'pg'
-gem "activerecord-postgis-adapter"
-
-
+gem "activerecord-postgis-adapter", :git => "git://github.com/BI/activerecord-postgis-adapter"
 
 # Gems used only for assets and not required
 # in production environments by default.
