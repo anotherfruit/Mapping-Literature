@@ -14,6 +14,7 @@
 //= require timemap/param
 //= require timemap/loaders/xml
 //= require timemap/loaders/georss
+//= require hobo_mapstraction
 //= require_tree ./front
 
 // $(document).ready(function(){

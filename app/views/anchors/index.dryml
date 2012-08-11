@@ -1,0 +1,19 @@
+<index-page>
+  <before-top-page-nav:>
+    <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
+      <repeat>
+        <% case this.shape._?.rgeo
+           when RGeo::Feature::Polygon
+           %><mapstraction-polyline points="&this.shape.rgeo.exterior_ring.points.map {|point| [point.latitude, point.longitude]}" closed /><%
+           when RGeo::Feature::MultiPoint
+             this.shape.rgeo.each {|point|
+             %><mapstraction-marker lat="&point.latitude" lon="&point.longitude"/><%
+             }
+           when RGeo::Feature::LineString
+           %><mapstraction-polyline points="&this.shape.rgeo.points.map {|point| [point.latitude, point.longitude]}"/><%
+           end
+        %>
+      </repeat>
+    </mapstraction>
+  </before-top-page-nav:>
+</index-page>

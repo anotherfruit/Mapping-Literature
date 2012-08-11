@@ -7,6 +7,8 @@
 
 <include gem='hobo_jquery_ui'/>
 
+<include gem='hobo_mapstraction'/>
+
 
 <include src="taglibs/auto/admin/rapid/cards"/>
 <include src="taglibs/auto/admin/rapid/pages"/>
