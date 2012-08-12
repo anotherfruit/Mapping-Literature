@@ -179,6 +179,37 @@ margin-bottom: 5px;
   </old-page>
 </extend>
 
-<def tag="view" for="Geometry">
-  <%= this.to_s %>
+<def tag="geo-marker">
+        <% case this._?.rgeo
+           when RGeo::Feature::Polygon
+           %><mapstraction-polyline points="&this.rgeo.exterior_ring.points.map {|point| [point.latitude, point.longitude]}" closed merge/><%
+           when RGeo::Feature::MultiPoint
+             this.rgeo.each_with_index {|point, i|
+             %><mapstraction-marker lat="&point.latitude" lon="&point.longitude" merge/><%
+             }
+           when RGeo::Feature::LineString
+           %><mapstraction-polyline points="&this.rgeo.points.map {|point| [point.latitude, point.longitude]}" merge/><%
+           end
+        %>
 </def>
+
+
+<extend tag="form" for="Anchor">
+  <old-form merge>
+    <before-field-list:>
+      <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
+        <do:shape>
+          <if>
+            <geo-marker click="location.href='#{edit_anchor_path(this_parent)}'"/>
+          </if>
+        </do:shape>
+      </mapstraction>
+      <br/>
+      <p>
+        <repeat:fragments>
+          <a action="edit"><name:creation/></a>
+        </repeat:fragments>
+      </p>
+    </before-field-list:>
+  </old-form>
+</extend>

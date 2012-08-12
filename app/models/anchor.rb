@@ -3,7 +3,7 @@ class Anchor < ActiveRecord::Base
   hobo_model # Don't put anything above this
 
   fields do
-    name     :string
+    name  :string, :null => false
     shape :geometry, :geographic => true, :srid => 4326
     timestamps
   end
@@ -14,24 +14,13 @@ class Anchor < ActiveRecord::Base
   has_many :fragment_anchors, :inverse_of => :anchor
   has_many :fragments, :through => :fragment_anchors
 
-def shape;
-  @attributes_cache['shape'] ||= begin;
-                                      val = begin;
-                                              missing_attribute('shape', caller) unless @attributes.has_key?('shape');
-                                              cast_code = self.class.columns_hash["shape"].type_cast_code('v')
-                                              Rails.logger.debug cast_code
-                                              (v=@attributes['shape']) && eval(cast_code);
-                                            end;
-                                      wrapper_type = self.class.attr_type(:shape);
-                                      Rails.logger.debug wrapper_type
-                                      if HoboFields.can_wrap?(wrapper_type, val);
-                                        wrapper_type.new(val);
-                                      else;
-                                        val;
-                                      end;
-                                    end;;
-end
-  
+  def self.labelled
+    where("name <> ''")
+  end
+
+  def self.unlabelled
+    where("name = ''")
+  end
 
   # --- Permissions --- #
 
