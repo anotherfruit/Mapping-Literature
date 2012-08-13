@@ -12,7 +12,11 @@ class Anchor < ActiveRecord::Base
   set_rgeo_factory_for_column(:shape, RGeo::Geographic.spherical_factory(:srid => 4326))
 
   has_many :fragment_anchors, :inverse_of => :anchor
-  has_many :fragments, :through => :fragment_anchors
+  has_many :fragments, :through => :fragment_anchors, :accessible => true
+
+  def to_s
+    name.blank? ? "anchor #{id}" : name
+  end
 
   def self.labelled
     where("name <> ''")

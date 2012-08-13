@@ -8,7 +8,7 @@
 // the the compiled file.
 //
 //= require application
-//= require bootstrap-collapse
+//= require bootstrap-all
 //= require timemap/timeline-2.3.0
 //= require timemap/timemap
 //= require timemap/param

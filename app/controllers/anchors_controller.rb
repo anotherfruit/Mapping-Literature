@@ -2,8 +2,7 @@ class AnchorsController < ApplicationController
 
   hobo_model_controller
 
-  auto_actions :index, :edit, :update
-  #auto_actions_for :fragment, [:new, :create, :edit, :update]
+  auto_actions :new, :create, :index, :edit, :update
 
   def index
     if params[:type] == 'labelled'

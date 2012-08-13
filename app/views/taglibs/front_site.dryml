@@ -26,6 +26,23 @@
 
 <extend tag="form" for="Creation">
   <old-form merge>
+    <field-list: fields="title, isbn10, isbn13, published_at, first_published_at, publisher, publisher_url, authors, genres, fragments">
+      <authors-view:>
+        <select-many>
+          <item-label:><a action="edit"/></item-label:>
+        </select-many>
+      </authors-view:>
+      <genres-view:>
+        <select-many>
+          <item-label:><a action="edit"/></item-label:>
+        </select-many>
+      </genres-view:>
+      <fragments-view:>
+        <after-submit go-back/>
+        <select-many without-select/>
+         <submit label="New Fragment" onclick="$('input[name=after_submit]').val('#{new_fragment_for_creation_path(:creation_id => this_parent)}'); return true;"/>
+      </fragments-view:>
+    </field-list:>
     <cancel: href="&@creation.authors.first ? creation_path(@creation.authors.first) : creations_path"/>
   </old-form>
 </extend>
@@ -36,35 +53,37 @@
      <feckless-fieldset fields="body"/>
      <div id="floatwrapper" style="margin-bottom:550px;">
        <div style="float:left;">
-         <feckless-fieldset fields="page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, shape, creation, gpscoordsets">
+         <feckless-fieldset fields="creation, page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, anchors">
+           <anchors-view:>
+             <select-many options="&Anchor.labelled"/>
+           </anchors-view:>
+           <creation-view:>
+             <view/>
+           </creation-view:>
          </feckless-fieldset>
 
+         <after-submit uri="&creation_path(this.creation)"/>
+
+         <submit label="New Anchor" onclick="$('input[name=after_submit]').val('#{new_anchor_path(:fragment => this.id)}'); return true;"/>
+
        </div>
 
-       <div style="float:right;">
-         <div id="timemap">
-           <div id="timelinecontainer">
-             <div id="timeline"></div>
-           </div>
-           <div id="mapcontainer">
-             <div id="map"></div>
-           </div>
-         </div>
-       </div>
+      <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
+        <repeat:anchors>
+          <do:shape>
+            <if>
+              <geo-marker/>
+            </if>
+          </do:shape>
+        </repeat:anchors>
+      </mapstraction>
      </div>
      <br/>
    </field-list:>
    <actions: style="clear: both;"/>
+   <cancel: href="&creation_path(this.creation)"/>
   </old-form>
 </extend>
-
-<def tag="card" for="Gpscoordset">
-  <card class="gpscoordset" param="default" merge>
-    <header: param>
-      <h4 param="heading"><a><name/></a> <a action="edit" if="&can_edit?" param="edit-link">- [Edit]</a> </h4>
-    </header:>
-  </card>
-</def>
 
 <def tag="card" for="Fragment">
   <card class="fragment" param="default" merge>
@@ -73,103 +92,7 @@
     </header:>
   </card>
 </def>
-
-<extend tag="form" for ="Gpscoordset">
- <old-form merge>
-   <error-messages param/>
-   <script type="text/javascript">
-$(document).ready(function(){
-   initialize();
-   collectAndAddMarkers();
-});
-
-    function addBlackMarker(location) {
-    var pinColor = "000000";
-    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter<%=raw"&"%>chld=%E2%80%A2|" + pinColor,
-        new google.maps.Size(21, 34),
-        new google.maps.Point(0,0),
-        new google.maps.Point(10, 34));
-    var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-        new google.maps.Size(40, 37),
-        new google.maps.Point(0, 0),
-        new google.maps.Point(12, 35));
-
-        marker = new google.maps.Marker({
-            position: location,
-            map: map,
-            icon: pinImage,
-            shadow: pinShadow
-        });
-    }
-
-    function addMarker(location) {
-        var pinColor = "CCCCCC";
-        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter<%=raw"&"%>chld=%E2%80%A2|" + pinColor,
-          new google.maps.Size(21, 34),
-          new google.maps.Point(0,0),
-          new google.maps.Point(10, 34));
-        var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-          new google.maps.Size(40, 37),
-          new google.maps.Point(0, 0),
-          new google.maps.Point(12, 35));
-        marker = new google.maps.Marker({
-            position: location,
-            map: map,
-            icon: pinImage,
-            shadow: pinShadow
-        });
-    }
-
-    function collectAndAddMarkers() {
-          <%
-          coords = this.fragment.gpscoordsets.find(:all)
-          coords.each do |coord|
-          %>
-           coordlatlong = new google.maps.LatLng(<%=coord.lat%>,<%=coord.long%>);
-           addMarker(coordlatlong);
-          <% end %>
-          <% if (this.lat != nil && this.long != nil) %>
-          coordlatlong = new google.maps.LatLng(<%=this.lat%>,<%=this.long%>);
-           addBlackMarker(coordlatlong)
-          <% end %>
-    }
-</script>
- <style>
-  #mapCanvas {
-  width: 500px;
-  height: 400px;
-  float: left;
-}
-#infoPanel {
-float: left;
-margin-left: 10px;
-}
-#infoPanel div {
-margin-bottom: 5px;
-}
-</style>
-
-   <div style="float:left;">
-   <field-list fields="lat, long">
-   </field-list>
-  <div>"<%=this.lat.to_s%>"</div>
-   <div id="infoPanel" style="display: none;">
-     <div id="markerStatus"><i>Click and drag the marker.</i></div>
-     <div id="info"></div>
-     <div id="address"></div>
-    </div>
-   </div>
-   <div style="float:right">
-    <div id="mapCanvas"></div>
-   </div>
-    <div param="actions" style="float:left">
-      <submit label="Save" param/><or-cancel param="cancel"/>
-    </div>
- </old-form>
-</extend>
-
-
-<extend tag="page">
+<extend tag="page">
   <old-page merge nav-location="top">
     <scripts: replace>
       <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyChYb5-wdAVaDZAuTIxmPdTF0s3X2JOR5A&sensor=false"></script>
@@ -196,7 +119,7 @@ margin-bottom: 5px;
 
 <extend tag="form" for="Anchor">
   <old-form merge>
-    <before-field-list:>
+    <field-list: replace>
       <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
         <do:shape>
           <if>
@@ -210,6 +133,9 @@ margin-bottom: 5px;
           <a action="edit"><name:creation/></a>
         </repeat:fragments>
       </p>
-    </before-field-list:>
+      <field-list fields="name, shape" param/>
+      <after-submit go-back/>
+    </field-list:>
+    <cancel: href="&session[:previous_uri]"/>
   </old-form>
 </extend>

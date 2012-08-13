@@ -1,18 +1,4 @@
 <edit-page>
-  <append-scripts:>
-    <script type="text/javascript">
-var tm;
-$(function() {
-    tm = ml_map_init(<%=raw({
-                type: "basic",
-                options: {
-                    items: [fragment_timemap_data(@fragment)]
-                }
-            }.to_json)%>);
-});
-    </script>
-  </append-scripts:>
-
 <append-content-body:>
  <style>
   #timemap {
