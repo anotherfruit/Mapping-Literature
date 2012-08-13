@@ -19,13 +19,13 @@
 
 
 <extend tag="form" for="Author">
-  <old-form merge>
+  <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
     <cancel: href="&@author.creations.first ? creation_path(@author.creations.first) : authors_path"/>
   </old-form>
 </extend>
 
 <extend tag="form" for="Creation">
-  <old-form merge>
+  <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
     <field-list: fields="title, isbn10, isbn13, published_at, first_published_at, publisher, publisher_url, authors, genres, fragments">
       <authors-view:>
         <select-many>
@@ -40,7 +40,7 @@
       <fragments-view:>
         <after-submit url="&creations_path"/>
         <select-many without-select/>
-         <submit label="New Fragment" onclick="$('input[name=after_submit]').val('#{new_fragment_for_creation_path(:creation_id => this_parent)}'); return true;"/>
+         <submit label="Save Creation and Add New Fragment" onclick="$('input[name=after_submit]').val('#{new_fragment_for_creation_path(:creation_id => this_parent)}'); return true;"/>
       </fragments-view:>
     </field-list:>
     <cancel: href="&@creation.authors.first ? creation_path(@creation.authors.first) : creations_path"/>
@@ -48,7 +48,7 @@
 </extend>
 
 <extend tag="form" for ="Fragment">
- <old-form merge>
+ <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
    <field-list: replace>
      <feckless-fieldset fields="body"/>
      <div id="floatwrapper" style="margin-bottom:550px;">
@@ -64,7 +64,7 @@
 
          <after-submit uri="&edit_creation_path(this.creation)"/>
 
-         <submit label="New Anchor" onclick="$('input[name=after_submit]').val('#{new_anchor_path(:fragment => this.id || 0)}'); return true;"/>
+         <submit label="Save Fragment and Add New Anchor" onclick="$('input[name=after_submit]').val('#{new_anchor_path(:fragment => this.id || 0)}'); return true;"/>
 
        </div>
 
@@ -118,7 +118,7 @@
 
 
 <extend tag="form" for="Anchor">
-  <old-form merge>
+  <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
     <field-list: replace>
       <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
         <do:shape>
