@@ -38,7 +38,7 @@
         </select-many>
       </genres-view:>
       <fragments-view:>
-        <after-submit go-back/>
+        <after-submit url="&creations_path"/>
         <select-many without-select/>
          <submit label="New Fragment" onclick="$('input[name=after_submit]').val('#{new_fragment_for_creation_path(:creation_id => this_parent)}'); return true;"/>
       </fragments-view:>
@@ -62,9 +62,9 @@
            </creation-view:>
          </feckless-fieldset>
 
-         <after-submit uri="&creation_path(this.creation)"/>
+         <after-submit uri="&edit_creation_path(this.creation)"/>
 
-         <submit label="New Anchor" onclick="$('input[name=after_submit]').val('#{new_anchor_path(:fragment => this.id)}'); return true;"/>
+         <submit label="New Anchor" onclick="$('input[name=after_submit]').val('#{new_anchor_path(:fragment => this.id || 0)}'); return true;"/>
 
        </div>
 
@@ -134,7 +134,7 @@
         </repeat:fragments>
       </p>
       <field-list fields="name, shape" param/>
-      <after-submit go-back/>
+      <after-submit uri="&params[:fragment] ? edit_fragment_path(params[:fragment]) : anchors_path"/>
     </field-list:>
     <cancel: href="&session[:previous_uri]"/>
   </old-form>
