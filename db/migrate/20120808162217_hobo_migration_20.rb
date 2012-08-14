@@ -2,7 +2,7 @@ class HoboMigration20 < ActiveRecord::Migration
   def self.up
     create_table :anchors do |t|
       t.string   :name, :null => false, :default => ""
-      t.geometry :shape, :geographic => true, :srid => 4326
+      t.geometry :shape, :srid => 4326
       t.datetime :created_at
       t.datetime :updated_at
     end

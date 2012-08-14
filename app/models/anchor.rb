@@ -4,12 +4,10 @@ class Anchor < ActiveRecord::Base
 
   fields do
     name  :string, :null => false
-    shape :geometry, :geographic => true, :srid => 4326
+    shape :geometry, :srid => 4326
     timestamps
   end
-  self.rgeo_factory_generator = RGeo::Geos.factory_generator
-  set_rgeo_factory_for_column(:geometry, RGeo::Geographic.spherical_factory(:srid => 4326))
-  set_rgeo_factory_for_column(:shape, RGeo::Geographic.spherical_factory(:srid => 4326))
+  set_rgeo_factory_for_column(:shape, RGeo::Cartesian::Factory.new(:srid => 4326))
 
   has_many :fragment_anchors, :inverse_of => :anchor
   has_many :fragments, :through => :fragment_anchors, :accessible => true
