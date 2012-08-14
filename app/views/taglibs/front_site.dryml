@@ -112,6 +112,8 @@
              }
            when RGeo::Feature::LineString
            %><mapstraction-polyline points="&this.rgeo.points.map {|point| [point.latitude, point.longitude]}" merge/><%
+           else
+             Rails.logger.debug "unsupported shape for anchor #{this_parent.id}"
            end
         %>
 </def>

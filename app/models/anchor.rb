@@ -24,6 +24,47 @@ class Anchor < ActiveRecord::Base
     where("name = ''")
   end
 
+
+  def placemarks
+    case shape._?.rgeo
+    when RGeo::Feature::LineString
+      [
+       {
+         polyline: shape.rgeo.points.map do |point|
+           {lat: point.y, lon: point.x}
+         end
+       }
+      ] + shape.rgeo.points.map do |point|
+        {
+          point: {
+            lat: point.y,
+            lon: point.x
+          }
+        }
+      end
+    when RGeo::Feature::MultiPoint
+      shape.rgeo.map do |point|
+        {
+          point: {
+            lat: point.y,
+            lon: point.x
+          }
+        }
+      end
+    when RGeo::Feature::Polygon
+      [ {
+          polygon: shape.rgeo.exterior_ring.points.map do |point|
+            {
+              lat: point.y,
+              lon: point.x
+            }
+          end
+        } ]
+    else
+      Rails.logger.debug "unsupported shape for anchor #{id}"
+      []
+    end
+  end
   # --- Permissions --- #
 
   def create_permitted?
