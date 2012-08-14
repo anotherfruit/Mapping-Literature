@@ -48,9 +48,10 @@ class FrontController < ApplicationController
       @sw_lon = params[:sw_lon]
       @ne_lat = params[:ne_lat]
       @ne_lon = params[:ne_lon]
-      @books = @books.includes(:fragments => :gpscoordsets).
-        where("gpscoordsets.lat > ? AND gpscoordsets.long > ? AND gpscoordsets.lat < ? AND gpscoordsets.long < ?",
-              @sw_lat, @sw_lon, @ne_lat, @ne_lon)
+
+      factory = Anchor.rgeo_factory_for_column(:shape)
+      window = RGeo::Cartesian::BoundingBox.create_from_points(factory.point(@sw_lon, @sw_lat), factory.point(@ne_lon, @ne_lat))
+      @books = @books.include(:fragments => :anchors).where{anchors.shape.op('&&', window)}.all
     end
 
     unless params[:search].blank?

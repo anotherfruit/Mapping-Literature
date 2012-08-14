@@ -87,3 +87,5 @@ gem "awesome_print"
 
 gem "hobo_mapstraction", :path => "/work/hobo_mapstraction/"
 gem "will_paginate-bootstrap", :git => "git://github.com/nickpad/will_paginate-bootstrap"
+
+gem "squeel"
