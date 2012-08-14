@@ -1,0 +1,9 @@
+<new-page>
+  <form:>
+    <before-actions:>
+      <if test="&params[:fragment]">
+        <input type="hidden" name="#{param_name_for_this}[fragments][]" value="@#{params[:fragment]}"/>
+      </if>
+    </before-actions:>
+  </form:>
+</new-page>
