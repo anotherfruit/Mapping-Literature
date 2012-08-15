@@ -1,12 +1,3 @@
 <index-page>
-  <collection: fields="this, birthdate, creations, #{'actions' if can_view?(this.first)}">
-    <this-view:>
-      <if test="&this.hlink">
-        <a href="&this.hlink"><%= this.name %></a>
-      </if>
-      <else>
-        <%= this.name %>
-      </else>
-    </this-view:>
-  </collection:>
+  <collection: fields="this, birthdate, creations, #{'actions' if can_view?(this.first)}"/>
 </index-page>
