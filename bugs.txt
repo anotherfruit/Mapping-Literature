@@ -10,6 +10,9 @@ TODO:
 
 - mobile home page w/geolocation
 
+- remove gpscoordsets from database etc.
+
 - translation
 
 - shape creation javascript tool (Hiro)
+
