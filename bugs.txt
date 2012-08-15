@@ -16,3 +16,25 @@ TODO:
 
 - shape creation javascript tool (Hiro)
 
+
+-- We'll need a ''real" online version that's not hosted on a machine
+in my flat so it would be great if you could set up a system on the
+amazon infrastructure that Barquin kindly sponsors in early September.
+It doesn't need to be bulletproof.
+
+-- I'll add http://easyrec.org/recommendation-engine to the fragment
+detail view to log what fragments are viewed by users but this is a
+trivial issue. I'm using this over at http://theyshootmusic.at and
+it's a neat out-of-the-box thing that works well.
+
+-- The fragment and the creation detail view will be changed but this
+should only cover the view layer. A useful thing would be a list to
+nearby (space) fragments; that's the only thing I currently can think
+of that's not a view problem.
+
+-- Maybe we can work out something after your holidays to clean up the
+timemap component from an aesthetical point of view. I will discuss
+this with Eduard from k-lab and realize there's not much that can be
+changed easily.
+
+-- simple role & lifecycle system
