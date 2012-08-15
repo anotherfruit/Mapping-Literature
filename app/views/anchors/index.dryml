@@ -1,5 +1,8 @@
 <index-page>
   <content-body:>
+    <a action="new" to="&model">
+      <ht key="anchor.actions.new">New Anchor</ht>
+    </a>
     <filter-menu param-name="type" options="&['labelled', 'unlabelled']"/>
     <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
       <repeat>

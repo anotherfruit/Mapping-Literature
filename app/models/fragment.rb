@@ -6,9 +6,6 @@ class Fragment < ActiveRecord::Base
     body                        :text
     page_nr_start               :integer
     page_nr_end                 :integer
-#    lat                         :decimal, :precision => 15, :scale => 12
-#    long                        :decimal, :precision => 15, :scale => 12
-#    closest_matching_address    :string
     indoor                      :boolean
     outdoor                     :boolean
     immigrant                   :boolean
@@ -30,8 +27,6 @@ class Fragment < ActiveRecord::Base
   # temporary, will be removed once transition to anchors is complete
   has_many :gpscoordsets, :accessible => :true, :inverse_of => :fragment
 
-
-#  acts_as_gmappable :lat => "lat", :lng => "long", :address =>"gmaps4rails_address", :checker => :prevent_geocoding
 
   #  acts_as_list :scope => :creation
 
@@ -91,10 +86,6 @@ class Fragment < ActiveRecord::Base
 
   def view_permitted?(field)
     true
-  end
-
-  def prevent_geocoding
-    address.blank? || (!lat.blank? && !lng.blank?)
   end
 
 end

@@ -141,3 +141,14 @@
     <cancel: href="&session[:previous_uri]"/>
   </old-form>
 </extend>
+
+
+<def tag="main-nav">
+  <navigation class="main-nav" merge-attrs param="default">
+    <nav-item href="#{base_url}/">Home</nav-item>
+    <nav-item with="&Creation"><ht key="creation.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
+    <nav-item with="&Anchor"><ht key="anchor.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
+    <nav-item with="&Author"><ht key="author.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
+    <nav-item with="&Genre"><ht key="genre.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
+  </navigation>
+</def>

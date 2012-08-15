@@ -1,5 +1,21 @@
-<show-page>
-<append-content-body:>
-
-</append-content-body:>
+<show-page without-collection-section>
+  <before-field-list:>
+    <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
+      <repeat:fragments>
+        <% frag = this %>
+        <repeat:anchors>
+          <do:shape>
+            <if>
+              <geo-marker click="location.href='#{fragment_path(frag.id)}'"/>
+            </if>
+          </do:shape>
+        </repeat:anchors>
+      </repeat:fragments>
+    </mapstraction>
+  </before-field-list:>
+  <field-list: fields="isbn10, isbn13, published_at, first_published_at, publisher">
+    <publisher-view:>
+      <a href="&this_parent.publisher_url"><%= this %></a>
+    </publisher-view:>
+  </field-list:>
 </show-page>
