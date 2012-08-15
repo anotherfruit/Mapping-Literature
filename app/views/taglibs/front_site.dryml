@@ -152,3 +152,12 @@
     <nav-item with="&Genre"><ht key="genre.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
   </navigation>
 </def>
+
+<def tag="view" for="Genre">
+  <if test="&this.hlink">
+    <a href="&this.hlink"><%= this.title %></a>
+  </if>
+  <else>
+    <%= this.title %>
+  </else>
+</def>

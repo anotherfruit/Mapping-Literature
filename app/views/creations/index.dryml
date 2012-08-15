@@ -1,0 +1,8 @@
+<index-page>
+  <collection: fields="this, authors, publisher, first_published_at, genres, #{'actions' if can_view?(this.first)}">
+    <publisher-view:>
+      <a href="&this_parent.publisher_url"><%= this %></a>
+    </publisher-view:>
+  </collection:>
+</index-page>
+    

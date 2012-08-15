@@ -1,6 +1,6 @@
 <index-page>
   <content-body:>
-    <a action="new" to="&model">
+    <a action="new" to="&model" class="btn pull-right">
       <ht key="anchor.actions.new">New Anchor</ht>
     </a>
     <filter-menu param-name="type" options="&['labelled', 'unlabelled']"/>
