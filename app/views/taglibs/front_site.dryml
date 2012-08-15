@@ -105,13 +105,13 @@
 <def tag="geo-marker">
         <% case this._?.rgeo
            when RGeo::Feature::Polygon
-           %><mapstraction-polyline points="&this.rgeo.exterior_ring.points.map {|point| [point.latitude, point.longitude]}" closed merge/><%
+           %><mapstraction-polyline points="&this.rgeo.exterior_ring.points.map {|point| [point.y, point.x]}" closed merge/><%
            when RGeo::Feature::MultiPoint
              this.rgeo.each_with_index {|point, i|
-             %><mapstraction-marker lat="&point.latitude" lon="&point.longitude" merge/><%
+             %><mapstraction-marker lat="&point.y" lon="&point.x" merge/><%
              }
            when RGeo::Feature::LineString
-           %><mapstraction-polyline points="&this.rgeo.points.map {|point| [point.latitude, point.longitude]}" merge/><%
+           %><mapstraction-polyline points="&this.rgeo.points.map {|point| [point.y, point.x]}" merge/><%
            else
              Rails.logger.debug "unsupported shape for anchor #{this_parent.id}"
            end
