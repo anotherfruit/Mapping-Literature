@@ -38,7 +38,7 @@
         </select-many>
       </genres-view:>
       <fragments-view:>
-        <after-submit url="&creations_path"/>
+        <after-submit uri="&creations_path"/>
         <select-many without-select/>
          <submit label="Save Creation and Add New Fragment" onclick="$('input[name=after_submit]').val('#{new_fragment_for_creation_path(:creation_id => this_parent)}'); return true;"/>
       </fragments-view:>
