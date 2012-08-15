@@ -1,5 +1,15 @@
-- the top bar bounces during ajax
+TODO:
 
 - google map icons messed up
 
-- check filter form synchronization
+- home page: clicks don't highlight bottom collection
+
+- clean up look of map filter.   (advanced vs simple view?)
+
+- replace most select boxes with autocomplete
+
+- mobile home page w/geolocation
+
+- translation
+
+- shape creation javascript tool (Hiro)
