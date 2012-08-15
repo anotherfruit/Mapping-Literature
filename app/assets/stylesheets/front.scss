@@ -16,6 +16,11 @@
  *= require hobo_mapstraction
  *= require_tree ./front
 */
+
+
+// http://stackoverflow.com/questions/9141249/twitter-bootstrap-css-affecting-google-maps
+#map img {  max-width: none; width: auto; display:inline; }
+
 @import "compass_twitter_bootstrap";
 
 tr.highlight td { background-color: #e0e0e0 !important; }
