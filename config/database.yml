@@ -46,7 +46,11 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: postgis
+  encoding: unicode
+  database: mapping_literature_development
   pool: 5
-  timeout: 5000
+  username: mapping_literature
+  password: test
+  postgis_extension: true
+
