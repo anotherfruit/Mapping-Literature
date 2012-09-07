@@ -1,5 +1,6 @@
 <show-page without-collection-section>
-  <before-field-list:>
+  <field-list: replace>
+
     <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
       <repeat:fragments>
         <% frag = this %>
@@ -12,10 +13,17 @@
         </repeat:anchors>
       </repeat:fragments>
     </mapstraction>
-  </before-field-list:>
-  <field-list: fields="isbn10, isbn13, published_at, first_published_at, publisher, genres">
-    <publisher-view:>
-      <a href="&this_parent.publisher_url"><%= this %></a>
-    </publisher-view:>
+
+    <field-list restore fields="isbn10, isbn13, published_at, first_published_at, publisher, genres">
+      <publisher-view:>
+        <a href="&this_parent.publisher_url"><%= this %></a>
+      </publisher-view:>
+    </field-list>
+
+    <bootstrap-tab-list:fragments active="&this.fragments.first" class="tabs-left">
+      <a:>Page <%= this.page_nr_start==this.page_nr_end ? this.page_nr_start : "#{this.page_nr_start} - #{this.page_nr_end}" %></a:>
+      <body:><%= this.body %></body:>
+    </bootstrap-tab-list:fragments>
+
   </field-list:>
 </show-page>

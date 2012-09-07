@@ -27,6 +27,7 @@ class Fragment < ActiveRecord::Base
   # temporary, will be removed once transition to anchors is complete
   has_many :gpscoordsets, :accessible => :true, :inverse_of => :fragment
 
+  default_scope order("page_nr_start ASC")
 
   #  acts_as_list :scope => :creation
 
