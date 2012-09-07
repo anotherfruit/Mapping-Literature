@@ -96,7 +96,9 @@
   <old-page merge nav-location="top">
     <scripts: replace>
       <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyChYb5-wdAVaDZAuTIxmPdTF0s3X2JOR5A&sensor=false"></script>
+      <javascript name="jquery-min"/>
       <script src="/mxn/mxn.js?(googlev3)" type="text/javascript"></script>
+      <script src="/timeline/timeline-2.3.0.js" type="text/javascript"></script>
       <scripts restore/>
     </scripts:>
   </old-page>

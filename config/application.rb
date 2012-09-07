@@ -14,7 +14,8 @@ module MappingLiterature
   class Application < Rails::Application
   config.i18n.default_locale = :en
   config.assets.precompile += %w(admin.css admin.js)
-  config.assets.precompile += %w(front.css front.js)
+    config.assets.precompile += %w(front.css front.js)
+    config.assets.precompile += %w(jquery-min.js)
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

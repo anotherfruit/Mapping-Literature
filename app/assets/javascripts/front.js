@@ -9,7 +9,6 @@
 //
 //= require application
 //= require bootstrap-all
-//= require timemap/timeline-2.3.0
 //= require timemap/timemap
 //= require timemap/param
 //= require timemap/loaders/xml
