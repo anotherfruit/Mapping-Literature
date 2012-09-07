@@ -54,11 +54,6 @@ class FrontController < ApplicationController
       @books = @books.include(:fragments => :anchors).where{anchors.shape.op('&&', window)}.all
     end
 
-    unless params[:search].blank?
-      @books = @books.search([params[:search], "authors.first_name",
-                              "authors.last_name", "creations.title"])
-    end
-
     unless params[:sort].blank?
       @books = @books.order(parse_sort_param({:title => "creations.title",
                                                :authors => "authors.last_name",
