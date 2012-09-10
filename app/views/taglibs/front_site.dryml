@@ -171,3 +171,9 @@
     <%= this.name %>
   </else>
 </def>
+
+<extend tag="select-many">
+  <combobox tag="select-many">
+    <old-select-many merge/>
+  </combobox>
+</extend>
