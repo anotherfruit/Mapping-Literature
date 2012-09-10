@@ -8,10 +8,7 @@
 // the the compiled file.
 //
 //= require application
-jQuery.fn.ui_button = jQuery.fn.button;
 //= require bootstrap-all
-jQuery.fn.bootstrap_button = jQuery.fn.button;
-if(jQuery.fn.ui_button) jQuery.fn.button = jQuery.fn.ui_button;
 //= require timemap/timemap
 //= require timemap/param
 //= require timemap/loaders/xml
@@ -22,3 +19,4 @@ if(jQuery.fn.ui_button) jQuery.fn.button = jQuery.fn.ui_button;
 // $(document).ready(function(){
 //     initialize();
 //     });
+

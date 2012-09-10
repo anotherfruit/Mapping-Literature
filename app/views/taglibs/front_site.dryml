@@ -39,8 +39,10 @@
       </genres-view:>
       <fragments-view:>
         <after-submit uri="&creations_path"/>
-        <select-many without-select/>
-         <submit label="Save Creation and Add New Fragment" onclick="$('input[name=after_submit]').val('#{new_fragment_for_creation_path(:creation_id => this_parent)}'); return true;"/>
+        <select-many without-select>
+          <item-label:><a action="edit"/></item-label:>
+        </select-many>
+        <submit label="Save Creation and Add New Fragment" onclick="$('input[name=after_submit]').val('#{new_fragment_for_creation_path(:creation_id => this_parent)}'); return true;"/>
       </fragments-view:>
     </field-list:>
     <cancel: href="&@creation.authors.first ? creation_path(@creation.authors.first) : creations_path"/>
@@ -55,7 +57,9 @@
        <div style="float:left;">
          <feckless-fieldset fields="creation, page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, anchors">
            <anchors-view:>
-             <select-many options="&Anchor.labelled"/>
+             <select-many options="&Anchor.labelled">
+               <item-label:><a action="edit"><%= this.name.blank? ? "(unlabelled)" : this.name%></a></item-label:>
+             </select-many>
            </anchors-view:>
            <creation-view:>
              <view/>
