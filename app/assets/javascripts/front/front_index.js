@@ -20,7 +20,8 @@ function ml_map_init(datasets, scrollTo) {
           intervalPixels: 150,
           showEventText:  false,
           trackHeight:    0.2,
-          trackGap:       0.2
+          trackGap:       0.2,
+          eventSource:    null
         }
       ],
       scrollTo: scrollTo || 'earliest'
