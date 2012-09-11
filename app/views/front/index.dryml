@@ -15,67 +15,32 @@ $(function() {
 
     ml_front_index_on_load(tm);
 })
-
-
-
     </script>
-
   </append-scripts:>
 
 
   <body: class="front-page"/>
 
-<content:>
-
-<header class="content-header">
-</header>
+  <content:>
+    <header class="content-header"></header>
 
     <div id="timemap">
-       <div id="timelinecontainer">
-          <div id="timeline"></div>
-</div>
+      <div id="timelinecontainer">
+        <div id="timeline"></div>
+      </div>
       <div id="mapcontainer">
-          <div id="map"></div>
-</div>
-     </div>
-<section class="content-body">
+        <div id="map"></div>
+      </div>
+    </div>
 
-  <form id="filter-form" action="&request.path" method="get" update="books-table" message="Updating Table..." spinner-at="#filter-form input.submit-button" spinner-options="&{my: 'right bottom', at: 'left bottom'}">
-    date filter: <datepicker name="date_start" with="&@date_start"/> to: <datepicker name="date_end" with="&@date_end"/>
-    <br/>
-    map filter:
-    <input type="text" name="sw_lat" id="sw_lat" value="&@sw_lat"/>
-    <input type="text" name="sw_lon" id="sw_lon" value="&@sw_lon"/>
-    <input type="text" name="ne_lat" id="ne_lat" value="&@ne_lat"/>
-    <input type="text" name="ne_lon" id="ne_lon" value="&@ne_lon"/>
-    <br/>
-    <input type="hidden" name="search" value="&params[:search]"/>
-    <input type="hidden" name="center_map" value="&params[:center_map]=='' ? '' : 'ON'"/>
-    <submit label="filter"/>
-    <br/>
-  </form>
+    <section class="content-body">
+      <map-filter-form update="books-table"/>
+      <do part="books-table">
+        <map-filter-table with="&@books"/>
+      </do>
+    </section>
 
-
-  <do part="books-table">
-    <do with="&@books">
-      <table-plus fields="this,authors,first_published_at,fragments_count">
-        <search-filter: >
-          <hidden-fields: skip="page, search, center_map"/>
-          <before-label:>
-            <div>
-              <input type ="hidden" name="center_map" value=""/>
-              <input type="checkbox" name="center_map" id="center_map" checked="&params[:center_map]!=''"/><label for="center_map">Keep map centred</label>
-            </div>
-          </before-label:>
-        </search-filter:>
-        <first-published-at-heading-link:>Year</first-published-at-heading-link:>
-        <first-published-at-view:><%= this.year %></first-published-at-view:>
-        <fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
-      </table-plus>
-    </do>
-  </do>
-</section>
-</content:>
+  </content:>
 
 </page>
 

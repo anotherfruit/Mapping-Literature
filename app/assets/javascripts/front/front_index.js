@@ -28,27 +28,57 @@ function ml_map_init(datasets, scrollTo) {
     });
 }
 
+var ml_initialLoad = true;
 
-function ml_front_index_on_load(tm) {
-    var initialLoad = true;
+// http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
+function debounce (func, threshold) {
+  var timeout;
+  return function debounced () {
+    if(ml_initialLoad) return;
+    var obj = this, args = arguments;
+    function delayed () {
+      func.apply(obj, args);
+      timeout = null;
+    };
 
-    // http://unscriptable.com/2009/03/20/debouncing-javascript-methods/
-    var debounce = function (func, threshold) {
-      var timeout;
-      return function debounced () {
-        if(initialLoad) return;
-        var obj = this, args = arguments;
-        function delayed () {
-          func.apply(obj, args);
-          timeout = null;
-        };
+    if (timeout) clearTimeout(timeout);
 
-        if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(delayed, threshold || 100);
+  };
+}
 
-        timeout = setTimeout(delayed, threshold || 100);
-      };
+function ml_add_map_filter_handlers(map) {
+
+    if($("#center_map").prop("checked")) map.autoCenterAndZoom(true);
+    else {
+      var bb = new mxn.BoundingBox($("#sw_lat").val(), $("#sw_lon").val(), $("#ne_lat").val(), $("#ne_lon").val());
+      if (bb.isEmpty()) map.autoCenterAndZoom(true);
+      else map.setBounds(bb);
     }
 
+    function updateMapFilter(event_name, event_source, event_args) {
+      var bounds = map.getBounds();
+      $("input[name='ne_lat']").val(bounds.getNorthEast().lat);
+      $("input[name='ne_lon']").val(bounds.getNorthEast().lon);
+      $("input[name='sw_lat']").val(bounds.getSouthWest().lat);
+      $("input[name='sw_lon']").val(bounds.getSouthWest().lon);
+      if(!ml_initialLoad) $("#filter-form").submit();
+    }
+
+    map.load.addHandler(function(event_name, event_source, event_args) {
+      updateMapFilter.call(this, event_name, event_source, event_args);
+      ml_initialLoad=false;
+    });
+    map.changeZoom.addHandler(debounce(updateMapFilter));
+    map.endPan.addHandler(debounce(updateMapFilter));
+
+    $("#center_map").change(function() {$("#filter-form input[name='center_map']").val($(this).prop('checked') ? 'on' : "") });
+    $("form.search-form input[name='search']").change(function() {$("#filter-form input[name='search']").val($(this).val())});
+}
+
+
+function ml_front_index_on_load(tm) {
+    ml_add_map_filter_handlers(tm.map);
 
     tm.timeline.getBand(0).addOnScrollListener(debounce(function(band) {
       $("#date_start").datepicker("setDate", band.getMinVisibleDate());
@@ -57,29 +87,6 @@ function ml_front_index_on_load(tm) {
       else $("#filter-form").submit();
       // tm.map.load gets called after map is centred, which will submit the form.
     }, 200));
-
-    if($("#center_map").prop("checked")) tm.map.autoCenterAndZoom(true);
-    else {
-      var bb = new mxn.BoundingBox($("#sw_lat").val(), $("#sw_lon").val(), $("#ne_lat").val(), $("#ne_lon").val());
-      if (bb.isEmpty()) tm.map.autoCenterAndZoom(true);
-      else tm.map.setBounds(bb);
-    }
-
-    function updateMapFilter(event_name, event_source, event_args) {
-      var bounds = tm.map.getBounds();
-      $("input[name='ne_lat']").val(bounds.getNorthEast().lat);
-      $("input[name='ne_lon']").val(bounds.getNorthEast().lon);
-      $("input[name='sw_lat']").val(bounds.getSouthWest().lat);
-      $("input[name='sw_lon']").val(bounds.getSouthWest().lon);
-      if(!initialLoad) $("#filter-form").submit();
-    }
-
-    tm.map.load.addHandler(function(event_name, event_source, event_args) {
-      updateMapFilter.call(this, event_name, event_source, event_args);
-      initialLoad=false;
-    });
-    tm.map.changeZoom.addHandler(debounce(updateMapFilter));
-    tm.map.endPan.addHandler(debounce(updateMapFilter));
 
     function timemapClicked(item) {
       $("tr.creation").removeClass("highlight");
@@ -91,9 +98,6 @@ function ml_front_index_on_load(tm) {
         timemapClicked(event_source.item);
       });
     }
-
-    $("#center_map").change(function() {$("#filter-form input[name='center_map']").val($(this).prop('checked') ? 'on' : "") });
-    $("form.search-form input[name='search']").change(function() {$("#filter-form input[name='search']").val($(this).val())});
 
     tm.timeline.getBand(0).getEventPainter().addOnSelectListener(function(eventID) {
       timemapClicked(tm.timeline.getBand(0).getEventSource().getEvent(eventID).item);

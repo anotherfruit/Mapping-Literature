@@ -1,10 +1,18 @@
 <index-page>
-  <content-body:>
-    <a action="new" to="&model" class="btn pull-right">
+
+  <count:>
+    <count label="labelled anchors" summary/>
+  </count:>
+
+  <prepend-content-header:>
+    <a action="new" to="&Anchor" class="btn pull-right">
       <ht key="anchor.actions.new">New Anchor</ht>
     </a>
-    <filter-menu param-name="type" options="&['labelled', 'unlabelled']"/>
-    <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
+
+  </prepend-content-header:>
+
+  <content-body:>
+    <mapstraction with="&@all_anchors" id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;" setupjs="ml_add_map_filter_handlers(this);">
       <repeat>
         <do:shape>
           <if>
@@ -13,6 +21,19 @@
         </do:shape>
       </repeat>
     </mapstraction>
+
+    <map-filter-form without-date-filter update="anchors-table"/>
+
+    <map-filter-table part="anchors-table" >
+      <table-plus: fields="this, creations, shape_type, actions">
+        <actions-view:>
+          <bootstrap-table-actions/>
+        </actions-view:>
+        <creations-view:>
+          <repeat join=","><a/></repeat>
+        </creations-view:>
+      </table-plus:>
+    </map-filter-table>
 
   </content-body:>
 </index-page>

@@ -65,6 +65,15 @@ class Anchor < ActiveRecord::Base
       []
     end
   end
+
+  def creations
+    fragments.*.creation.sort.uniq
+  end
+
+  def shape_type
+    shape.split(' ',2).first unless shape.nil?
+  end
+
   # --- Permissions --- #
 
   def create_permitted?

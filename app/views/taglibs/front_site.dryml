@@ -181,3 +181,38 @@
     <old-select-many merge/>
   </combobox>
 </extend>
+
+<def tag="map-filter-form">
+  <form id="filter-form" action="&request.path" method="get" message="Updating Table..." spinner-at="#filter-form input.submit-button" spinner-options="&{my: 'right bottom', at: 'left bottom'}" param merge>
+    <div param="date-filter">
+      date filter: <datepicker name="date_start" with="&@date_start"/> to: <datepicker name="date_end" with="&@date_end"/>
+    </div>
+    <div param="map-filter">
+      map filter:
+      <input type="text" name="sw_lat" id="sw_lat" value="&@sw_lat"/>
+      <input type="text" name="sw_lon" id="sw_lon" value="&@sw_lon"/>
+      <input type="text" name="ne_lat" id="ne_lat" value="&@ne_lat"/>
+      <input type="text" name="ne_lon" id="ne_lon" value="&@ne_lon"/>
+    </div>
+    <input type="hidden" name="search" value="&params[:search]"/>
+    <input type="hidden" name="center_map" value="&params[:center_map]=='' ? '' : 'ON'"/>
+    <submit label="filter" param/>
+  </form>
+</def>
+
+<def tag="map-filter-table">
+  <table-plus fields="this,authors,first_published_at,fragments_count" param merge>
+    <search-filter:>
+      <hidden-fields: skip="page, search, center_map"/>
+      <before-label:>
+        <div>
+          <input type ="hidden" name="center_map" value=""/>
+          <input type="checkbox" name="center_map" id="center_map" checked="&params[:center_map]!=''"/><label for="center_map">Keep map centred</label>
+        </div>
+      </before-label:>
+    </search-filter:>
+    <first-published-at-heading-link:>Year</first-published-at-heading-link:>
+    <first-published-at-view:><%= this.year %></first-published-at-view:>
+    <fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
+  </table-plus>
+</def>
