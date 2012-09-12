@@ -1,7 +1,7 @@
 
 class Geometry < String
 
-  COLUMN_TYPE = :geometry
+  COLUMN_TYPE = :spatial
 
   ::HoboFields.register_type("geometry", self)
 
