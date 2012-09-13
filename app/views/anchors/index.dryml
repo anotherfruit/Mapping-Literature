@@ -12,7 +12,7 @@
   </prepend-content-header:>
 
   <content-body:>
-    <mapstraction with="&@all_anchors" id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;" setupjs="ml_add_map_filter_handlers(this);">
+    <mapstraction with="&@all_anchors" id="map" largeControls mapTypeControls style="height: 400px;" setupjs="ml_add_map_filter_handlers(this);">
       <repeat>
         <do:shape>
           <if>

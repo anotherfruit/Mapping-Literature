@@ -28,6 +28,10 @@
   <old-datepicker merge changeMonth changeYear showButtonPanel onClose="datepicker_on_close" yearRange="1800:#{Date.today.year}" />
 </extend>
 
+<extend tag="mapstraction">
+  <old-mapstraction merge api="&session[:map_provider]"/>
+</extend>
+
 <extend tag="form" for="Creation">
   <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
     <field-list: fields="title, isbn10, isbn13, published_at, first_published_at, publisher, publisher_url, authors, genres, fragments">
@@ -76,7 +80,7 @@
 
        </div>
 
-      <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
+      <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
         <repeat:anchors>
           <do:shape>
             <if>
@@ -103,12 +107,29 @@
 <extend tag="page">
   <old-page merge nav-location="top">
     <scripts: replace>
-      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyChYb5-wdAVaDZAuTIxmPdTF0s3X2JOR5A&sensor=false"></script>
+      <if test="&session[:map_provider]=='googlev3'">
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyChYb5-wdAVaDZAuTIxmPdTF0s3X2JOR5A&sensor=false"></script>
+      </if>
+      <if test="&session[:map_provider]=='openlayers'">
+        <script type="text/javascript" src="http://openlayers.org/api/OpenLayers.js"></script>
+      </if>
+      <if test="&session[:map_provider]=='ovi'">
+        <script type="text/javascript" 
+                src="http://api.maps.nokia.com/2.2.3/jsl.js?
+                     with=maps,places,directions,positioning"></script>
+      </if>
       <javascript name="jquery-min"/>
-      <script src="/mxn/mxn.js?(googlev3)" type="text/javascript"></script>
+      <script src="/mxn/mxn.js?(#{session[:map_provider]})" type="text/javascript" param="mxn"></script>
       <script src="/timeline/timeline-2.3.0.js" type="text/javascript"></script>
       <scripts restore/>
     </scripts:>
+    <account-nav:>
+      <prepend-ul:>
+        <li class="nav-item">
+          <select-menu options='&{OpenLayers: "openlayers", Google: "googlev3", Bing: "microsoft7", Nokia: "ovi"}' selected="&session[:map_provider]" class="dev-user-changer" onchange="location.href = location.pathname + '?map_provider=' + encodeURIComponent(this.options[this.selectedIndex].value)"/>
+        </li>
+      </prepend-ul:>
+    </account-nav:>
   </old-page>
 </extend>
 
@@ -132,13 +153,23 @@
 <extend tag="form" for="Anchor">
   <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
     <field-list: replace>
-      <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
+      <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
         <do:shape>
           <if>
-            <geo-marker click="location.href='#{edit_anchor_path(this_parent)}'"/>
+            <geo-marker />
           </if>
         </do:shape>
       </mapstraction>
+      <br/>
+      <div id="toolbar">
+        <a href="#" id="addButtonMultiPoint" class="btn">Add multi point</a>
+        <a href="#" id="addButtonLineString" class="btn">Add line string</a>
+        <a href="#" id="addButtonPolygon" class="btn">Add polygon</a>
+      </div>
+      <ul id="features">
+      </ul>
+      <pre id="log"></pre>
+
       <br/>
       <p>
         <repeat:fragments>

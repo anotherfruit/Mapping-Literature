@@ -1,7 +1,7 @@
 <show-page without-collection-section>
   <field-list: replace>
 
-    <mapstraction id="map" api="googlev3" largeControls mapTypeControls style="height: 400px;">
+    <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
       <repeat:fragments>
         <% frag = this %>
         <repeat:anchors>
