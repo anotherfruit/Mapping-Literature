@@ -24,6 +24,10 @@
   </old-form>
 </extend>
 
+<extend tag="datepicker">
+  <old-datepicker merge changeMonth changeYear showButtonPanel onClose="datepicker_on_close" yearRange="1800:#{Date.today.year}" />
+</extend>
+
 <extend tag="form" for="Creation">
   <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
     <field-list: fields="title, isbn10, isbn13, published_at, first_published_at, publisher, publisher_url, authors, genres, fragments">

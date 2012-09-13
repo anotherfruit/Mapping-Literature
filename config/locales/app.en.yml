@@ -45,3 +45,7 @@ en:
         lat: Latitude of text fragment (use the map)
         long: Longitude of text fragment (use the map)
         closest_matching_address: Closest Matching Address (use the map)
+
+  date:
+    formats:
+      default: "%B %Y"
