@@ -32,6 +32,9 @@
         <creations-view:>
           <repeat join=","><a/></repeat>
         </creations-view:>
+        <this-view:>
+          <a action="edit"/>
+        </this-view:>
       </table-plus:>
     </map-filter-table>
 

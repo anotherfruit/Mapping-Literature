@@ -109,7 +109,8 @@ Number.prototype.mod = function(n) {
                     
                     if (settings.$list != undefined)
                     {
-                        var $anchor = $('<li><a href="#" class="' + settings.anchorClassHide + '">' + settings.anchorLabelHide + '</a><a href="#" class="' + settings.anchorClassSelect + '">' + feature.geometry.type + '</a><a href="#" class="' + settings.anchorClassRemove + '">' + settings.anchorLabelRemove + '</a></li>');
+                        //var $anchor = $('<li><a href="#" class="' + settings.anchorClassHide + '">' + settings.anchorLabelHide + '</a><a href="#" class="' + settings.anchorClassSelect + '">' + feature.geometry.type + '</a><a href="#" class="' + settings.anchorClassRemove + '">' + settings.anchorLabelRemove + '</a></li>');
+                        var $anchor = $('<li><a href="#" class="' + settings.anchorClassHide + '">' + settings.anchorLabelHide + '</a>' + feature.geometry.type + '<a href="#" class="' + settings.anchorClassRemove + '">' + settings.anchorLabelRemove + '</a></li>');
                         // cross-reference
                         $anchor.data("feature", feature);
                         feature.properties.internal.$anchor = $anchor;

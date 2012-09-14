@@ -1,4 +1,5 @@
 <new-page>
+  <mxn: src="/mxn.hiro/mxn.js?(#{session[:map_provider]})" />
   <form:>
     <before-actions:>
       <if test="&params[:fragment]">

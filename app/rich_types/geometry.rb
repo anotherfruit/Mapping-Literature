@@ -16,6 +16,10 @@ class Geometry < String
     end
   end
 
+  def feature_collection_geojson
+    RGeo::GeoJSON.encode(RGeo::GeoJSON::FeatureCollection.new([RGeo::GeoJSON::Feature.new(rgeo)]))
+  end
+
 end
 
 

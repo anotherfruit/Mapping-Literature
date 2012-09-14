@@ -107,11 +107,12 @@
 <extend tag="page">
   <old-page merge nav-location="top">
     <scripts: replace>
+      <%# OpenLayers is used for geojson conversion, so always load %>
+      <script type="text/javascript" src="http://openlayers.org/api/OpenLayers.js"></script>
       <if test="&session[:map_provider]=='googlev3'">
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyChYb5-wdAVaDZAuTIxmPdTF0s3X2JOR5A&sensor=false"></script>
       </if>
       <if test="&session[:map_provider]=='openlayers'">
-        <script type="text/javascript" src="http://openlayers.org/api/OpenLayers.js"></script>
       </if>
       <if test="&session[:map_provider]=='ovi'">
         <script type="text/javascript" 
@@ -125,7 +126,7 @@
     </scripts:>
     <account-nav:>
       <prepend-ul:>
-        <li class="nav-item">
+        <li class="nav-item dev-user-changer">
           <select-menu options='&{OpenLayers: "openlayers", Google: "googlev3", Bing: "microsoft7", Nokia: "ovi"}' selected="&session[:map_provider]" class="dev-user-changer" onchange="location.href = location.pathname + '?map_provider=' + encodeURIComponent(this.options[this.selectedIndex].value)"/>
         </li>
       </prepend-ul:>
@@ -153,18 +154,13 @@
 <extend tag="form" for="Anchor">
   <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
     <field-list: replace>
-      <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
-        <do:shape>
-          <if>
-            <geo-marker />
-          </if>
-        </do:shape>
+      <mapstraction id="map" largeControls mapTypeControls data-collection="#{this.shape._?.feature_collection_geojson.to_json}" style="height: 400px;" setupjs="$('#map').mxnDraw({collection: $('#map').data('collection')}); this.autoCenterAndZoom();   mxnDrawInit.call($('#map'), this);" >
       </mapstraction>
       <br/>
       <div id="toolbar">
-        <a href="#" id="addButtonMultiPoint" class="btn">Add multi point</a>
-        <a href="#" id="addButtonLineString" class="btn">Add line string</a>
-        <a href="#" id="addButtonPolygon" class="btn">Add polygon</a>
+        <a href="#" id="addButtonMultiPoint" class="btn" onclick="mxnDrawHideButtons()">Multi-point</a>
+        <a href="#" id="addButtonLineString" class="btn" onclick="mxnDrawHideButtons()">Line String</a>
+        <a href="#" id="addButtonPolygon" class="btn" onclick="mxnDrawHideButtons()">Polygon</a>
       </div>
       <ul id="features">
       </ul>
@@ -172,13 +168,19 @@
 
       <br/>
       <p>
-        <repeat:fragments>
-          <a action="edit"><name:creation/></a>
-        </repeat:fragments>
       </p>
-      <field-list fields="name, shape" param/>
+      <field-list fields="fragments, name, shape" param>
+        <fragments-label:>Books</fragments-label:>
+        <fragments-view:>
+          <repeat>
+            <a action="edit"><name:creation/></a>
+          </repeat>
+        </fragments-view:>
+        <shape-field: style="display: none;"/>
+      </field-list>
       <after-submit uri="&params[:fragment] ? edit_fragment_path(params[:fragment]) : anchors_path"/>
     </field-list:>
+    <submit: onclick="$('#anchor_shape').val((new OpenLayers.Format.GeoJSON()).read( $('#map').mxnDraw('getCollection'))[0].geometry.toString()); return true;"/>
     <cancel: href="&session[:previous_uri]"/>
   </old-form>
 </extend>
