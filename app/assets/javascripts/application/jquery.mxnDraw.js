@@ -33,14 +33,10 @@ Number.prototype.mod = function(n) {
             $addButtonMarkers: $("#addButtonMultiPoint"),
             $addButtonPolylineOpen: $("#addButtonLineString"),
             $addButtonPolylineClosed: $("#addButtonPolygon"),
-            $updateButton: $("#updateButton"),
             $list: $("#features"),
             $log: $("#log"),
-            
-            mxnApi: "openlayers",
-            mxnControls: {zoom: "small", scale: false},
-            mxnCenter: new mxn.LatLonPoint(48.216814, 16.392118),
-            mxnZoom: 10,
+
+            mapstraction: $self.data('map'),
             addButtonClassActive: "active",
             anchorClassActive: "active",
             anchorClassSelect: "select",
@@ -50,16 +46,16 @@ Number.prototype.mod = function(n) {
             anchorLabelRemove: "Remove",
             anchorLabelHide: "Hide",
             anchorLabelShow: "Show",
-            iconUrl: "../img/marker.png",
+            iconUrl: "/assets/mxnDraw/marker.png",
             iconSize: [12, 12],
             iconAnchor: [6, 6],
-            startIconUrl: "../img/markerA.png",
+            startIconUrl: "/assets/mxnDraw/markerA.png",
             startIconSize: [12, 12],
             startIconAnchor: [6, 0],
-            endIconUrl: "../img/markerB.png",
+            endIconUrl: "/assets/mxnDraw/markerB.png",
             endIconSize: [12, 12],
             endIconAnchor: [6, 12],
-            editIconUrl: "../img/markerEdit.png",
+            editIconUrl: "/assets/mxnDraw/markerEdit.png",
             editIconSize: [12, 12],
             editIconAnchor: [6, 6],
             polylineColor: "#FF0000",
@@ -135,20 +131,20 @@ Number.prototype.mod = function(n) {
                     
                     for (var i = 0; i < myFeature.properties.internal.mxnMarkers.length; i++)
                     {
-                        mapstraction.removeMarker(myFeature.properties.internal.mxnMarkers[i]);
+                        settings.mapstraction.removeMarker(myFeature.properties.internal.mxnMarkers[i]);
                     }
                     
                     if (feature.geometry.type == jsonTypes[types.LINE_STRING] || feature.geometry.type == jsonTypes[types.POLYGON])
                     {
                         for (var i = 0; i < myFeature.properties.internal.mxnEditMarkers.length; i++)
                         {
-                            mapstraction.removeMarker(myFeature.properties.internal.mxnEditMarkers[i]);
+                            settings.mapstraction.removeMarker(myFeature.properties.internal.mxnEditMarkers[i]);
                         }
                     }
                     
                     if (myFeature.properties.internal.mxnPolyline != undefined)
                     {
-                        mapstraction.removePolyline(myFeature.properties.internal.mxnPolyline);
+                        settings.mapstraction.removePolyline(myFeature.properties.internal.mxnPolyline);
                     }
                     
                     myFeature.properties.internal.$anchor.remove();
@@ -175,7 +171,7 @@ Number.prototype.mod = function(n) {
                         
                         if (myFeature.properties.internal.mxnPolyline != undefined)
                         {
-                            mapstraction.removePolyline(myFeature.properties.internal.mxnPolyline);
+                            settings.mapstraction.removePolyline(myFeature.properties.internal.mxnPolyline);
                             delete feature.properties.internal.mxnPolyline;
                         }
                     }
@@ -222,7 +218,7 @@ Number.prototype.mod = function(n) {
                     {
                         methods.selectFeature(marker.getAttribute("feature"));
                         
-                        mapstraction.removeMarker(marker);
+                        settings.mapstraction.removeMarker(marker);
                         var index = $.inArray(marker, feature.properties.internal.mxnMarkers);
                         feature.properties.internal.mxnMarkers.splice(index, 1);
                         
@@ -246,7 +242,7 @@ Number.prototype.mod = function(n) {
                             
                             for (var key in marker.attributes.editMarkers)
                             {
-                                mapstraction.removeMarker(marker.attributes.editMarkers[key]);
+                                settings.mapstraction.removeMarker(marker.attributes.editMarkers[key]);
                                 var editMarkerIndex = $.inArray(marker.attributes.editMarkers[key], feature.properties.internal.mxnEditMarkers);
                                 
                                 if (key == "previous")
@@ -260,7 +256,7 @@ Number.prototype.mod = function(n) {
                             if (feature.properties.internal.mxnEditMarkers.length == 1)
                             {
                                 // update only edit marker to reflect eventual direction change
-                                mapstraction.removeMarker(feature.properties.internal.mxnEditMarkers[0]);
+                                settings.mapstraction.removeMarker(feature.properties.internal.mxnEditMarkers[0]);
                                 feature.properties.internal.mxnEditMarkers.splice($.inArray(feature.properties.internal.mxnEditMarkers[0], feature.properties.internal.mxnEditMarkers), 1);
                                 delete feature.properties.internal.mxnMarkers[0].attributes.editMarkers.previous;
                                 delete feature.properties.internal.mxnMarkers[1].attributes.editMarkers.next;
@@ -296,7 +292,7 @@ Number.prototype.mod = function(n) {
                             // update edit marker positions
                             for (var key in marker.attributes.editMarkers)
                             {
-                                mapstraction.removeMarker(marker.attributes.editMarkers[key]);
+                                settings.mapstraction.removeMarker(marker.attributes.editMarkers[key]);
                                 var index = $.inArray(marker.attributes.editMarkers[key], feature.properties.internal.mxnEditMarkers);
                                 feature.properties.internal.mxnEditMarkers.splice(index, 1);
                                 methods.addEditMarker(marker.attributes.editMarkers[key].attributes.markers.previous, marker.attributes.editMarkers[key].attributes.markers.next, index);
@@ -372,7 +368,7 @@ Number.prototype.mod = function(n) {
                             {
                                 if (feature.geometry.type == jsonTypes[types.POLYGON] && feature.properties.internal.mxnEditMarkers.length > 2)
                                 {
-                                    mapstraction.removeMarker(feature.properties.internal.mxnEditMarkers.pop());
+                                    settings.mapstraction.removeMarker(feature.properties.internal.mxnEditMarkers.pop());
                                 }
                                 
                                 methods.addEditMarker(feature.properties.internal.mxnMarkers[feature.properties.internal.mxnMarkers.length - 2], marker);
@@ -408,7 +404,7 @@ Number.prototype.mod = function(n) {
                     }
                     
                     
-                    mapstraction.addMarker(marker);
+                    settings.mapstraction.addMarker(marker);
                 }
             },
             updateMarker: function(index){
@@ -419,7 +415,7 @@ Number.prototype.mod = function(n) {
                         var markerAttributes = feature.properties.internal.mxnMarkers[index].attributes;
                     }
                     
-                    mapstraction.removeMarker(feature.properties.internal.mxnMarkers[index]);
+                    settings.mapstraction.removeMarker(feature.properties.internal.mxnMarkers[index]);
                     methods.addCoordinate(feature.properties.internal.mxnMarkers[index].location, markerAttributes, index);
                 }
             },
@@ -444,7 +440,7 @@ Number.prototype.mod = function(n) {
                         methods.selectFeature(editMarker.getAttribute("feature"));
                         methods.addCoordinate(editMarker.location, undefined, $.inArray(editMarker.attributes.markers.previous, feature.properties.internal.mxnMarkers) + 1, true);
                         
-                        mapstraction.removeMarker(editMarker);
+                        settings.mapstraction.removeMarker(editMarker);
                         feature.properties.internal.mxnEditMarkers.splice($.inArray(editMarker, feature.properties.internal.mxnEditMarkers), 1);
                     });
                     
@@ -472,7 +468,7 @@ Number.prototype.mod = function(n) {
                     }
                     
                     
-                    mapstraction.addMarker(editMarker);
+                    settings.mapstraction.addMarker(editMarker);
                 }
             },
             drawLine: function() {
@@ -480,7 +476,7 @@ Number.prototype.mod = function(n) {
                 {
                     if (feature.properties.internal.mxnMarkers.length == 0)
                     {
-                        mapstraction.removePolyline(feature.properties.internal.mxnPolyline);
+                        settings.mapstraction.removePolyline(feature.properties.internal.mxnPolyline);
                         delete feature.properties.internal.mxnPolyline;
                     }
                     else if (feature.properties.internal.mxnMarkers.length > 0)
@@ -495,7 +491,7 @@ Number.prototype.mod = function(n) {
                         
                         if (feature.properties.internal.mxnPolyline != undefined)
                         {
-                            mapstraction.removePolyline(feature.properties.internal.mxnPolyline);
+                            settings.mapstraction.removePolyline(feature.properties.internal.mxnPolyline);
                         }
                         
                         // cross-reference
@@ -511,7 +507,7 @@ Number.prototype.mod = function(n) {
                             feature.properties.internal.mxnPolyline.setFillColor(settings.polylineFillColor);
                         }
                         
-                        mapstraction.addPolyline(feature.properties.internal.mxnPolyline);
+                        settings.mapstraction.addPolyline(feature.properties.internal.mxnPolyline);
                     }
                 }
             },
@@ -577,16 +573,10 @@ Number.prototype.mod = function(n) {
             $self.data("mxnDraw-collection", collection);
             
             
-            var mapstraction = new mxn.Mapstraction(settings.$map.attr("id"), settings.mxnApi);
-            
             var $addButtons = [];
             $addButtons[types.MULTI_POINT] = settings.$addButtonMarkers;
             $addButtons[types.LINE_STRING] = settings.$addButtonPolylineOpen;
             $addButtons[types.POLYGON] = settings.$addButtonPolylineClosed;
-            
-            
-            mapstraction.addControls(settings.mxnControls);
-            mapstraction.setCenterAndZoom(settings.mxnCenter, settings.mxnZoom);
             
             
             if (settings.collection != undefined)
@@ -655,7 +645,7 @@ Number.prototype.mod = function(n) {
             
             
             // set up map click handler: create new coordinate
-            mapstraction.click.addHandler(function(eventName, eventSource, eventArgs) {
+            settings.mapstraction.click.addHandler(function(eventName, eventSource, eventArgs) {
                 methods.addCoordinate(eventArgs.location);
             });
         }
