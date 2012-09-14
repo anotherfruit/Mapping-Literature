@@ -62,6 +62,7 @@ Number.prototype.mod = function(n) {
             editIconUrl: "../img/markerEdit.png",
             editIconSize: [12, 12],
             editIconAnchor: [6, 6],
+            multipleFeatures: false,
             polylineColor: "#FF0000",
             polylineFillColor: "#FF0000",
             polylineOpacity: 0.75,
@@ -79,7 +80,7 @@ Number.prototype.mod = function(n) {
         
         var methods = {
             addFeature: function(type) {
-                if ($.inArray(type, types))
+                if ($.inArray(type, types) && (settings.multipleFeatures || collection.features.length < 1))
                 {
                     for (var i = 0; i < $addButtons.length; i++)
                     {
@@ -110,13 +111,21 @@ Number.prototype.mod = function(n) {
                     collection.features.push(feature)
                     
                     
-                    var $anchor = $('<li><a href="#" class="' + settings.anchorClassHide + '">' + settings.anchorLabelHide + '</a><a href="#" class="' + settings.anchorClassSelect + '">' + feature.geometry.type + '</a><a href="#" class="' + settings.anchorClassRemove + '">' + settings.anchorLabelRemove + '</a></li>');
-                    // cross-reference
-                    $anchor.data("feature", feature);
-                    feature.properties.internal.$anchor = $anchor;
-                    settings.$list.append($anchor);
+                    if (settings.$list != undefined)
+                    {
+                        var $anchor = $('<li><a href="#" class="' + settings.anchorClassHide + '">' + settings.anchorLabelHide + '</a><a href="#" class="' + settings.anchorClassSelect + '">' + feature.geometry.type + '</a><a href="#" class="' + settings.anchorClassRemove + '">' + settings.anchorLabelRemove + '</a></li>');
+                        // cross-reference
+                        $anchor.data("feature", feature);
+                        feature.properties.internal.$anchor = $anchor;
+                        settings.$list.append($anchor);
+                    }
+                    
                     
                     methods.selectFeature(feature);
+                }
+                else
+                {
+                    feature = undefined;
                 }
             },
             selectFeature: function(myFeature) {
@@ -124,8 +133,12 @@ Number.prototype.mod = function(n) {
                 {
                     feature = myFeature;
                     
-                    settings.$list.children("li").removeClass(settings.anchorClassActive);
-                    feature.properties.internal.$anchor.addClass(settings.anchorClassActive);
+                    
+                    if (settings.$list != undefined)
+                    {
+                        settings.$list.children("li").removeClass(settings.anchorClassActive);
+                        feature.properties.internal.$anchor.addClass(settings.anchorClassActive);
+                    }
                 }
             },
             removeFeature: function(myFeature) {
@@ -151,7 +164,11 @@ Number.prototype.mod = function(n) {
                         mapstraction.removePolyline(myFeature.properties.internal.mxnPolyline);
                     }
                     
-                    myFeature.properties.internal.$anchor.remove();
+                    if (settings.$list != undefined)
+                    {
+                        myFeature.properties.internal.$anchor.remove();
+                    }
+                    
                     collection.features.splice($.inArray(myFeature, collection.features), 1);
                     feature = undefined;
                 }
@@ -518,14 +535,23 @@ Number.prototype.mod = function(n) {
             updateCollection: function() {
                 for (var i = 0; i < collection.features.length; i++)
                 {
-                    for (var j = 0; j < collection.features[i].properties.internal.mxnMarkers.length; j++)
-                    {
-                        collection.features[i].geometry.coordinates[j] = [collection.features[i].properties.internal.mxnMarkers[j].location.lon, collection.features[i].properties.internal.mxnMarkers[j].location.lat];
-                    }
-                    
                     if (collection.features[i].geometry.type == jsonTypes[types.POLYGON])
                     {
-                        collection.features[i].geometry.coordinates[j] = [collection.features[i].properties.internal.mxnMarkers[0].location.lon, collection.features[i].properties.internal.mxnMarkers[0].location.lat];
+                        collection.features[i].geometry.coordinates[0] = [];
+                        
+                        for (var j = 0; j < collection.features[i].properties.internal.mxnMarkers.length; j++)
+                        {
+                            collection.features[i].geometry.coordinates[0][j] = [collection.features[i].properties.internal.mxnMarkers[j].location.lon, collection.features[i].properties.internal.mxnMarkers[j].location.lat];
+                        }
+                        
+                        collection.features[i].geometry.coordinates[0][j] = [collection.features[i].properties.internal.mxnMarkers[0].location.lon, collection.features[i].properties.internal.mxnMarkers[0].location.lat];
+                    }
+                    else
+                    {
+                        for (var j = 0; j < collection.features[i].properties.internal.mxnMarkers.length; j++)
+                        {
+                            collection.features[i].geometry.coordinates[j] = [collection.features[i].properties.internal.mxnMarkers[j].location.lon, collection.features[i].properties.internal.mxnMarkers[j].location.lat];
+                        }
                     }
                 }
             },
@@ -631,27 +657,30 @@ Number.prototype.mod = function(n) {
             });
             
             
-            settings.$list.find("a." + settings.anchorClassSelect).live("click", function() {
-                methods.selectFeature($(this).parent().data("feature"));
-            });
-            
-            settings.$list.find("a." + settings.anchorClassRemove).live("click", function() {
-                methods.removeFeature($(this).parent().data("feature"));
-            });
-            
-            settings.$list.find("a." + settings.anchorClassHide).live("click", function() {
-                $this = $(this);
-                methods.hideFeature($this.parent().data("feature"));
-                $this.removeClass(settings.anchorClassHide).addClass(settings.anchorClassShow);
-                $this.html(settings.anchorLabelShow);
-            });
-            
-            settings.$list.find("a." + settings.anchorClassShow).live("click", function() {
-                $this = $(this);
-                methods.showFeature($(this).parent().data("feature"));
-                $this.removeClass(settings.anchorClassShow).addClass(settings.anchorClassHide);
-                $this.html(settings.anchorLabelHide);
-            });
+            if (settings.$list != undefined)
+            {
+                settings.$list.find("a." + settings.anchorClassSelect).live("click", function() {
+                    methods.selectFeature($(this).parent().data("feature"));
+                });
+                
+                settings.$list.find("a." + settings.anchorClassRemove).live("click", function() {
+                    methods.removeFeature($(this).parent().data("feature"));
+                });
+                
+                settings.$list.find("a." + settings.anchorClassHide).live("click", function() {
+                    $this = $(this);
+                    methods.hideFeature($this.parent().data("feature"));
+                    $this.removeClass(settings.anchorClassHide).addClass(settings.anchorClassShow);
+                    $this.html(settings.anchorLabelShow);
+                });
+                
+                settings.$list.find("a." + settings.anchorClassShow).live("click", function() {
+                    $this = $(this);
+                    methods.showFeature($(this).parent().data("feature"));
+                    $this.removeClass(settings.anchorClassShow).addClass(settings.anchorClassHide);
+                    $this.html(settings.anchorLabelHide);
+                });
+            }
             
             
             // set up map click handler: create new coordinate
