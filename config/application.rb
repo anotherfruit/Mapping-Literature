@@ -16,6 +16,9 @@ module MappingLiterature
   config.assets.precompile += %w(admin.css admin.js)
     config.assets.precompile += %w(front.css front.js)
     config.assets.precompile += %w(jquery-min.js)
+    config.watchable_dirs[File.join(config.root, 'app/views')] = ['dryml']
+    config.assets.debug = false
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

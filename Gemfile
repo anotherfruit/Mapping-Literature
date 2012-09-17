@@ -92,3 +92,7 @@ gem "will_paginate-bootstrap", :git => "git://github.com/nickpad/will_paginate-b
 gem "squeel"
 
 gem "delocalize"
+
+gem "thin", :group => :development
+gem "quiet_assets", :group => :development
+
