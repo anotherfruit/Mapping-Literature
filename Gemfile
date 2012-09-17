@@ -96,3 +96,4 @@ gem "delocalize"
 gem "thin", :group => :development
 gem "quiet_assets", :group => :development
 
+gem "mobile-fu"

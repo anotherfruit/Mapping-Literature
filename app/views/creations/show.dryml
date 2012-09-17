@@ -21,7 +21,7 @@
     </field-list>
 
     <bootstrap-tab-list:fragments active="&this.fragments.first" class="tabs-left">
-      <a:>Page <%= this.page_nr_start==this.page_nr_end ? this.page_nr_start : "#{this.page_nr_start} - #{this.page_nr_end}" %></a:>
+      <a:>Page <%= this.page_range %></a:>
       <body:><%= this.body %></body:>
     </bootstrap-tab-list:fragments>
 

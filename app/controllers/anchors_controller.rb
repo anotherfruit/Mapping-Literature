@@ -3,6 +3,7 @@ class AnchorsController < ApplicationController
   hobo_model_controller
 
   auto_actions :new, :create, :index, :edit, :update
+  index_action :mobile
 
   def index
     # self.this is filtered by the map, @all_anchors isn't
@@ -24,6 +25,11 @@ class AnchorsController < ApplicationController
       self.this = self.this.where{anchors.shape.op('&&', window)}.all
     end
 
+    hobo_index
+  end
+
+  def mobile
+    self.this = Anchor.includes(:fragments => :creation)
     hobo_index
   end
 

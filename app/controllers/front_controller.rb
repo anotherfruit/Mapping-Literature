@@ -21,8 +21,15 @@ class FrontController < ApplicationController
     end
   end
 
-
   def index
+    if is_mobile_device?
+      redirect_to :controller => :anchors, :action => :mobile
+    else
+      redirect_to :action => :desktop
+    end
+  end
+
+  def desktop
     @books = Creation.includes(:authors)
     @books = @books.search([params[:search], "authors.first_name",
                             "authors.last_name", "creations.title"]) if params[:search]

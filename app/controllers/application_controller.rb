@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  has_mobile_fu false
+
   protect_from_forgery
   after_filter HoboRapid::PreviousUriFilter
   before_filter :set_map_provider
