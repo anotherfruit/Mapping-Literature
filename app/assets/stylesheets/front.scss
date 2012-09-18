@@ -22,6 +22,23 @@
 #map img {  max-width: none; width: auto; display:inline; }
 
 @import "compass_twitter_bootstrap";
+@import "http://fonts.googleapis.com/css?family=Cantata+One";
+@import "http://fonts.googleapis.com/css?family=Muli";
+
+h2 {
+  font-family: 'Cantata One', Helvetica, Arial, sans-serif;
+}
+
+
+body {
+  background: url('http://i.imgur.com/5EMXx.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: 'Muli', Georgia, Times, serif;
+
+}
 
 tr.highlight td { background-color: #e0e0e0 !important; }
 
