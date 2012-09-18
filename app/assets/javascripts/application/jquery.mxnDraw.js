@@ -623,9 +623,20 @@ Number.prototype.mod = function(n) {
                         methods.addFeature(types.POLYGON);
                     }
                     
-                    for (var j = 0; j < settings.collection.features[i].geometry.coordinates.length; j++)
+
+                    if (settings.collection.features[i].geometry.type == jsonTypes[types.POLYGON])
                     {
-                        methods.addCoordinate(new mxn.LatLonPoint(settings.collection.features[i].geometry.coordinates[j][1], settings.collection.features[i].geometry.coordinates[j][0]));
+                        for (var j = 0; j < settings.collection.features[i].geometry.coordinates[0].length; j++)
+                        {
+                            methods.addCoordinate(new mxn.LatLonPoint(settings.collection.features[i].geometry.coordinates[0][j][1], settings.collection.features[i].geometry.coordinates[0][j][0]));
+                        }
+                    }
+                    else
+                    {
+                        for (var j = 0; j < settings.collection.features[i].geometry.coordinates.length; j++)
+                        {
+                            methods.addCoordinate(new mxn.LatLonPoint(settings.collection.features[i].geometry.coordinates[j][1], settings.collection.features[i].geometry.coordinates[j][0]));
+                        }
                     }
                 }
             }

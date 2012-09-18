@@ -6,7 +6,7 @@ module CreationsHelper
 #      placemarks: creation.fragments.*.placemarks.flatten,
       title: creation.title,
       options: {
-            infoHtml: "#{link_to creation.title, creation}: #{creation.fragments.map {|f| link_to('pg'+f.page_range, f)}.join(', ')}",
+            infoHtml: "<p>#{link_to creation.title, creation}</p><p>#{creation.fragments.map {|f| link_to('pp'+f.page_range, f)}.join(', ')}</p>",
             creationId: creation.id
           }
     }

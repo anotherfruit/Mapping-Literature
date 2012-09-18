@@ -10,7 +10,7 @@
             <geo-marker>
               <do with="&this_parent">
                 <repeat:fragments>
-                  <p><a:creation/> <a>pg<%= this.page_range %></a></p>
+                  <p><a:creation/></p><p><a>pp<%= this.page_range %></a></p>
                 </repeat:fragments>
               </do>
             </geo-marker>

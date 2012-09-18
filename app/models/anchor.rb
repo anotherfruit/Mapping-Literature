@@ -24,6 +24,10 @@ class Anchor < ActiveRecord::Base
     where("name = ''")
   end
 
+  # selects one of 5 closest anchors
+  def near
+    self.class.order_by("(select shape from anchors where id = #{id}) <-> shape").limit(1).offset((rand*5).to_i+1).first
+  end
 
   def placemarks
     case shape._?.rgeo

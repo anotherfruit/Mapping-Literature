@@ -33,6 +33,19 @@
       <body:><%= image_tag "images/quote.png", :class => "quote" %><%= this.body %><p><a>&raquo; View fragment on map &laquo;</a></p></body:>
     </bootstrap-tab-list:fragments>
    </div>
+
+   <div class="content-floater" style="margin-left:1em;">
+     <do with="&this.near_to_date">
+       <p>
+         Book with similar publication date:  <a/>
+       </p>
+     </do>
+     <do with="&this.anchors.sample.near.fragments.sample">
+       <p>
+         Nearby fragment: <a/>
+       </p>
+     </do>
+   </div>
   </div>
   </field-list:>
 </show-page>
