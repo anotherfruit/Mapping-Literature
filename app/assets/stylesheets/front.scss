@@ -23,8 +23,23 @@
 
 @import "compass_twitter_bootstrap";
 
-// this is a conflicting change
+@import "http://fonts.googleapis.com/css?family=Cantata+One";
+@import "http://fonts.googleapis.com/css?family=Muli";
 
+h2 {
+  font-family: 'Cantata One', Helvetica, Arial, sans-serif;
+}
+
+
+body {
+  background: url('http://i.imgur.com/5EMXx.png') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: 'Muli', Georgia, Times, serif;
+
+}
 
 tr.highlight td { background-color: #e0e0e0 !important; }
 
@@ -45,5 +60,6 @@ tr.highlight td { background-color: #e0e0e0 !important; }
 /* #features li a.remove{float:right;} */
 #features li a.hide{display: none;}
 #features li a.show{display: none;}
+
 
 #log{margin:0;height:320px;overflow:auto;font-family:monospace;font-size:10px;background-color:#eee;display:none;}

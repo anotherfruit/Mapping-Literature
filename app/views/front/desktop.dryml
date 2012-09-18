@@ -22,8 +22,11 @@ $(function() {
   <body: class="front-page"/>
 
   <content:>
-    <header class="content-header"></header>
+      <header class="content-header">
+       <h2>A fragmentary approach to map Viennese writing within time and space</h2>
+      </header>
 
+   <div class="content-floater">
     <div id="timemap">
       <div id="timelinecontainer">
         <div id="timeline"></div>
@@ -32,6 +35,7 @@ $(function() {
         <div id="map"></div>
       </div>
     </div>
+   </div>
 
     <section class="content-body">
       <map-filter-form update="books-table"/>
