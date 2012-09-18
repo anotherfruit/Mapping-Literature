@@ -1,0 +1,22 @@
+<%# layout from https://groups.google.com/forum/?fromgroups=#!topic/twitter-bootstrap/0QwbHUMx7co %>
+<index-page without-heading without-count>
+  <navbar: style="margin-bottom: 0px;"/>
+  <body: style="max-height:100%; overflow:hidden; padding-left: 0; padding-right: 0;"/>
+  <content-body: style="overflow:hidden;">
+    <mapstraction id="map" largeControls geolocate zoom="&18" mapTypeControls style="width:100%;height:100%; position: absolute; ">
+      <repeat>
+        <do:shape>
+          <if>
+            <geo-marker>
+              <do with="&this_parent">
+                <repeat:fragments>
+                  <p><a:creation/> <a>pg<%= this.page_range %></a></p>
+                </repeat:fragments>
+              </do>
+            </geo-marker>
+          </if>
+        </do:shape>
+      </repeat>
+    </mapstraction>
+  </content-body:>
+</index-page>
