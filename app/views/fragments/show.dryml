@@ -1,30 +1,41 @@
 <show-page without-collection-section without-record-flags without-creator-link>
-   <field-list: replace>
-     <div id="floatwrapper">
-       <div style="float:left;">
-         <feckless-fieldset fields="creation, page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, anchors">
-           <anchors-view:>
-             <repeat>
-               <a action="edit"><%= this.name.blank? ? "(unlabelled)" : this.name%></a>
-               <br/>
-             </repeat>
-           </anchors-view:>
-           <creation-view:>
-             <view/>
-           </creation-view:>
-         </feckless-fieldset>
-       </div>
-
-      <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
-        <repeat:anchors>
-          <do:shape>
-            <if>
-              <geo-marker/>
-            </if>
-          </do:shape>
-        </repeat:anchors>
-      </mapstraction>
-     </div>
-     <br/>
-   </field-list:>
+
+    <field-list: replace>
+          <div class="content-floater" style="float:left; width: 15%;">
+            <feckless-fieldset fields="creation, page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, topics, anchors">
+              <anchors-view:>
+                <repeat>
+                  <a action="edit"><%= this.name.blank? ? "(unlabelled)" : this.name%></a>
+                  <br/>
+                </repeat>
+              </anchors-view:>
+              <creation-view:>
+                <view/>
+              </creation-view:>
+            </feckless-fieldset>
+          </div>
+
+         <div class="content-floater" style="float: right; width: 75%; margin-left: 1em;">
+         <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
+           <repeat:anchors>
+             <do:shape>
+               <if>
+                 <geo-marker/>
+               </if>
+             </do:shape>
+           </repeat:anchors>
+         </mapstraction>
+         </div>
+
+         <div class="content-floater" style="float:right; width: 35%;">
+          <h2>Near fragment in time</h2>
+          <img class="quote" src="http://cdn1.iconfinder.com/data/icons/WPZOOM_Developer_Icon_Set/45/quote.png"/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat purus eu odio vulputate suscipit. Suspendisse eget arcu id erat feugiat commodo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec elementum euismod placerat. Praesent in mi nisi. Donec sapien mauris, mollis commodo accumsan at, scelerisque sed dui. Sed mattis mollis sem ac feugiat. </p>-- [A fragment/Link to fragment] from [Creation Title/Link] by [Author]
+         </div>
+          <div class="content-floater" style="float:right; visibility: hidden;">&nbsp;</div>
+          <div class="content-floater" style="float:right; width: 35%;">
+          <h2>Near fragment in space</h2>
+          <img class="quote" src="http://cdn1.iconfinder.com/data/icons/WPZOOM_Developer_Icon_Set/45/quote.png"/><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat purus eu odio vulputate suscipit. Suspendisse eget arcu id erat feugiat commodo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec elementum euismod placerat. Praesent in mi nisi. Donec sapien mauris, mollis commodo accumsan at, scelerisque sed dui. Sed mattis mollis sem ac feugiat.</p>-- [A fragment/Link to fragment] from [Creation Link] by [Author]
+         </div>
+      </field-list:>
+
 </show-page>
