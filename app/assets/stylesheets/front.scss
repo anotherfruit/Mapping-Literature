@@ -22,6 +22,7 @@
 #map img {  max-width: none; width: auto; display:inline; }
 
 @import "compass_twitter_bootstrap";
+
 @import "http://fonts.googleapis.com/css?family=Cantata+One";
 @import "http://fonts.googleapis.com/css?family=Muli";
 
@@ -59,5 +60,6 @@ tr.highlight td { background-color: #e0e0e0 !important; }
 /* #features li a.remove{float:right;} */
 #features li a.hide{display: none;}
 #features li a.show{display: none;}
+
 
 #log{margin:0;height:320px;overflow:auto;font-family:monospace;font-size:10px;background-color:#eee;display:none;}
