@@ -79,6 +79,10 @@ class Fragment < ActiveRecord::Base
     page_nr_start==page_nr_end ? page_nr_start.to_s : "#{page_nr_start}-#{page_nr_end}"
   end
 
+  def name
+    "#{creation.title} pp #{page_range}"
+  end
+
   # --- Permissions --- #
 
   def create_permitted?

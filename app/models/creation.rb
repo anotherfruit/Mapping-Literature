@@ -26,7 +26,14 @@ class Creation < ActiveRecord::Base
 
   children :fragments
 
+  def anchors
+    fragments.*.anchors.flatten
+  end
 
+  # returns one of the 5 creations closest by date to this one
+  def near_to_date
+    self.class.order_by("abs('#{first_published_at}' - first_published_at)").limit(1).offset((rand*5).to_i+1).first
+  end
 
   # --- Permissions --- #
 
