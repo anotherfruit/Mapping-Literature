@@ -41,7 +41,65 @@ body {
 
 }
 
+// Table & Content Floater Markup
+
 tr.highlight td { background-color: #e0e0e0 !important; }
+
+div#timemap { background-color: #FFF !important; padding: 0em !important; }
+
+div.table-plus { background-color: #FFF !important;
+  padding: 1em;
+  margin-top: 2em;
+  -moz-box-shadow: 1px 1px 3px #000;
+  -webkit-box-shadow: 1px 1px 3px #000;
+  box-shadow: 1px 1px 3px #000;
+/* For IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#000000')";
+/* For IE 5.5 - 7 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#000000');
+}
+
+table.table-striped.collection { background-color: #FFF !important;
+  padding: 1em;
+  margin-top: 2em;
+  -moz-box-shadow: 1px 1px 3px #000;
+  -webkit-box-shadow: 1px 1px 3px #000;
+  box-shadow: 1px 1px 3px #000;
+/* For IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#000000')";
+/* For IE 5.5 - 7 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#000000');
+}
+
+table.table-bordered { border-style: none; }
+
+div.header { margin-bottom: 1em; }
+
+td.this-view { border-left: none !important; }
+
+th.Creation-heading { border-left: none !important; }
+
+div.content-floater, div.description.view.fragment-body, form.form-horizontal.creation {
+  background-color: #FFF !important;
+  padding: 1em;
+  margin-top: 2em;
+  -moz-box-shadow: 1px 1px 3px #000;
+  -webkit-box-shadow: 1px 1px 3px #000;
+  box-shadow: 1px 1px 3px #000;
+/* For IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#000000')";
+/* For IE 5.5 - 7 */
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#000000');
+}
+
+// Button Markup
+
+a.new-link, a.edit-link { margin-bottom: 1em; }
+
+div.content-header {margin-bottom: 3em !important;}
+
+img.quote { float: left; margin: 1em;}
+
 
 .ui-datepicker-calendar { display: none; }
 

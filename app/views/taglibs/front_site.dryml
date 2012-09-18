@@ -59,11 +59,12 @@
 
 <extend tag="form" for ="Fragment">
  <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
-   <field-list: replace>
+  <field-list: replace>
+   <div class="content-floater">
      <feckless-fieldset fields="body"/>
-     <div id="floatwrapper" style="margin-bottom:550px;">
-       <div style="float:left;">
-         <feckless-fieldset fields="creation, page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, anchors">
+   </div>
+      <div class="content-floater" style="float:left; width: 30%; min-width:250px;">
+         <feckless-fieldset fields="creation, page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, topics, anchors">
            <anchors-view:>
              <select-many options="&Anchor.labelled">
                <item-label:><a action="edit"><%= this.name.blank? ? "(unlabelled)" : this.name%></a></item-label:>
@@ -73,14 +74,11 @@
              <view/>
            </creation-view:>
          </feckless-fieldset>
-
          <after-submit uri="&edit_creation_path(this.creation)"/>
-
          <submit label="Save Fragment and Add New Anchor" onclick="$('input[name=after_submit]').val('#{new_anchor_path(:fragment => this.id || 0)}'); return true;"/>
-
-       </div>
-
-      <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
+      </div>
+      <div class="content-floater" style="float:right; width: 60%; margin-left: 1em;">
+       <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
         <repeat:anchors>
           <do:shape>
             <if>
@@ -88,9 +86,8 @@
             </if>
           </do:shape>
         </repeat:anchors>
-      </mapstraction>
-     </div>
-     <br/>
+       </mapstraction>
+      </div>
    </field-list:>
    <actions: style="clear: both;"/>
    <cancel: href="&creation_path(this.creation)"/>
@@ -104,7 +101,8 @@
     </header:>
   </card>
 </def>
-<extend tag="page">
+
+<extend tag="page">
   <old-page merge nav-location="top">
     <scripts: replace>
       <%# OpenLayers is used for geojson conversion, so always load %>

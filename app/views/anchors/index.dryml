@@ -12,6 +12,7 @@
   </prepend-content-header:>
 
   <content-body:>
+   <div class="content-floater">
     <mapstraction with="&@all_anchors" id="map" largeControls mapTypeControls style="height: 400px;" setupjs="ml_add_map_filter_handlers(this);">
       <repeat>
         <do:shape>
@@ -20,8 +21,8 @@
           </if>
         </do:shape>
       </repeat>
-    </mapstraction>
-
+     </mapstraction>
+    </div>
     <map-filter-form without-date-filter update="anchors-table"/>
 
     <map-filter-table part="anchors-table" >
