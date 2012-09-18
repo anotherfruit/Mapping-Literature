@@ -1,0 +1,46 @@
+/*
+ * This is the stylesheet manifest file for the front subsite (which
+ * is your whole application if you don't have any subsites).  Files
+ * or plugins referenced from here or placed in the front/ directory
+ * will be included.
+ *
+ *= require_self
+ *= require hobo_rapid
+ *= require hobo_jquery
+ *= require hobo_jquery_ui
+ *= require jquery-ui/redmond
+ *= require application
+ *= require hobo_bootstrap
+ *= require hobo_bootstrap_docs
+ *= require hobo_bootstrap_responsive
+ *= require hobo_mapstraction
+ *= require_tree ./front
+*/
+
+
+// http://stackoverflow.com/questions/9141249/twitter-bootstrap-css-affecting-google-maps
+#map img {  max-width: none; width: auto; display:inline; }
+
+@import "compass_twitter_bootstrap";
+
+tr.highlight td { background-color: #e0e0e0 !important; }
+
+.ui-datepicker-calendar { display: none; }
+
+/* mxnDraw */
+#container{padding:12px;overflow:hidden}
+#ui,#log{float:left;width:50%;}
+#toolbar,#form{margin-bottom:12px;}
+#features{margin:0;padding:0 12px 0 0;list-style:none;}
+#features li{display:block;padding:4px;overflow:hidden}
+/* #features li:nth-child(2n-1){background-color:#deedf7;} */
+/* #features li.active{background-color:#3baae3!important;} */
+#features li a{text-decoration:none;}
+#features li a:hover{text-decoration:underline;}
+/* #features li.active a{color:#fff!important;} */
+#features li a{display:block;float:left;margin-right:4px;}
+/* #features li a.remove{float:right;} */
+#features li a.hide{display: none;}
+#features li a.show{display: none;}
+
+#log{margin:0;height:320px;overflow:auto;font-family:monospace;font-size:10px;background-color:#eee;display:none;}

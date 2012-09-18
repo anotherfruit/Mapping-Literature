@@ -1,0 +1,38 @@
+Major:
+
+- mxnDraw
+- mapstraction type selection (OSM, Google, Bing, Nokia) https://dl.dropbox.com/u/26153001/Mapping%20Literature/Nav_Mapstraction_Dropdown.png
+- search/sort authors/genres
+- Alternative/new (mobile) front page view
+
+Minor points are
+- We're going for the Arvo & PT Sans font choice
+( http://designshack.net/articles/css/10-great-google-font-combinations-you-can-copy/
+)
+- The "update circles" at the front page should be replaced by the
+arrows as ~seen in the front-page.rar . The js hooks are already
+there. It would be a nifty visual support feature for new users to
+realize what component is triggering what. You were right the
+table->map feature is a good idea.
+- If easy to apply an img upload feature for creation (book cover)
+would be great.
+
+To be tested / works for me:
+
+- The "meta" search@nav isn't working. It should search authors,
+creations and labelled anchors
+- The table search@front page is out of order
+- Author Index view is broken
+- The timemap component doesn't need to display creations in the
+century scale. ( It also seems to lead to 'glitching' layers when
+using the interface )
+- When using table-sort the title vanishes (@front-page)
+- Adding an autocomplete field for fragments for adding labeled anchors
+- The Anchor Index View should only list labeled anchors.
+( https://dl.dropbox.com/u/26153001/Mapping%20Literature/Anchor_Index_View.png )
+- search/sort/map filter on anchors index
+- use of twitter tab-thing to show of the text-content of fragments
+within creation detail view (order by starting page number)
+- Autocomplete fields instead of drowdown boxes
+- For Creation first_published_at & published_at no day is needed.   Note that the date format is now specified in app.en.yml
+

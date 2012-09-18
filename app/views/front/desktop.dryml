@@ -1,0 +1,46 @@
+<page title="Home">
+
+  <append-scripts:>
+    <script type="text/javascript">
+var tm;
+$(function() {
+    tm = ml_map_init(<%=raw({
+                type: "basic",
+                options: {
+                    items: @all_books.map do |creation|
+                          timemap_data(creation)
+                    end
+                }
+            }.to_json)%>, '<%= @date_start == Date.new(1800,1,1) ? "earliest" : (@date_start + (@date_end - @date_start)/2).strftime("%Y-%m-%d") %>');
+
+    ml_front_index_on_load(tm);
+})
+    </script>
+  </append-scripts:>
+
+
+  <body: class="front-page"/>
+
+  <content:>
+    <header class="content-header"></header>
+
+    <div id="timemap">
+      <div id="timelinecontainer">
+        <div id="timeline"></div>
+      </div>
+      <div id="mapcontainer">
+        <div id="map"></div>
+      </div>
+    </div>
+
+    <section class="content-body">
+      <map-filter-form update="books-table"/>
+      <do part="books-table">
+        <map-filter-table with="&@books"/>
+      </do>
+    </section>
+
+  </content:>
+
+</page>
+

@@ -1,0 +1,3 @@
+<edit-page>
+  <mxn: src="/mxn.hiro/mxn.js?(#{session[:map_provider]})" />
+</edit-page>

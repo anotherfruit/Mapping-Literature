@@ -1,0 +1,3 @@
+<index-page>
+  <collection: fields="this, birthdate, creations, #{'actions' if can_view?(this.first)}"/>
+</index-page>

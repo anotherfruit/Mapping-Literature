@@ -30,3 +30,22 @@ en:
       creation:
         one: Book
         other: Books
+    attributes:
+      fragment:
+        body: Text
+        page_nr_start: Starting Page Number
+        page_nr_end:  Ending Page Number
+        lat: Latitude
+        long: Longitude
+        closest_matching_address: Closest Matching Address
+    attribute_help:
+      fragment:
+        page_nr_start: Page number the quote starts
+        page_nr_end: Page number the quote ends
+        lat: Latitude of text fragment (use the map)
+        long: Longitude of text fragment (use the map)
+        closest_matching_address: Closest Matching Address (use the map)
+
+  date:
+    formats:
+      default: "%B %Y"

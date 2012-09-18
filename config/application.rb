@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'active_record/connection_adapters/postgis_adapter/railtie'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -13,7 +14,11 @@ module MappingLiterature
   class Application < Rails::Application
   config.i18n.default_locale = :en
   config.assets.precompile += %w(admin.css admin.js)
-  config.assets.precompile += %w(front.css front.js)
+    config.assets.precompile += %w(front.css front.js)
+    config.assets.precompile += %w(jquery-min.js)
+    config.watchable_dirs[File.join(config.root, 'app/views')] = ['dryml']
+    config.assets.debug = false
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

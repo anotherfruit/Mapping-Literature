@@ -13,9 +13,13 @@ class Author < ActiveRecord::Base
 
   has_many :rs_author_creations, :dependent => :destroy, :inverse_of => :author
   has_many :creations, :through => :rs_author_creations, :accessible => :true
-  #children :creations
+#  children :creations
 
   # --- Permissions --- #
+
+  def name
+    first_name + " " + middle_name + " " + last_name
+  end
 
   def create_permitted?
     acting_user.administrator?

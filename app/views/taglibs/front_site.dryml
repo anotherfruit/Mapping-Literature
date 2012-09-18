@@ -1,21 +1,255 @@
 <!-- Global taglib - these are the tags for your front site -->
 
+<include src="rapid" gem="hobo"/>
+
+<include gem='hobo_rapid'/>
+
+<include gem='hobo_jquery'/>
+
+<include gem='hobo_jquery_ui'/>
+
 <include src="taglibs/auto/rapid/cards"/>
 <include src="taglibs/auto/rapid/pages"/>
 <include src="taglibs/auto/rapid/forms"/>
 
 <%# The default Hobo theme %>
-<include gem='hobo_clean'/>
+<include gem='hobo_bootstrap'/>
+
+<include gem='hobo_mapstraction'/>
+
 
 <extend tag="form" for="Author">
-  <old-form merge>
+  <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
     <cancel: href="&@author.creations.first ? creation_path(@author.creations.first) : authors_path"/>
   </old-form>
 </extend>
 
+<extend tag="datepicker">
+  <old-datepicker merge changeMonth changeYear showButtonPanel onClose="datepicker_on_close" yearRange="1800:#{Date.today.year}" />
+</extend>
+
+<extend tag="mapstraction">
+  <old-mapstraction merge api="&session[:map_provider]"/>
+</extend>
+
 <extend tag="form" for="Creation">
-  <old-form merge>
+  <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
+    <field-list: fields="title, isbn10, isbn13, published_at, first_published_at, publisher, publisher_url, authors, genres, fragments">
+      <authors-view:>
+        <select-many>
+          <item-label:><a action="edit"/></item-label:>
+        </select-many>
+      </authors-view:>
+      <genres-view:>
+        <select-many>
+          <item-label:><a action="edit"/></item-label:>
+        </select-many>
+      </genres-view:>
+      <fragments-view:>
+        <after-submit uri="&creations_path"/>
+        <select-many without-select>
+          <item-label:><a action="edit"/></item-label:>
+        </select-many>
+        <submit label="Save Creation and Add New Fragment" onclick="$('input[name=after_submit]').val('#{new_fragment_for_creation_path(:creation_id => this_parent)}'); return true;"/>
+      </fragments-view:>
+    </field-list:>
     <cancel: href="&@creation.authors.first ? creation_path(@creation.authors.first) : creations_path"/>
   </old-form>
 </extend>
 
+<extend tag="form" for ="Fragment">
+ <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
+   <field-list: replace>
+     <feckless-fieldset fields="body"/>
+     <div id="floatwrapper" style="margin-bottom:550px;">
+       <div style="float:left;">
+         <feckless-fieldset fields="creation, page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, anchors">
+           <anchors-view:>
+             <select-many options="&Anchor.labelled">
+               <item-label:><a action="edit"><%= this.name.blank? ? "(unlabelled)" : this.name%></a></item-label:>
+             </select-many>
+           </anchors-view:>
+           <creation-view:>
+             <view/>
+           </creation-view:>
+         </feckless-fieldset>
+
+         <after-submit uri="&edit_creation_path(this.creation)"/>
+
+         <submit label="Save Fragment and Add New Anchor" onclick="$('input[name=after_submit]').val('#{new_anchor_path(:fragment => this.id || 0)}'); return true;"/>
+
+       </div>
+
+      <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
+        <repeat:anchors>
+          <do:shape>
+            <if>
+              <geo-marker/>
+            </if>
+          </do:shape>
+        </repeat:anchors>
+      </mapstraction>
+     </div>
+     <br/>
+   </field-list:>
+   <actions: style="clear: both;"/>
+   <cancel: href="&creation_path(this.creation)"/>
+  </old-form>
+</extend>
+
+<def tag="card" for="Fragment">
+  <card class="fragment" param="default" merge>
+    <header: param>
+      <h4 param="heading"><a><this.creation.title/> - <name/></a></h4>
+    </header:>
+  </card>
+</def>
+<extend tag="page">
+  <old-page merge nav-location="top">
+    <scripts: replace>
+      <%# OpenLayers is used for geojson conversion, so always load %>
+      <script type="text/javascript" src="http://openlayers.org/api/OpenLayers.js"></script>
+      <if test="&session[:map_provider]=='googlev3'">
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyChYb5-wdAVaDZAuTIxmPdTF0s3X2JOR5A&sensor=false"></script>
+      </if>
+      <if test="&session[:map_provider]=='openlayers'">
+      </if>
+      <if test="&session[:map_provider]=='ovi'">
+        <script type="text/javascript" 
+                src="http://api.maps.nokia.com/2.2.3/jsl.js?
+                     with=maps,places,directions,positioning"></script>
+      </if>
+      <javascript name="jquery-min"/>
+      <script src="/mxn/mxn.js?(#{session[:map_provider]})" type="text/javascript" param="mxn"></script>
+      <script src="/timeline/timeline-2.3.0.js" type="text/javascript"></script>
+      <scripts restore/>
+    </scripts:>
+    <account-nav:>
+      <prepend-ul:>
+        <li class="nav-item dev-user-changer">
+          <select-menu options='&{OpenLayers: "openlayers", Google: "googlev3", Bing: "microsoft7", Nokia: "ovi"}' selected="&session[:map_provider]" class="dev-user-changer" onchange="location.href = location.pathname + '?map_provider=' + encodeURIComponent(this.options[this.selectedIndex].value)"/>
+        </li>
+      </prepend-ul:>
+    </account-nav:>
+  </old-page>
+</extend>
+
+<def tag="geo-marker">
+        <% case this._?.rgeo
+           when RGeo::Feature::Polygon
+           %><mapstraction-polyline points="&this.rgeo.exterior_ring.points.map {|point| [point.y, point.x]}" closed merge/><%
+           when RGeo::Feature::MultiPoint
+             this.rgeo.each_with_index {|point, i|
+             %><mapstraction-marker lat="&point.y" lon="&point.x" merge/><%
+             }
+           when RGeo::Feature::LineString
+           %><mapstraction-polyline points="&this.rgeo.points.map {|point| [point.y, point.x]}" merge/><%
+           else
+             Rails.logger.debug "unsupported shape for anchor #{this_parent.id}"
+           end
+        %>
+</def>
+
+
+<extend tag="form" for="Anchor">
+  <old-form merge before-unload="You have unsaved changes.  Are you sure you wish to leave the page without saving?">
+    <field-list: replace>
+      <mapstraction id="map" largeControls mapTypeControls data-collection="#{this.shape._?.feature_collection_geojson.to_json}" style="height: 400px;" setupjs="$('#map').mxnDraw({collection: $('#map').data('collection')}); this.autoCenterAndZoom();   mxnDrawInit.call($('#map'), this);" >
+      </mapstraction>
+      <br/>
+      <div id="toolbar">
+        <a href="#" id="addButtonMultiPoint" class="btn" onclick="mxnDrawHideButtons()">Multi-point</a>
+        <a href="#" id="addButtonLineString" class="btn" onclick="mxnDrawHideButtons()">Line String</a>
+        <a href="#" id="addButtonPolygon" class="btn" onclick="mxnDrawHideButtons()">Polygon</a>
+      </div>
+      <ul id="features">
+      </ul>
+      <pre id="log"></pre>
+
+      <br/>
+      <p>
+      </p>
+      <field-list fields="fragments, name, shape" param>
+        <fragments-label:>Books</fragments-label:>
+        <fragments-view:>
+          <repeat>
+            <a action="edit"><name:creation/></a>
+          </repeat>
+        </fragments-view:>
+        <shape-field: style="display: none;"/>
+      </field-list>
+      <after-submit uri="&params[:fragment] ? edit_fragment_path(params[:fragment]) : anchors_path"/>
+    </field-list:>
+    <submit: onclick="$('#anchor_shape').val((new OpenLayers.Format.GeoJSON()).read( $('#map').mxnDraw('getCollection'))[0].geometry.toString()); return true;"/>
+    <cancel: href="&session[:previous_uri]"/>
+  </old-form>
+</extend>
+
+
+<def tag="main-nav">
+  <navigation class="main-nav" merge-attrs param="default">
+    <nav-item with="&Creation"><ht key="creation.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
+    <nav-item with="&Anchor"><ht key="anchor.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
+    <nav-item with="&Author"><ht key="author.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
+    <nav-item with="&Genre"><ht key="genre.nav_item" count="100"><model-name-human count="100"/></ht></nav-item>
+  </navigation>
+</def>
+
+<def tag="view" for="Genre">
+  <if test="&this.hlink">
+    <a href="&this.hlink"><%= this.title %></a>
+  </if>
+  <else>
+    <%= this.title %>
+  </else>
+</def>
+
+<def tag="view" for="Author">
+  <if test="&this.hlink">
+    <a href="&this.hlink"><%= this.name %></a>
+  </if>
+  <else>
+    <%= this.name %>
+  </else>
+</def>
+
+<extend tag="select-many">
+  <combobox tag="select-many">
+    <old-select-many merge/>
+  </combobox>
+</extend>
+
+<def tag="map-filter-form">
+  <form id="filter-form" action="&request.path" method="get" message="Updating Table..." spinner-at="#filter-form input.submit-button" spinner-options="&{my: 'right bottom', at: 'left bottom'}" param merge>
+    <div param="date-filter">
+      date filter: <datepicker name="date_start" with="&@date_start"/> to: <datepicker name="date_end" with="&@date_end"/>
+    </div>
+    <div param="map-filter">
+      map filter:
+      <input type="text" name="sw_lat" id="sw_lat" value="&@sw_lat"/>
+      <input type="text" name="sw_lon" id="sw_lon" value="&@sw_lon"/>
+      <input type="text" name="ne_lat" id="ne_lat" value="&@ne_lat"/>
+      <input type="text" name="ne_lon" id="ne_lon" value="&@ne_lon"/>
+    </div>
+    <input type="hidden" name="search" value="&params[:search]"/>
+    <input type="hidden" name="center_map" value="&params[:center_map]=='' ? '' : 'ON'"/>
+    <submit label="filter" param/>
+  </form>
+</def>
+
+<def tag="map-filter-table">
+  <table-plus fields="this,authors,first_published_at,fragments_count" param merge>
+    <search-filter:>
+      <hidden-fields: skip="page, search, center_map"/>
+      <before-label:>
+        <div>
+          <input type ="hidden" name="center_map" value=""/>
+          <input type="checkbox" name="center_map" id="center_map" checked="&params[:center_map]!=''"/><label for="center_map">Keep map centred</label>
+        </div>
+      </before-label:>
+    </search-filter:>
+    <first-published-at-heading-link:>Year</first-published-at-heading-link:>
+    <first-published-at-view:><%= this.year %></first-published-at-view:>
+    <fragments-count-heading-link:>Fragments</fragments-count-heading-link:>
+  </table-plus>
+</def>

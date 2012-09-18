@@ -8,7 +8,15 @@
 // the the compiled file.
 //
 //= require application
-//
-// The default Hobo theme
-//= require hobo_clean
+//= require bootstrap-all
+//= require timemap/timemap
+//= require timemap/param
+//= require timemap/loaders/xml
+//= require timemap/loaders/georss
+//= require hobo_mapstraction
 //= require_tree ./front
+
+// $(document).ready(function(){
+//     initialize();
+//     });
+

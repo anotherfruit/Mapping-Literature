@@ -1,9 +1,29 @@
-<show-page>
-<append-content-body:>
-<a href='&new_author_path("author[creations]" => "@#{@creation.id}")' if="&can_create?(RsAuthorCreation)">
-<ht key="author.actions.new" count="1">
-    New Author
-</ht>
-    </a>
-</append-content-body:>
+<show-page without-collection-section>
+  <field-list: replace>
+
+    <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
+      <repeat:fragments>
+        <% frag = this %>
+        <repeat:anchors>
+          <do:shape>
+            <if>
+              <geo-marker click="location.href='#{fragment_path(frag.id)}'"/>
+            </if>
+          </do:shape>
+        </repeat:anchors>
+      </repeat:fragments>
+    </mapstraction>
+
+    <field-list restore fields="isbn10, isbn13, published_at, first_published_at, publisher, genres">
+      <publisher-view:>
+        <a href="&this_parent.publisher_url"><%= this %></a>
+      </publisher-view:>
+    </field-list>
+
+    <bootstrap-tab-list:fragments active="&this.fragments.first" class="tabs-left">
+      <a:>Page <%= this.page_range %></a:>
+      <body:><%= this.body %></body:>
+    </bootstrap-tab-list:fragments>
+
+  </field-list:>
 </show-page>

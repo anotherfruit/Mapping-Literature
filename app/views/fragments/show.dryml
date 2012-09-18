@@ -1,0 +1,30 @@
+<show-page without-collection-section without-record-flags without-creator-link>
+   <field-list: replace>
+     <div id="floatwrapper">
+       <div style="float:left;">
+         <feckless-fieldset fields="creation, page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, anchors">
+           <anchors-view:>
+             <repeat>
+               <a action="edit"><%= this.name.blank? ? "(unlabelled)" : this.name%></a>
+               <br/>
+             </repeat>
+           </anchors-view:>
+           <creation-view:>
+             <view/>
+           </creation-view:>
+         </feckless-fieldset>
+       </div>
+
+      <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
+        <repeat:anchors>
+          <do:shape>
+            <if>
+              <geo-marker/>
+            </if>
+          </do:shape>
+        </repeat:anchors>
+      </mapstraction>
+     </div>
+     <br/>
+   </field-list:>
+</show-page>
