@@ -1,6 +1,16 @@
 <show-page without-collection-section>
   <field-list: replace>
 
+<div class="left-column-wrapper" style="float:left; width: 49%;">
+  <div class="content-floater" style=" ">
+    <field-list restore fields="isbn10, isbn13, published_at, first_published_at, publisher, genres">
+      <publisher-view:>
+        <a href="&this_parent.publisher_url"><%= this %></a>
+      </publisher-view:>
+    </field-list>
+  </div>
+
+   <div class="content-floater" >
     <mapstraction id="map" largeControls mapTypeControls style="height: 400px;">
       <repeat:fragments>
         <% frag = this %>
@@ -13,17 +23,16 @@
         </repeat:anchors>
       </repeat:fragments>
     </mapstraction>
+   </div>
+  </div>
 
-    <field-list restore fields="isbn10, isbn13, published_at, first_published_at, publisher, genres">
-      <publisher-view:>
-        <a href="&this_parent.publisher_url"><%= this %></a>
-      </publisher-view:>
-    </field-list>
-
+  <div class="right-column-wrapper" style="float:right; width: 49%; ">
+   <div class="content-floater" style="margin-left:1em;">
     <bootstrap-tab-list:fragments active="&this.fragments.first" class="tabs-left">
-      <a:>Page <%= this.page_range %></a:>
-      <body:><%= this.body %></body:>
+      <a:>Page <%= this.page_nr_start==this.page_nr_end ? this.page_nr_start : "#{this.page_nr_start} - #{this.page_nr_end}" %></a:>
+      <body:><img class="quote" src="http://cdn1.iconfinder.com/data/icons/WPZOOM_Developer_Icon_Set/45/quote.png"/><%= this.body %><p><a>&raquo; View fragment on map &laquo;</a></p></body:>
     </bootstrap-tab-list:fragments>
-
+   </div>
+  </div>
   </field-list:>
 </show-page>
