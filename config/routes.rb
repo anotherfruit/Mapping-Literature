@@ -3,6 +3,9 @@ MappingLiterature::Application.routes.draw do
 
   match 'search' => 'front#search', :as => 'site_search'
 
+  match 'front/desktop' => 'front#desktop'
+  match 'front/mobile' => 'front#mobile'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
