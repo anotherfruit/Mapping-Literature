@@ -64,7 +64,7 @@
      <feckless-fieldset fields="body"/>
    </div>
       <div class="content-floater" style="float:left; width: 30%; min-width:250px;">
-         <feckless-fieldset fields="creation, page_nr_start, page_nr_end, indoor, outdoor, immigrant, surrogat, non_replacable_scenery, fictional, topics, anchors">
+         <feckless-fieldset fields="creation, page_nr_start, page_nr_end, indoor, outdoor, non_replacable_scenery, fictional, topics, anchors">
            <anchors-view:>
              <select-many options="&Anchor.labelled">
                <item-label:><a action="edit"><%= this.name.blank? ? "(unlabelled)" : this.name%></a></item-label:>
