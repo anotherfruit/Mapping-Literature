@@ -24,8 +24,12 @@ class Fragment < ActiveRecord::Base
   has_many :anchors, :through => :fragment_anchors, :accessible => :true
   children :anchors
 
+  has_many :rs_fragment_topics, :dependent => :destroy, :inverse_of => :fragment
+  has_many :topics, :through => :rs_fragment_topics, :accessible => :true
+
   # temporary, will be removed once transition to anchors is complete
-  has_many :gpscoordsets, :accessible => :true, :inverse_of => :fragment
+  has_many :gpscoordsets, :accessible => :true, :inverse_of => :fragment
+
 
   default_scope order("page_nr_start ASC")
 
