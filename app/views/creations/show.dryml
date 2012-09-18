@@ -30,7 +30,7 @@
    <div class="content-floater" style="margin-left:1em;">
     <bootstrap-tab-list:fragments active="&this.fragments.first" class="tabs-left">
       <a:>Page <%= this.page_nr_start==this.page_nr_end ? this.page_nr_start : "#{this.page_nr_start} - #{this.page_nr_end}" %></a:>
-      <body:><img class="quote" src="http://cdn1.iconfinder.com/data/icons/WPZOOM_Developer_Icon_Set/45/quote.png"/><%= this.body %><p><a>&raquo; View fragment on map &laquo;</a></p></body:>
+      <body:><%= image_tag "images/quote.png", :class => "quote" %><%= this.body %><p><a>&raquo; View fragment on map &laquo;</a></p></body:>
     </bootstrap-tab-list:fragments>
    </div>
   </div>
