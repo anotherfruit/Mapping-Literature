@@ -30,13 +30,13 @@ class FrontController < ApplicationController
   end
 
   def desktop
-    @books = Creation.includes(:authors)
+    @books = Creation.includes(:authors, :fragments)
     @books = @books.search([params[:search], "authors.first_name",
                             "authors.last_name", "creations.title"]) if params[:search]
 
     # @all_books isn't filtered by date or location; is used for
     # markers
-    @all_books = Creation.includes(:authors)
+    @all_books = Creation.includes(:authors).includes(:fragments => :anchors)
     @all_books = @all_books.search([params[:search], "authors.first_name",
                             "authors.last_name", "creations.title"]) if params[:search]
 
