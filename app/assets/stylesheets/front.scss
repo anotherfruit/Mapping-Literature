@@ -95,6 +95,8 @@ div.content-floater, div.description.view.fragment-body, form.form-horizontal.cr
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#000000');
 }
 
+div.description.view.fragment-body { min-height: 50px; }
+
 // Button Markup
 
 a.new-link, a.edit-link { margin-bottom: 1em; }
