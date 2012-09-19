@@ -24,7 +24,7 @@
 @import "compass_twitter_bootstrap";
 
 @import "http://fonts.googleapis.com/css?family=Cantata+One";
-@import "http://fonts.googleapis.com/css?family=Muli";
+// @import "http://fonts.googleapis.com/css?family=Muli";
 
 h2 {
   font-family: 'Cantata One', Helvetica, Arial, sans-serif;
@@ -40,6 +40,9 @@ body {
   font-family: 'Muli', Georgia, Times, serif;
 
 }
+
+// Hide filter form for demo
+#filter-form { display: none; }
 
 // Table & Content Floater Markup
 
@@ -100,9 +103,21 @@ div.content-header {margin-bottom: 3em !important;}
 
 img.quote { float: left; margin: 1em;}
 
-.ui-autocomplete-input, .ui-button.ui-widget.ui-state-default.ui-button-icon-only { margin-top: 7px; }
+.navbar .brand {
+  display: inline-block;
+  width: 227px;
+  height: 40px;
+  padding: 0;
+  margin: 0 10px 0 0;
+  background: url('/assets/images/viennavigator_logo.png') no-repeat;
+}
+
+.btn.btn-primary.button.submit-button, .ui-autocomplete-input, .ui-button.ui-widget.ui-state-default.ui-button-icon-only { margin-top: 7px; }
 .ui-datepicker-calendar { display: none; }
 .dev-user-changer {margin-right: 2px; }
+.form-actions { background-color: #FFF; }
+.btn.btn-primary.button.submit-button
+.live-search.search-query { margin-bottom: 7px; }
 
 /* mxnDraw */
 #container{padding:12px;overflow:hidden}
